@@ -1,101 +1,60 @@
 <script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
-	import anime from "animejs/lib/anime";
-	let editor;
-	import { onMount } from 'svelte';
-
-	onMount(() => {
-		// we need to use onMount because the div hasn't
-		// been created by the time the init code runs
-		anime({
-			targets: '.menu-bar',
-			translateX: 250,
-			rotate: '1turn',
-			backgroundColor: '#FFF',
-			duration: 800
-		});
-		return () => {
-			// any cleanup code goes here
-		};
-		editor()
-	});
-
-
+    import photo from '$lib/images/photo-1606107557195-0e29a4b5b4aa.jpg';
 </script>
 
-<svelte:head>
-	<title>Home</title>
-<!--	<meta name="description" content="Svelte demo app" />-->
-</svelte:head>
-
 <section>
-	<div class="container-menu">
-	<h1 transition:fade>
-		FOMA-BLOG
-	</h1>
-		<ul class="menu-bar" >
-			<li>О нас</li>
-			<li>Разделы</li>
-			<li>Контакты</li>
-			<li>Лавка</li>
-		</ul>
-	</div>
-
-<!--	<h2>-->
-<!--		try editing <strong>src/routes/+page.svelte</strong>-->
-<!--	</h2>-->
-
-<!--	<Counter />-->
+    <div class="title-container">
+        <div class="title">
+            <h1>
+                FOMA-BLOG
+            </h1>
+        </div>
+        <ul class="menu-bar">
+            <li>-- О нас</li>
+            <li>-- Разделы</li>
+            <li>-- Контакты</li>
+            <li>-- Лавка</li>
+        </ul>
+    </div>
 </section>
 
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: start;
-		height: 100%;
-		padding: 0 10% ;
-	}
+<style lang="scss">
+    section{
+        position: relative;
+        width: 100%;
+        height: 100%;
 
-	.menu-bar{
-		list-style: none;
-		font-size: 50px;
-	}
+      .title-container{
+        position: relative;
+        width: 45%;
+        height: 100%;
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        flex-direction: column;
 
-	.menu-bar li{
-		padding: 15px;
-	}
+        .title{
+          position: relative;
+          font-size: 6vw;
+          border-bottom: 4px solid;
+          padding: 0 0 0 10%;
+        }
 
-	h1 {
-		font-size: 120px;
-	}
+        .menu-bar{
+          position: relative;
+          font-size: 1.8vw;
+          padding: 5% 10%;
+          display: flex;
+          flex-direction: column;
+          > * {
+            padding-bottom: 3%;
+          }
+        }
+      }
+
+    }
 
 
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
 
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
 
-	@keyframes show-up-animation {
-		0%{
-			opacity: 0;
-		}
-		100%{
-			opacity: 1;
-		}
-	}
 </style>
