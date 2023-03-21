@@ -15,7 +15,6 @@
 </script>
 
 <section>
-    <img class="fomka" src="{fomka}" alt="">
 </section>
 
 <style lang="scss">
