@@ -1,17 +1,57 @@
-<script>
+<script lang="ts">
     import logo from '../assets/images/logo.svg'
-    import NavItem from "../components/navbar/NavItem.svelte";
+    import NavItem from "../core/components/navbar/NavItem.svelte";
+    import FlyoutNavItem from "../core/components/navbar/FlyoutNavItem.svelte";
+    import type {INavItem} from "../lib/entitys";
+    import PhotoSVG from "../components/svg/PhotoSVG.svelte";
+    import HomeSVG from "../components/svg/HomeSVG.svelte";
+    import TravelSVG from "../components/svg/TravelSVG.svelte";
+    import StoreSVG from "../components/svg/StoreSVG.svelte";
+    import AboutSVG from "../components/svg/AboutSVG.svelte";
+    import ContactsSVG from "../components/svg/ContactsSVG.svelte";
 
     let showMenu = false;
 
     function toggleNavbar() {
         showMenu = !showMenu;
     }
+
+    const flyoutNavItems: INavItem[] = [{
+        name: 'Фото',
+        description: 'Жанровая фотография и фото из путешествий',
+        icon: PhotoSVG,
+        href: 'https://foma-blog.ru/photo',
+    }, {
+        name: 'Лавка',
+        description: 'В нашей лавке показаны товары ручной работы',
+        icon: StoreSVG,
+        href: 'https://foma-blog.ru/store',
+    }, {
+        name: 'Путешествия',
+        description: 'Истории из наших путешествий и рассказы у костра',
+        icon: TravelSVG,
+        href: 'https://foma-blog.ru/travel',
+    }, {
+        name: 'Дом и техника',
+        description: 'Заметки на тему ремонта, техники и про цветы',
+        icon: HomeSVG,
+        href: 'https://foma-blog.ru/home',
+    }]
+
+    const flyoutSubNavButtons: INavItem[] = [{
+        name: 'О нас',
+        icon: AboutSVG,
+        href: 'https://foma-blog.ru/index.html#about',
+    }, {
+        name: 'Контакты',
+        icon: ContactsSVG,
+        href: 'https://foma-blog.ru/index.html#contacts',
+    }]
 </script>
 <header class="bg-white">
     <nav id="navbar" class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div class="flex lg:flex-1">
-            <a href="#" class="-m-1.5 p-1.5">
+            <a href="https://foma-blog.ru/" target="_blank" class="-m-1.5 p-1.5">
                 <span class="sr-only">FOMA-BLOG</span>
                 <img class="h-16 w-auto" src="{logo}" alt="">
             </a>
@@ -27,9 +67,9 @@
             </button>
         </div>
         <div class="hidden lg:flex lg:gap-x-12">
-
             <NavItem> Дизайн</NavItem>
             <NavItem> Програмирование</NavItem>
+            <FlyoutNavItem navItems="{flyoutNavItems}" subNavButtons="{flyoutSubNavButtons}"> Другие</FlyoutNavItem>
         </div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
             <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Войти</a>
