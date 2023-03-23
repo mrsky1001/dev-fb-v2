@@ -1,6 +1,7 @@
 <script lang="ts">
-    import type {INavItem} from "../../../lib/entitys";
-    import CustomComponent from "../CustomComponent/CustomComponent.svelte";
+    import type {INavItem} from "../../../../lib/entitys";
+    import CustomComponent from "../../CustomComponent/CustomComponent.svelte";
+    import DropdownSVG from "../../../../components/svg/btn-icons/DropdownSVG.svelte";
 
     export let type = '';
     export let navItems: INavItem[] = [];
@@ -12,34 +13,21 @@
         <button type="button"
                 class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:bg-gray-50" aria-controls="disclosure-1"
                 aria-expanded="false">
-            Другие
-            <svg class="h-5 w-5 flex-none" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd"
-                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                      clip-rule="evenodd"/>
-            </svg>
+            <slot/>
+            <CustomComponent component="{DropdownSVG}"/>
         </button>
         <div class="mt-2 space-y-2" id="disclosure-1">
-            <a href="#"
-               class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Фото</a>
-            <a href="#"
-               class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Лавка</a>
-            <a href="#"
-               class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Путешествия</a>
-            <a href="#"
-               class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Дом
-                и техника</a>
-
+            {#each navItems as navItem}
+                <a href="{navItem.href}"
+                   class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">{navItem.name}</a>
+            {/each}
         </div>
     </div>
 {:else}
     <div class="relative">
         <button type="button" class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900" aria-expanded="false">
             <slot/>
-            <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                      clip-rule="evenodd"/>
-            </svg>
+            <CustomComponent component="{DropdownSVG}"/>
         </button>
 
         <div class="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">

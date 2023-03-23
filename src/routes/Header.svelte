@@ -1,20 +1,38 @@
 <script lang="ts">
     import logo from '../assets/images/logo.svg'
-    import NavItem from "../core/components/navbar/NavItem.svelte";
-    import FlyoutNavItem from "../core/components/navbar/FlyoutNavItem.svelte";
+    import NavItem from "../core/components/navbar/NavItem/NavItem.svelte";
+    import FlyoutNavItem from "../core/components/navbar/flyout/FlyoutNavItem.svelte";
     import type {INavItem} from "../lib/entitys";
-    import PhotoSVG from "../components/svg/PhotoSVG.svelte";
-    import HomeSVG from "../components/svg/HomeSVG.svelte";
-    import TravelSVG from "../components/svg/TravelSVG.svelte";
-    import StoreSVG from "../components/svg/StoreSVG.svelte";
-    import AboutSVG from "../components/svg/AboutSVG.svelte";
-    import ContactsSVG from "../components/svg/ContactsSVG.svelte";
+    import PhotoSVG from "../components/svg/page-icons/PhotoSVG.svelte";
+    import HomeSVG from "../components/svg/page-icons/HomeSVG.svelte";
+    import TravelSVG from "../components/svg/page-icons/TravelSVG.svelte";
+    import StoreSVG from "../components/svg/page-icons/StoreSVG.svelte";
+    import AboutSVG from "../components/svg/page-icons/AboutSVG.svelte";
+    import ContactsSVG from "../components/svg/page-icons/ContactsSVG.svelte";
+    import DesignSVG from "../components/svg/page-icons/DesignSVG.svelte";
+    import DevSVG from "../components/svg/page-icons/DevSVG.svelte";
+    import BarsSVG from "../components/svg/btn-icons/BarsSVG.svelte";
+    import CustomComponent from "../core/components/CustomComponent/CustomComponent.svelte";
+    import RightNavItem from "../core/components/navbar/NavItem/RightNavItem.svelte";
 
     let showMenu = false;
 
     function toggleNavbar() {
         showMenu = !showMenu;
     }
+
+    const navItems: INavItem[] = [
+        {
+            name: 'Дизайн',
+            description: 'Заметки на тему дизайна. Интересные кейсы и работы',
+            icon: DesignSVG,
+            href: 'https://foma-blog.ru/design',
+        }, {
+            name: 'Программирование',
+            description: 'Заметки на тему веб-разработки и программирования. Решения интересных задач',
+            icon: DevSVG,
+            href: 'https://foma-blog.ru/dev',
+        },]
 
     const flyoutNavItems: INavItem[] = [{
         name: 'Фото',
@@ -41,17 +59,17 @@
     const flyoutSubNavButtons: INavItem[] = [{
         name: 'О нас',
         icon: AboutSVG,
-        href: 'https://foma-blog.ru/index.html#about',
+        href: 'https://foma-blog.ru/#about',
     }, {
         name: 'Контакты',
         icon: ContactsSVG,
-        href: 'https://foma-blog.ru/index.html#contacts',
+        href: 'https://foma-blog.ru/#contacts',
     }]
 </script>
 <header class="bg-white">
-    <nav id="navbar" class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+    <nav id="navbar" class="navbar mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div class="flex lg:flex-1">
-            <a href="https://foma-blog.ru/" target="_blank" class="-m-1.5 p-1.5">
+            <a href="https://foma-blog.ru/" target="_blank" class="btn btn-ghost normal-case text-xl -m-1.5 p-1.5">
                 <span class="sr-only">FOMA-BLOG</span>
                 <img class="h-16 w-auto" src="{logo}" alt="">
             </a>
@@ -59,20 +77,16 @@
         <div class="flex lg:hidden">
             <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
                 <span class="sr-only">Open main menu</span>
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 512 512" stroke-width="1.5" stroke="currentColor"
-                     aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
-                </svg>
+                <CustomComponent component="{BarsSVG}"/>
             </button>
         </div>
         <div class="hidden lg:flex lg:gap-x-12">
-            <NavItem> Дизайн</NavItem>
+            <NavItem href=""> Дизайн</NavItem>
             <NavItem> Програмирование</NavItem>
             <FlyoutNavItem navItems="{flyoutNavItems}" subNavButtons="{flyoutSubNavButtons}"> Другие</FlyoutNavItem>
         </div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Войти</a>
+            <RightNavItem href="https://foma-blog.ru/login">Войти</RightNavItem>
         </div>
     </nav>
     <!-- Mobile menu, show/hide based on menu open state. -->
@@ -87,52 +101,18 @@
                 </a>
                 <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
                     <span class="sr-only">Close menu</span>
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 512 512" stroke-width="1.5" stroke="currentColor"
-                         aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
+                    <CustomComponent component="{BarsSVG}"/>
                 </button>
             </div>
             <div class="mt-6 flow-root">
                 <div class="-my-6 divide-y divide-gray-500/10">
                     <div id="other-section-container" class="space-y-2 py-6">
-                        <div class="-mx-3">
-                            <button type="button"
-                                    class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:bg-gray-50"
-                                    aria-controls="disclosure-1" aria-expanded="false">
-                                Другие
-                                <!--
-                                  Expand/collapse icon, toggle classes based on menu open state.
-
-                                  Open: "rotate-180", Closed: ""
-                                -->
-                                <svg class="h-5 w-5 flex-none" viewBox="0 0 20 20" fill="currentColor"
-                                     aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </button>
-                            <!-- 'Product' sub-menu, show/hide based on menu state. -->
-                            <div class="mt-2 space-y-2" id="disclosure-1">
-                                <a href="#"
-                                   class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Фото</a>
-                                <a href="#"
-                                   class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Лавка</a>
-                                <a href="#"
-                                   class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Путешествия</a>
-                                <a href="#"
-                                   class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Дом
-                                    и техника</a>
-
-                            </div>
-                        </div>
-                        <NavItem href="http://foma-blog/dev/" type="mobile">Дизайн</NavItem>
+                        <FlyoutNavItem type="mobile" navItems="{flyoutNavItems}" subNavButtons="{flyoutSubNavButtons}">Другие</FlyoutNavItem>
+                        <NavItem href="http://foma-blog/design/" type="mobile">Дизайн</NavItem>
                         <NavItem href="http://foma-blog/dev/" type="mobile">Програмирование</NavItem>
                     </div>
                     <div class="py-6">
-                        <a href="#"
-                           class="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Войти</a>
+                        <RightNavItem href="https://foma-blog.ru/login" type="mobile">Войти</RightNavItem>
                     </div>
                 </div>
             </div>
