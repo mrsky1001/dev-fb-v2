@@ -1,6 +1,4 @@
 <script lang="ts">
-    import NavItem from "../core/components/navbar/NavItem/NavItem.svelte";
-    import FlyoutNavItem from "../core/components/navbar/FlyoutNavItem/FlyoutNavItem.svelte";
     import type {INavItem} from "../lib/entitys";
     import PhotoSVG from "../components/svg/page-icons/PhotoSVG.svelte";
     import HomeSVG from "../components/svg/page-icons/HomeSVG.svelte";
@@ -10,10 +8,8 @@
     import ContactsSVG from "../components/svg/page-icons/ContactsSVG.svelte";
     import DesignSVG from "../components/svg/page-icons/DesignSVG.svelte";
     import DevSVG from "../components/svg/page-icons/DevSVG.svelte";
-    import BarsSVG from "../components/svg/btn-icons/BarsSVG.svelte";
-    import CustomComponent from "../core/components/CustomComponent/CustomComponent.svelte";
-    import RightNavItem from "../core/components/navbar/NavItem/RightNavItem.svelte";
     import LogoNav from "../core/components/navbar/Logo/LogoNav.svelte";
+    import {Chevron, Dropdown, DropdownDivider, DropdownItem, Group, GroupItem, Helper, Listgroup, Navbar, NavBrand, NavHamburger, NavLi, NavUl, Radio} from "flowbite-svelte";
 
     let showMenu = false;
 
@@ -34,7 +30,7 @@
             href: 'https://foma-blog.ru/dev',
         },]
 
-    const flyoutNavItems: INavItem[] = [{
+    const otherNavItems: INavItem[] = [{
         name: 'Фото',
         description: 'Жанровая фотография и фото из путешествий',
         icon: PhotoSVG,
@@ -67,79 +63,80 @@
     }]
 
     const logo = {name: 'FOMA-BLOG', href: 'https://foma-blog.ru/'}
+    let group3 = 2;
 </script>
 <header class="bg-white">
-    <div class="navbar bg-base-100">
-        <div class="flex-1">
+    <Navbar let:hidden let:toggle class="mx-auto  max-w-7xl ">
+        <NavBrand href="{logo.href}" target="_blank">
             <LogoNav name="{logo.name}" href="{logo.href}"></LogoNav>
-        </div>
-        <div class="flex-none">
-            <ul class="menu menu-horizontal px-1">
-                <li><a>Item 1</a></li>
-                <li tabindex="0">
-                    <a>
-                        Parent
-                        <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                            <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
-                        </svg>
-                    </a>
-                    <ul class="p-2 bg-base-100">
-                        <li><a>Submenu 1</a></li>
-                        <li><a>Submenu 2</a></li>
-                    </ul>
+        </NavBrand>
+        <NavHamburger on:click={toggle}/>
+        <NavUl {hidden}>
+            <NavLi href="/dev" class="text-base">Разработка</NavLi>
+            <NavLi href="/design" class="text-base">Дизайн</NavLi>
+            <NavLi id="nav-menu-other" class="cursor-pointer text-base">
+                <Chevron aligned>Другие</Chevron>
+            </NavLi>
+            <Dropdown triggeredBy="#nav-menu-other" class="max-w-sm rounded divide-y divide-gray-100 shadow dark:bg-gray-800 dark:divide-gray-700">
+                <li class="rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+                    <Radio name="group3" value={1}>Enable notifications</Radio>
+                    <Helper class="pl-6">Some helpful instruction goes over here.</Helper>
                 </li>
-                <li><a>Item 3</a></li>
-            </ul>
-        </div>
-    </div>
-    <nav id="navbar" class="navbar mx-auto flex max-w-7xl items-center justify-between p-4  lg:px-8" aria-label="Global">
-        <div class="flex lg:flex-1">
-            <LogoNav name="{logo.name}" href="{logo.href}"></LogoNav>
-        </div>
-        <div class="flex lg:hidden">
-            <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
-                <span class="sr-only">Open main menu</span>
-                <CustomComponent component="{BarsSVG}"/>
-            </button>
-        </div>
-        <ul class="hidden  menu menu-horizontal px-1 lg:flex lg:gap-x-12">
-            {#each navItems as navItem}
-                <NavItem href="{navItem.href}">{navItem.name}</NavItem>
-            {/each}
-            <FlyoutNavItem navItems="{flyoutNavItems}" subNavButtons="{flyoutSubNavButtons}"> Другие</FlyoutNavItem>
-        </ul>
-        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-            <RightNavItem href="https://foma-blog.ru/login">Войти</RightNavItem>
-        </div>
-    </nav>
-    <!-- Mobile menu, show/hide based on menu open state. -->
-    <div id="mobile-navbar" class="lg:hidden" role="dialog" aria-modal="true">
-        <!-- Background backdrop, show/hide based on slide-over state. -->
-        <div class="fixed inset-0 z-10">
-            <LogoNav type="mobile" name="{logo.name}" href="{logo.href}"></LogoNav>
-        </div>
-        <div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            <div class="flex items-center justify-between">
+                <DropdownItem>Settings</DropdownItem>
+                <DropdownItem>Earnings</DropdownItem>
+                <DropdownDivider/>
+                <DropdownItem>Sign out</DropdownItem>
+            </Dropdown>
+        </NavUl>
+    </Navbar>
+    <!--    <nav id="navbar" class="navbar mx-auto flex max-w-7xl items-center justify-between p-4  lg:px-8" aria-label="Global">-->
+    <!--        <div class="flex lg:flex-1">-->
+    <!--            <LogoNav name="{logo.name}" href="{logo.href}"></LogoNav>-->
+    <!--        </div>-->
+    <!--        <div class="flex lg:hidden">-->
+    <!--            <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">-->
+    <!--                <span class="sr-only">Open main menu</span>-->
+    <!--                <CustomComponent component="{BarsSVG}"/>-->
+    <!--            </button>-->
+    <!--        </div>-->
+    <!--        <ul class="hidden  menu menu-horizontal px-1 lg:flex lg:gap-x-12">-->
+    <!--            {#each navItems as navItem}-->
+    <!--                <NavItem href="{navItem.href}">{navItem.name}</NavItem>-->
+    <!--            {/each}-->
+    <!--            <FlyoutNavItem navItems="{flyoutNavItems}" subNavButtons="{flyoutSubNavButtons}"> Другие</FlyoutNavItem>-->
+    <!--        </ul>-->
+    <!--        <div class="hidden lg:flex lg:flex-1 lg:justify-end">-->
+    <!--            <RightNavItem href="https://foma-blog.ru/login">Войти</RightNavItem>-->
+    <!--        </div>-->
+    <!--    </nav>-->
+    <!--    &lt;!&ndash; Mobile menu, show/hide based on menu open state. &ndash;&gt;-->
+    <!--    <div id="mobile-navbar" class="lg:hidden" role="dialog" aria-modal="true">-->
+    <!--        &lt;!&ndash; Background backdrop, show/hide based on slide-over state. &ndash;&gt;-->
+    <!--        <div class="fixed inset-0 z-10">-->
+    <!--            <LogoNav type="mobile" name="{logo.name}" href="{logo.href}"></LogoNav>-->
+    <!--        </div>-->
+    <!--        <div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">-->
+    <!--            <div class="flex items-center justify-between">-->
 
-                <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
-                    <span class="sr-only">Close menu</span>
-                    <CustomComponent component="{BarsSVG}"/>
-                </button>
-            </div>
-            <div class="mt-6 flow-root">
-                <div class="-my-6 divide-y divide-gray-500/10">
-                    <div id="other-section-container" class="space-y-2 py-6">
-                        <FlyoutNavItem type="mobile" navItems="{flyoutNavItems}" subNavButtons="{flyoutSubNavButtons}">Другие</FlyoutNavItem>
-                        <NavItem href="http://foma-blog/design/" type="mobile">Дизайн</NavItem>
-                        <NavItem href="http://foma-blog/dev/" type="mobile">Програмирование</NavItem>
-                    </div>
-                    <div class="py-6">
-                        <RightNavItem href="https://foma-blog.ru/login" type="mobile">Войти</RightNavItem>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!--                <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">-->
+    <!--                    <span class="sr-only">Close menu</span>-->
+    <!--                    <CustomComponent component="{BarsSVG}"/>-->
+    <!--                </button>-->
+    <!--            </div>-->
+    <!--            <div class="mt-6 flow-root">-->
+    <!--                <div class="-my-6 divide-y divide-gray-500/10">-->
+    <!--                    <div id="other-section-container" class="space-y-2 py-6">-->
+    <!--                        <FlyoutNavItem type="mobile" navItems="{flyoutNavItems}" subNavButtons="{flyoutSubNavButtons}">Другие</FlyoutNavItem>-->
+    <!--                        <NavItem href="http://foma-blog/design/" type="mobile">Дизайн</NavItem>-->
+    <!--                        <NavItem href="http://foma-blog/dev/" type="mobile">Програмирование</NavItem>-->
+    <!--                    </div>-->
+    <!--                    <div class="py-6">-->
+    <!--                        <RightNavItem href="https://foma-blog.ru/login" type="mobile">Войти</RightNavItem>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
 </header>
 
 <style>
