@@ -6,6 +6,7 @@
     export let type = '';
     export let navItems: INavItem[] = [];
     export let subNavButtons: INavItem[] = [];
+    let isOpen = false
 
 </script>
 {#if type.includes("mobile")}
@@ -25,38 +26,41 @@
     </li>
 {:else}
     <li tabindex="0">
-        <div class="relative">
-            <a class="flex items-center gap-x-1 text-sm  leading-6 text-gray-900" aria-expanded="false">
+        <div class=" dropdown">
+            <label tabIndex={0} class="btn m-1">
                 <slot/>
                 <CustomComponent component="{DropdownSVG}"/>
-            </a>
+            </label>
 
-            <div class="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                <div class="p-4">
-                    {#each navItems as navItem}
-                        <div class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
-                            <div class="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                <CustomComponent component="{navItem.icon}"/>
-                            </div>
-                            <div class="flex-auto">
-                                <a rel="noreferrer" href="{navItem.href}" target="_blank" class="block  text-gray-900">
-                                    {navItem.name}
-                                    <span class="absolute inset-0"></span>
-                                </a>
-                                <p class="mt-1 text-gray-600">{navItem.description}</p>
-                            </div>
+            <ul tabIndex={0} class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                {#each navItems as navItem}
+                    <li class="">
+                        <div class="">
+                            <CustomComponent component="{navItem.icon}"/>
                         </div>
-                    {/each}
-                </div>
-                <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                    {#each subNavButtons as subItem}
-                        <a rel="noreferrer" href="{subItem.href}" target="_blank"
-                           class="flex items-center justify-center gap-x-2.5 p-3 text-sm  leading-6 text-gray-900 hover:bg-gray-100">
-                            <CustomComponent component="{subItem.icon}"/>
-                            {subItem.name}
-                        </a>
-                    {/each}
-                </div>
+                        <div class="flex-auto">
+                            <a rel="noreferrer" href="{navItem.href}" target="_blank" class="block  text-gray-900">
+                                {navItem.name}
+                                <span class="absolute inset-0"></span>
+                            </a>
+                            <p class="mt-1 text-gray-600">{navItem.description}</p>
+                        </div>
+                    </li>
+                {/each}
+            </ul>
+
+            <div tabIndex={0}
+                 class="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+
+                <!--                <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">-->
+                <!--                    {#each subNavButtons as subItem}-->
+                <!--                        <a rel="noreferrer" href="{subItem.href}" target="_blank"-->
+                <!--                           class="flex items-center justify-center gap-x-2.5 p-3 text-sm  leading-6 text-gray-900 hover:bg-gray-100">-->
+                <!--                            <CustomComponent component="{subItem.icon}"/>-->
+                <!--                            {subItem.name}-->
+                <!--                        </a>-->
+                <!--                    {/each}-->
+                <!--                </div>-->
             </div>
         </div>
     </li>

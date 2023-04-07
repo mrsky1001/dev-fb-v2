@@ -1,4 +1,4 @@
-<svg class="h-6 w-6 text-gray-600 group-hover:text-indigo-600" fill="currentColor" viewBox="0 0 512 512" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+<svg class="h-6 w-6 text-gray-600 group-hover:text-accent" fill="currentColor" viewBox="0 0 512 512" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
     <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)">
         fill="#000000" stroke="none">
         <path d="M1162 4519 c-255 -43 -462 -222 -545 -470 -36 -107 -38 -188 -35
