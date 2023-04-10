@@ -1,4 +1,4 @@
-@import '@fontsource/ubuntu';
+@import '@fontsource/pt-sans';
 
 @tailwind base;
 @tailwind components;
@@ -6,8 +6,8 @@
 
 
 :root {
-    --font-body: 'ubuntu';
-    --font-mono: 'ubuntu', sans-serif, monospace;
+    --font-body: Roboto, sans-serif, monospace;
+    --font-mono: Roboto, sans-serif, monospace;
     --header-font-width: 700;
     --color-bg-0: rgb(202, 216, 228);
     --color-bg-1: hsl(209, 36%, 86%);

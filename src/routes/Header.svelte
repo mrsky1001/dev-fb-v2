@@ -9,7 +9,24 @@
     import DesignSVG from "../components/svg/page-icons/DesignSVG.svelte";
     import DevSVG from "../components/svg/page-icons/DevSVG.svelte";
     import LogoNav from "../core/components/navbar/Logo/LogoNav.svelte";
-    import {Chevron, Dropdown, DropdownDivider, DropdownItem, Group, GroupItem, Helper, Listgroup, Navbar, NavBrand, NavHamburger, NavLi, NavUl, Radio} from "flowbite-svelte";
+    import {
+        Button,
+        Chevron,
+        Dropdown,
+        DropdownDivider,
+        DropdownItem,
+        Group,
+        GroupItem,
+        Helper,
+        Listgroup,
+        Navbar,
+        NavBrand,
+        NavHamburger,
+        NavLi,
+        NavUl,
+        Radio
+    } from "flowbite-svelte";
+    import CustomComponent from "../core/components/CustomComponent/CustomComponent.svelte";
 
     let showMenu = false;
 
@@ -63,31 +80,47 @@
     }]
 
     const logo = {name: 'FOMA-BLOG', href: 'https://foma-blog.ru/'}
-    let group3 = 2;
 </script>
 <header class="bg-white">
-    <Navbar let:hidden let:toggle class="mx-auto  max-w-7xl ">
+    <Navbar let:hidden let:toggle class="mx-auto">
         <NavBrand href="{logo.href}" target="_blank">
             <LogoNav name="{logo.name}" href="{logo.href}"></LogoNav>
         </NavBrand>
         <NavHamburger on:click={toggle}/>
         <NavUl {hidden}>
-            <NavLi href="/dev" class="text-base">Разработка</NavLi>
-            <NavLi href="/design" class="text-base">Дизайн</NavLi>
-            <NavLi id="nav-menu-other" class="cursor-pointer text-base">
+            <NavLi href="/dev" class="text-base font-semibold">Разработка</NavLi>
+            <NavLi href="/design" class="text-base font-semibold">Дизайн</NavLi>
+            <NavLi id="nav-menu-other" class="cursor-pointer text-base font-semibold">
                 <Chevron aligned>Другие</Chevron>
             </NavLi>
-            <Dropdown triggeredBy="#nav-menu-other" class="max-w-sm rounded divide-y divide-gray-100 shadow dark:bg-gray-800 dark:divide-gray-700">
-                <li class="rounded p-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <Radio name="group3" value={1}>Enable notifications</Radio>
-                    <Helper class="pl-6">Some helpful instruction goes over here.</Helper>
-                </li>
-                <DropdownItem>Settings</DropdownItem>
-                <DropdownItem>Earnings</DropdownItem>
-                <DropdownDivider/>
-                <DropdownItem>Sign out</DropdownItem>
+            <Dropdown open={true} triggeredBy="#nav-menu-other" class="max-w-sm rounded divide-y divide-gray-100 shadow dark:bg-gray-800 dark:divide-gray-700">
+                <div class="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5  ">
+                    <div class="p-4">
+                        {#each otherNavItems as navItem}
+                            <li class="">
+                                <a rel="noreferrer" href="{navItem.href}" target="_blank" class="group flex  gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                                    <div class="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                        <CustomComponent component="{navItem.icon}"/>
+                                    </div>
+                                    <div class="flex-auto">
+                                        <span class="font-semibold">{navItem.name}</span>
+                                        <p class="mt-1 ">{navItem.description}</p>
+                                    </div>
+                                    <!--                                <Radio name="group3" value={1}>Enable notifications</Radio>-->
+                                    <!--                                <Helper class="pl-6">Some helpful instruction goes over here.</Helper>-->
+                                </a>
+
+                            </li>
+                        {/each}
+                    </div>
+                </div>
+
             </Dropdown>
         </NavUl>
+        <div class="flex md:order-2">
+            <Button size="sm">Войти</Button>
+            <NavHamburger on:click={toggle}/>
+        </div>
     </Navbar>
     <!--    <nav id="navbar" class="navbar mx-auto flex max-w-7xl items-center justify-between p-4  lg:px-8" aria-label="Global">-->
     <!--        <div class="flex lg:flex-1">-->

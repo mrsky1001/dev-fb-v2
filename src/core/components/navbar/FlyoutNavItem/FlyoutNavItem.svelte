@@ -31,7 +31,7 @@
                 <CustomComponent component="{DropdownSVG}"/>
             </a>
 
-            <div class="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+            <div class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
                 <div class="p-4">
                     {#each navItems as navItem}
                         <div class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">

@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
     // daisyui: {
     //     themes: [
@@ -34,45 +36,43 @@ module.exports = {
     ],
 
     theme: {
-        homeTheme: {
 
-            "primary": "rgb(79, 70, 229)",
+        screens: {
+            sm: '480px',
+            md: '768px',
+            lg: '976px',
+            xl: '1440px',
+        },
 
-            "secondary": "#0054bc",
-
-            "accent": "#ca36cc",
-
-            "neutral": "#fff",
-
-            "base-100": "#F8F6F9",
-
-            "info": "#357FD4",
-
-            "success": "#157061",
-
-            "warning": "#FBC756",
-
-            "error": "#F40B1B",
+        fontFamily: {
+            sans: ['Graphik', 'sans-serif'],
+            serif: ['Merriweather', 'serif'],
         },
         extend: {
-            "primary": "rgb(79, 70, 229)",
+            spacing: {
+                '128': '32rem',
+                '144': '36rem',
+            },
+            borderRadius: {
+                '4xl': '2rem',
+            },
+            colors: {
+                gray: colors.gray,
+                blue: '#ca36cc',
+                red: colors.rose,
+                pink: colors.fuchsia,
+                primary: "rgb(79, 70, 229)",
+                secondary: "#0054bc",
+                accent: "#ca36cc",
+                neutral: "#fff",
+                "base-100": "#F8F6F9",
+                info: "#357FD4",
+                success: "#157061",
+                warning: "#FBC756",
+                error: "#F40B1B",
+            },
+        }
 
-            "secondary": "#0054bc",
-
-            "accent": "#ca36cc",
-
-            "neutral": "#fff",
-
-            "base-100": "#F8F6F9",
-
-            "info": "#357FD4",
-
-            "success": "#157061",
-
-            "warning": "#FBC756",
-
-            "error": "#F40B1B",
-        },
     },
 
     plugins: [
