@@ -1,7 +1,7 @@
 <script lang="ts">
     import CustomComponent from "../../CustomComponent/CustomComponent.svelte";
     import LogoSVG from "../../../../components/svg/btn-icons/LogoSVG.svelte";
-    import logo from "../../../../assets/images/logo.svg";
+    import {NavBrand} from "flowbite-svelte";
 
     export let type = ''
     export let name = ''
@@ -15,11 +15,10 @@
         <CustomComponent component="{LogoSVG}"/>
     </a>
 {:else}
-    <img
-            src="{logo}"
-            class="mr-3 h-6 sm:h-16"
-            alt="{name}"
-    />
+    <NavBrand href="{href}" class="group" target="_blank">
+        <LogoSVG></LogoSVG>
+        <span><slot/></span>
+    </NavBrand>
     <!--    <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">-->
     <!--    FOMA-BLOG-->
     <!--    </span>-->

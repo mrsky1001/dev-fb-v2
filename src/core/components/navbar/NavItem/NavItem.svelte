@@ -1,4 +1,8 @@
 <script>
+    import {NavLi} from "flowbite-svelte";
+    import CustomComponent from "../../CustomComponent/CustomComponent.svelte";
+
+    export let icon = '';
     export let type = '';
     export let href = '';
 
@@ -11,11 +15,15 @@
         </a>
     </li>
 {:else}
-    <li>
-        <a href="#{href}" class="btn text-sm leading-6 text-gray-900 ">
-            <slot/>
-        </a>
-    </li>
+    <NavLi href="{href}" class="group hover:bg-gray-200 text-base font-semibold flex flex-row items-center">
+
+        {#if icon}
+            <div class="flex  flex-none items-center justify-center ">
+                <CustomComponent component="{icon}"/>
+            </div>
+        {/if}
+        <span><slot/></span>
+    </NavLi>
 {/if}
 
 <style>

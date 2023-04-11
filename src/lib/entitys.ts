@@ -4,5 +4,5 @@ export interface INavItem {
     href: string
     name: string
     description?: string
-    icon: string | SvelteComponent
+    icon?: string | SvelteComponent
 }

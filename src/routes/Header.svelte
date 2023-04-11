@@ -6,27 +6,16 @@
     import StoreSVG from "../components/svg/page-icons/StoreSVG.svelte";
     import AboutSVG from "../components/svg/page-icons/AboutSVG.svelte";
     import ContactsSVG from "../components/svg/page-icons/ContactsSVG.svelte";
-    import DesignSVG from "../components/svg/page-icons/DesignSVG.svelte";
-    import DevSVG from "../components/svg/page-icons/DevSVG.svelte";
-    import LogoNav from "../core/components/navbar/Logo/LogoNav.svelte";
     import {
         Button,
-        Chevron,
-        Dropdown,
-        DropdownDivider,
-        DropdownItem,
-        Group,
-        GroupItem,
-        Helper,
-        Listgroup,
         Navbar,
-        NavBrand,
         NavHamburger,
-        NavLi,
         NavUl,
-        Radio
+        Radio, Search
     } from "flowbite-svelte";
-    import CustomComponent from "../core/components/CustomComponent/CustomComponent.svelte";
+    import DropdownNavItem from "../core/components/navbar/DropdownNavItem/DropdownNavItem.svelte";
+    import NavItem from "../core/components/navbar/NavItem/NavItem.svelte";
+    import NavBrand from "../core/components/navbar/NavBrand/NavBrand.svelte";
 
     let showMenu = false;
 
@@ -38,12 +27,12 @@
         {
             name: 'Дизайн',
             description: 'Заметки на тему дизайна. Интересные кейсы и работы',
-            icon: DesignSVG,
+            // icon: DesignSVG,
             href: 'https://foma-blog.ru/design',
         }, {
-            name: 'Программирование',
+            name: 'Разработка',
             description: 'Заметки на тему веб-разработки и программирования. Решения интересных задач',
-            icon: DevSVG,
+            // icon: DevSVG,
             href: 'https://foma-blog.ru/dev',
         },]
 
@@ -54,7 +43,7 @@
         href: 'https://foma-blog.ru/photo',
     }, {
         name: 'Лавка',
-        description: 'В нашей лавке показаны товары ручной работы',
+        description: 'В лавке представлены товары, сделанные нами',
         icon: StoreSVG,
         href: 'https://foma-blog.ru/store',
     }, {
@@ -69,7 +58,7 @@
         href: 'https://foma-blog.ru/home',
     }]
 
-    const flyoutSubNavButtons: INavItem[] = [{
+    const otherSubNavButtons: INavItem[] = [{
         name: 'О нас',
         icon: AboutSVG,
         href: 'https://foma-blog.ru/#about',
@@ -82,42 +71,21 @@
     const logo = {name: 'FOMA-BLOG', href: 'https://foma-blog.ru/'}
 </script>
 <header class="bg-white">
-    <Navbar let:hidden let:toggle class="mx-auto">
-        <NavBrand href="{logo.href}" target="_blank">
-            <LogoNav name="{logo.name}" href="{logo.href}"></LogoNav>
-        </NavBrand>
+    <Navbar let:hidden let:toggle>
+        <NavBrand href="{logo.href}"></NavBrand>
         <NavHamburger on:click={toggle}/>
         <NavUl {hidden}>
-            <NavLi href="/dev" class="text-base font-semibold">Разработка</NavLi>
-            <NavLi href="/design" class="text-base font-semibold">Дизайн</NavLi>
-            <NavLi id="nav-menu-other" class="cursor-pointer text-base font-semibold">
-                <Chevron aligned>Другие</Chevron>
-            </NavLi>
-            <Dropdown open={true} triggeredBy="#nav-menu-other" class="max-w-sm rounded divide-y divide-gray-100 shadow dark:bg-gray-800 dark:divide-gray-700">
-                <div class="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5  ">
-                    <div class="p-4">
-                        {#each otherNavItems as navItem}
-                            <li class="">
-                                <a rel="noreferrer" href="{navItem.href}" target="_blank" class="group flex  gap-x-6 rounded-lg p-4 hover:bg-gray-50">
-                                    <div class="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                        <CustomComponent component="{navItem.icon}"/>
-                                    </div>
-                                    <div class="flex-auto">
-                                        <span class="font-semibold">{navItem.name}</span>
-                                        <p class="mt-1 ">{navItem.description}</p>
-                                    </div>
-                                    <!--                                <Radio name="group3" value={1}>Enable notifications</Radio>-->
-                                    <!--                                <Helper class="pl-6">Some helpful instruction goes over here.</Helper>-->
-                                </a>
+            {#each navItems as navItem}
+                <NavItem href="{navItem.href}" icon="{navItem.icon}">{navItem.name}</NavItem>
+            {/each}
 
-                            </li>
-                        {/each}
-                    </div>
-                </div>
-
-            </Dropdown>
+            <DropdownNavItem navItems="{otherNavItems}" subNavButtons="{otherSubNavButtons}">Другие</DropdownNavItem>
         </NavUl>
-        <div class="flex md:order-2">
+        <div>
+            <Search size="sm" placeholder="Поиск">
+            </Search>
+        </div>
+        <div class="flex ">
             <Button size="sm">Войти</Button>
             <NavHamburger on:click={toggle}/>
         </div>
@@ -136,7 +104,7 @@
     <!--            {#each navItems as navItem}-->
     <!--                <NavItem href="{navItem.href}">{navItem.name}</NavItem>-->
     <!--            {/each}-->
-    <!--            <FlyoutNavItem navItems="{flyoutNavItems}" subNavButtons="{flyoutSubNavButtons}"> Другие</FlyoutNavItem>-->
+    <!--            <DropdownNavItem navItems="{flyoutNavItems}" subNavButtons="{flyoutSubNavButtons}"> Другие</DropdownNavItem>-->
     <!--        </ul>-->
     <!--        <div class="hidden lg:flex lg:flex-1 lg:justify-end">-->
     <!--            <RightNavItem href="https://foma-blog.ru/login">Войти</RightNavItem>-->
@@ -159,7 +127,7 @@
     <!--            <div class="mt-6 flow-root">-->
     <!--                <div class="-my-6 divide-y divide-gray-500/10">-->
     <!--                    <div id="other-section-container" class="space-y-2 py-6">-->
-    <!--                        <FlyoutNavItem type="mobile" navItems="{flyoutNavItems}" subNavButtons="{flyoutSubNavButtons}">Другие</FlyoutNavItem>-->
+    <!--                        <DropdownNavItem type="mobile" navItems="{flyoutNavItems}" subNavButtons="{flyoutSubNavButtons}">Другие</DropdownNavItem>-->
     <!--                        <NavItem href="http://foma-blog/design/" type="mobile">Дизайн</NavItem>-->
     <!--                        <NavItem href="http://foma-blog/dev/" type="mobile">Програмирование</NavItem>-->
     <!--                    </div>-->
