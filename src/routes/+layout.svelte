@@ -9,8 +9,7 @@
     <Header/>
 
     <main>
-        <section>
-        </section>
+        <slot></slot>
     </main>
 </div>
 
