@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type {INavItem} from "../../../../lib/entitys";
+    import type {INavItem} from "../../../lib/entitys";
     import CustomComponent from "../../CustomComponent/CustomComponent.svelte";
     import DropdownSVG from "../../../../components/svg/btn-icons/DropdownSVG.svelte";
     import {Chevron, Dropdown, NavLi} from "flowbite-svelte";

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type {INavItem} from "../lib/entitys";
+    import type {INavItem} from "../core/lib/entitys";
     import PhotoSVG from "../components/svg/page-icons/PhotoSVG.svelte";
     import HomeSVG from "../components/svg/page-icons/HomeSVG.svelte";
     import TravelSVG from "../components/svg/page-icons/TravelSVG.svelte";
@@ -70,7 +70,7 @@
 
     const logo = {name: 'FOMA-BLOG', href: 'https://foma-blog.ru/'}
 </script>
-<header class="bg-white">
+<header class="bg-white fixed w-full">
     <Navbar let:hidden let:toggle>
         <NavBrand href="{logo.href}"></NavBrand>
         <NavHamburger on:click={toggle}/>

@@ -11,3 +11,5 @@ services:
       HOST: 0.0.0.0
     working_dir: /app
     command: sh -c "cd /app; yarn install; yarn run dev --host 0.0.0.0"
+
+    network_mode: "host"
