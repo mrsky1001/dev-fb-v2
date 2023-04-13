@@ -4,12 +4,12 @@
 
 import Section from "../models/classes/article/Section";
 import type {IRule} from "../models/interfaces/lib/IRule";
-import {validationProp} from "../lib/validation";
+import {validationProp} from "../validation";
 import urls from "../collections/urls";
 import api from "./api";
 import type {AxiosError, AxiosResponse} from "axios";
-import {handlerError, responseHandler} from "../lib/response-handler";
-import config from "../../config/config";
+import {handlerError, responseHandler} from "../response-handler";
+import config from "../../../config/config";
 import type {ISection} from "../models/interfaces/article/ISection";
 
 const getInValidSectionFields = (section: Section) => {

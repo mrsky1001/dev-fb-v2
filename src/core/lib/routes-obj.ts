@@ -21,7 +21,7 @@
 //         })
 // }
 
-import roles from "../collections/roles";
+import roles from "./collections/roles";
 import config from "../../config/config";
 
 export const routesObj = {

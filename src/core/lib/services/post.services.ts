@@ -6,10 +6,10 @@ import api from './api'
 import type {IRule} from "../models/interfaces/lib/IRule";
 import Post from "../models/classes/article/Post";
 import urls from "../collections/urls";
-import config from "../../config/config";
+import config from "../../../config/config";
 import type {AxiosResponse} from 'axios';
-import {validationProp} from "../lib/validation";
-import {handlerError, responseHandler} from "../lib/response-handler";
+import {validationProp} from "../validation";
+import {handlerError, responseHandler} from "../response-handler";
 import type AxiosError from "axios";
 import type {IPost} from "../models/interfaces/article/IPost";
 import type {IPostsFilter} from "../models/interfaces/filter/filters-posts";

@@ -6,7 +6,7 @@
 import GenericModel from "../app/GenericModel";
 import type {IUser} from "../../interfaces/auth/IUser";
 import roles from "../../../collections/roles";
-import {getTimeSalt} from "../../../lib/tools.lib";
+import {getTimeSalt} from "../../../tools.lib";
 
 export default class User extends GenericModel implements IUser {
     private _role: number = roles.UNAUTHORIZED.value

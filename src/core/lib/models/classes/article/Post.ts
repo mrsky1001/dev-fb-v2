@@ -5,7 +5,7 @@
 
 import GenericModel from "../app/GenericModel";
 import type {IPost} from "../../interfaces/article/IPost";
-import config from "../../../../config/config";
+import config from "../../../../../config/config";
 import type IPhotoPost from "../../interfaces/article/IPhotoPost";
 import type {IComment} from "../../interfaces/article/IComment";
 import type {IUser} from "../../interfaces/auth/IUser";

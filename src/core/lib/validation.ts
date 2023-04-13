@@ -3,7 +3,7 @@
  */
 
 
-import type {IRule} from "../models/interfaces/lib/IRule";
+import type {IRule} from "./models/interfaces/lib/IRule";
 
 export const validationProp = (obj: any, array: IRule[], listError: string[], name?: string): void => {
     array.forEach((rule: IRule) => {

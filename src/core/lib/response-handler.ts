@@ -3,8 +3,8 @@
  */
 
 import type {AxiosError, AxiosResponse} from "axios";
-import type {IAppMessage} from "../models/interfaces/app/IAppMessage";
-import type {IRoute} from "../models/interfaces/app/IRoute";
+import type {IAppMessage} from "./models/interfaces/app/IAppMessage";
+import type {IRoute} from "./models/interfaces/app/IRoute";
 import routesObj from "./routes-obj";
 
 export const responseHandler = (res: AxiosResponse, msg?: IAppMessage | null, isShowMsg = true): Promise<any> => {

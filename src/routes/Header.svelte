@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type {INavItem} from "../core/lib/entitys";
+    import type {INavItem} from "../core/lib/models/entitys";
     import PhotoSVG from "../components/svg/page-icons/PhotoSVG.svelte";
     import HomeSVG from "../components/svg/page-icons/HomeSVG.svelte";
     import TravelSVG from "../components/svg/page-icons/TravelSVG.svelte";
