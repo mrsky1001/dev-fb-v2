@@ -8,7 +8,7 @@
 // import urls from '@/core/collections/urls'
 // import { AxiosError, AxiosResponse } from 'axios'
 // import GenericModel from '@/core/models/classes/app/GenericModel'
-// import { vxc } from '@/core/store/store.vuex'
+// import { vxc } from '@/core/stores/stores.vuex'
 // import { IUser } from '@/core/models/interfaces/auth/IUser'
 //
 // export const getAllImgs = (postId: string): Promise<string[]> => {

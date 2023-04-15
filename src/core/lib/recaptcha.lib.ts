@@ -2,7 +2,7 @@
 //  * Copyright (c) 21.11.2021, 23:51  Kolyada Nikita Vladimirovich nikita.nk16@yandex.ru
 //  */
 //
-// import { vxc } from '@/core/store/store.vuex'
+// import { vxc } from '@/core/stores/stores.vuex'
 //
 // const recaptchaLib = {
 //     errorEvent: (): void => {

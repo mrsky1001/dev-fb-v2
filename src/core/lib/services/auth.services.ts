@@ -12,7 +12,7 @@
 // import IAccount from '@/core/models/classes/auth/Account'
 // import GenericModel from '@/core/models/classes/app/GenericModel'
 // import { IUser } from '@/core/models/interfaces/auth/IUser'
-// import { vxc } from '@/core/store/store.vuex'
+// import { vxc } from '@/core/stores/stores.vuex'
 //
 // export const isAuthorized = (isRedirectToLogin = false): Promise<boolean> => {
 //     return new Promise<boolean>((resolve, reject) => {

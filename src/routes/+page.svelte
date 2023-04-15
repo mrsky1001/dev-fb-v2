@@ -2,22 +2,21 @@
     import {onMount} from "svelte";
     import {Button, Card} from "flowbite-svelte";
     import img from "../testdata/image-1.webp"
-
+    import {allSectionsStore} from "../core/lib/stores/section/all-sections.store";
     import ScrollSpy from "../core/components/ScrollSpy/ScrollSpy.svelte";
 
-    export let data
-
     onMount(() => {
-        console.log(data)
+        console.log(allSectionsStore.all())
+        // console.log($allSectionsStore)
+
     })
 
-    const cards = [{img: img, name: 'ss'}]
 </script>
 
 <section class="flex flex-col justify-center items-center w-full ">
     <div class="flex w-full">
         <div class="flex-auto max-w-4xl min-w-0 pt-6 lg:px-8 lg:pt-8 pb:12 xl:pb-24 lg:pb-16">
-            {#each _sections as section }
+            {#each allSectionsStore.all() as section }
                 <Card img="{img}">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
@@ -34,7 +33,7 @@
         </div>
         <div class="flex-none hidden w-64 pl-8 mr-8 xl:text-sm xl:block">
             <div class="flex overflow-y-auto sticky top-28 flex-col justify-between pt-10 pb-6 h-[calc(100vh-5rem)]">
-                <ScrollSpy arr="{_getSectionsLikeScrollSpyArr()}"/>
+                <ScrollSpy/>
             </div>
         </div>
     </div>

@@ -10,8 +10,8 @@
 // import { IComment, IRawComment } from '@/core/models/interfaces/article/IComment'
 // import { handlerError, responseHandler } from '@/core/lib/response-handler'
 // import Comment from '@/core/models/classes/article/Comment'
-// import { vxc } from '@/core/store/store.vuex'
-// import { ISnackbarProps } from '@/core/store/app/snackbar.store'
+// import { vxc } from '@/core/stores/stores.vuex'
+// import { ISnackbarProps } from '@/core/stores/app/snackbar.stores'
 // import { validationProp } from '@/core/lib/validation'
 //
 // const getInValidCommentFields = (comment: IRawComment) => {

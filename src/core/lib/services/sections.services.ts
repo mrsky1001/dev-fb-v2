@@ -2,7 +2,7 @@
  * Copyright (©) 09.07.2021, 17:13. Kolyada Nikita Vladimirovich (nikita.nk16@yandex.ru)
  */
 
-import Section from "../models/classes/article/Section";
+import Section from "../stores/section/section";
 import type {IRule} from "../models/interfaces/lib/IRule";
 import {validationProp} from "../validation";
 import urls from "../collections/urls";
@@ -10,7 +10,7 @@ import api from "./api";
 import type {AxiosError, AxiosResponse} from "axios";
 import {handlerError, responseHandler} from "../response-handler";
 import config from "../../../config/config";
-import type {ISection} from "../models/interfaces/article/ISection";
+import type {ISection} from "../stores/section/ISection";
 
 const getInValidSectionFields = (section: Section) => {
     const rules: IRule[] = [
@@ -52,7 +52,11 @@ export const getSections = (): Promise<Section[]> => {
             .get(`${urls.GET_SECTIONS}`, {params: {domain: config.server.domain}})
             .then((res: AxiosResponse) => {
                 responseHandler(res, undefined, false)
-                    .then((data) => resolve(data.sections.map((section: ISection) => new Section(section))))
+                    .then((data) => resolve(
+                        data.sections
+                            .sort((a: Section, b: Section) => a.name.localeCompare(b.name))
+                            .map((section: ISection) => new Section(section)))
+                    )
                     .catch((err: AxiosError) => {
                         handlerError(err)
                         reject(err)
