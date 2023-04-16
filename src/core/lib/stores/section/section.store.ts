@@ -1,36 +1,33 @@
-import {get, type Unsubscriber, writable} from "svelte/store";
-import type {ISection} from "./section";
+import {get, writable} from "svelte/store";
+import type {ISectionProps} from "./section";
 import Section from "./section";
 import {allSectionsStore} from "./all-sections.store";
+import {getPosts} from "../../services/post.services";
+import _baseStore, {type WrapperProps} from "../_base.store";
 
-export interface SectionStore {
-    set(): void;
-
-    self(): Section;
-
+export interface SectionStore extends WrapperProps<Section> {
     setActive(val: boolean): void;
-
-    subscribe(v: any): Unsubscriber;
 }
 
-export const createSectionStore = (s: ISection): SectionStore => {
+export const createSectionStore = (s: ISectionProps): SectionStore => {
     const store = writable(new Section(s))
 
-    return {
-        set: (s: ISection) => store.set(new Section(s)),
+    return _baseStore(store, ({init, self}) => ({
+        ...store, init, self,
+        setActive: (val: boolean) => {
+            const section = get(store)
 
-        setActive: (val: any) => {
             allSectionsStore.resetActiveMark()
-            store.update(s => {
-                s.isActive = val
-                return s
+
+            getPosts(section.id, new Date()).then(posts => {
+                store.update(s => {
+                    s.isActive = val
+                    s.setPosts(posts)
+                    return s
+                })
             })
-        },
-
-        self: () => get(store),
-
-        subscribe: store.subscribe,
-    } as SectionStore
+        }
+    }))
 }
 
 

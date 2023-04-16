@@ -70,7 +70,7 @@
 
     const logo = {name: 'FOMA-BLOG', href: 'https://foma-blog.ru/'}
 </script>
-<header class="bg-white fixed w-full">
+<header class="sticky top-0 z-40 flex-none w-full mx-auto bg-white border-b border-gray-200 dark:border-gray-600 dark:bg-gray-800">
     <Navbar let:hidden let:toggle>
         <NavBrand href="{logo.href}"></NavBrand>
         <NavHamburger on:click={toggle}/>

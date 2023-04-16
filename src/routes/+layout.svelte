@@ -8,9 +8,13 @@
 <div class="app">
     <Header/>
 
-    <main>
-        <slot></slot>
-    </main>
+    <div class="w-full px-4 mx-auto max-w-8xl ">
+        <div class="flex w-full">
+            <main class="flex-auto w-full min-w-0 lg:static lg:max-h-full lg:overflow-visible">
+                <slot></slot>
+            </main>
+        </div>
+    </div>
 </div>
 
 <style lang="scss">

@@ -2,9 +2,10 @@
     import {allSectionsStore} from "../../lib/stores/section/all-sections.store.js";
     import {onDestroy, onMount} from "svelte";
     import Section from "../../lib/stores/section/section";
-    import {subscribeAll} from "../../lib/stores/subscribeAll";
+    import {subscribeAll} from "../../lib/stores/subscribe-all";
 
     let sections = []
+
     const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), (values) => {
         sections = values
     })
@@ -14,21 +15,19 @@
     })
 
     const activeClass = (section: Section) => {
-        console.log(section.isActive)
         return section.isActive ? 'font-semibold border-l-[0.125rem]  text-primary' : ''
     }
 
     const setActive = (section: Section) => {
-        console.log(allUnsubscribe)
-        return allSectionsStore.getStore(section).setActive(true)
+        return allSectionsStore.getStore(section.id).setActive(true)
     }
 
-    // onDestroy(() =>
-    //     allUnsubscribe.forEach(us => us())
-    // )
+    onDestroy(() =>
+        allUnsubscribe()
+    )
 </script>
 <div class="mb-8">
-    <h4 class="pl-2.5 mb-2 text-sm font-semibold tracking-wide text-gray-900 uppercase dark:text-white lg:text-xs">Темы</h4>
+    <h4 class="pl-[5px] mb-2 text-sm font-semibold tracking-wide text-gray-900 uppercase dark:text-white lg:text-xs">Темы</h4>
     <nav id="TableOfContents">
         <ul id="mainScrollSpy">
             {#each sections as section}
