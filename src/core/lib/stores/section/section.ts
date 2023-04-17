@@ -9,18 +9,20 @@ import {nanoid} from "nanoid";
 import type {IAllPostStore} from "../post/all-posts.store";
 import {createAllPostStore} from "../post/all-posts.store";
 import type {IPost} from "../post/post";
+import type {IBase} from "../_base.store";
 
-export interface ISection {
-    id: string
+export interface ISection extends IBase {
     author: IUser | null
     name: string
     domain: string
     description: string
     creatingDate: Date
-
     isActive: boolean
-
     allPostStore: IAllPostStore
+
+
+    init: (obj: ISectionProps) => void
+    setPosts: (posts: IPost[]) => void
 }
 
 export interface ISectionProps extends ISection {

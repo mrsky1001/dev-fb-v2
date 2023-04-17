@@ -1,7 +1,7 @@
-import {get, Readable, Updater} from "svelte/store";
+import {get} from "svelte/store";
 import type {Writable} from "svelte/store";
 
-interface IBase {
+export interface IBase {
     id: string
 }
 
@@ -27,22 +27,21 @@ export default function _baseStore<T extends IBase, I>(
     return wrapperFn({...store, init, self});
 }
 
-export interface WrapperPropsForList<F extends IBase, T extends WrapperProps<F>> extends Writable<T> {
-    init: (s: T[]) => void;
+export interface WrapperPropsForList<F extends IBase, T extends WrapperProps<F>> extends Writable<T[]> {
     add: (s: T) => void;
-    all: () => T[];
-
-    getStore: (id: string) => T | undefined;
-    allStores: () => T[];
+    all: () => F[];
+    init: (s: T[]) => void;
+    getStore: (id: string) => (T | undefined);
+    allStores: () => T[]
 }
 
-export function _baseStoreForList<F extends IBase, T, I>(
+export function _baseStoreForList<F extends IBase, T extends WrapperProps<F>, I>(
     stores: Writable<T[]>,
-    wrapperFn: (args: WrapperPropsForList<F, T extends WrapperProps<F>>) => I
+    wrapperFn: (args: WrapperPropsForList<F, T>) => I
 ): I {
     const {set, update, subscribe} = stores;
 
-    const init = (s: T[]) => {
+    const init = (s: T[]): void => {
         set(s)
     }
 
@@ -50,15 +49,15 @@ export function _baseStoreForList<F extends IBase, T, I>(
         update((old) => [...old, s])
     }
 
-    const all = () => {
-        return get(stores);
+    const all = (): F[] => {
+        return get(stores).map(s => s.self())
     }
 
-    const getStore = (id: string) => {
+    const getStore = (id: string): T | undefined => {
         return get(stores).find(s => s.self().id === id)
     }
-    const allStores = (): Writable<T[]> => {
-        return stores;
+    const allStores = (): T[] => {
+        return get(stores);
     }
 
     return wrapperFn({...stores, init, add, all, getStore, allStores});

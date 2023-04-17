@@ -1,45 +1,32 @@
-import type {SectionStore} from "./section.store";
+import type {ISectionStore} from "./ISectionStore";
 import type {ISection, ISectionProps} from "./section";
 import {get, type Unsubscriber, writable} from "svelte/store";
-import {createSectionStore} from "./section.store";
-import type {WrapperPropsForList} from "../_base.store";
-import Section from "./section";
+import {createSectionStore} from "./ISectionStore";
+import type {IBase, WrapperProps, WrapperPropsForList} from "../_base.store";
+import type Section from "./section";
+import _baseStore, {_baseStoreForList} from "../_base.store";
+import {getPosts} from "../../services/post.services";
 
-export interface IAllSectionStore extends WrapperPropsForList<SectionStore []> {
-    getStore(sectionId: string): SectionStore;
-
-    getActive(): ISection;
-
-    add(s: SectionStore): void;
-
-    set(sections: ISectionProps[]): void;
+export interface IAllSectionStore extends WrapperPropsForList<ISection, ISectionStore> {
+    getActive(): ISection | undefined;
 
     resetActiveMark(): void;
-
 }
 
-const createAllSectionStore = () => {
-    const stores = writable<SectionStore[]>([])
+const createAllSectionStore = (): IAllSectionStore => {
+    const stores = writable<ISectionStore[]>([])
 
-    return {
-        getStore: (sectionId: string) => {
-            return get(stores).find(s => s.self().id === sectionId)
-        },
-        getActive: () => get(stores)?.find(s => s.self().isActive)?.self(),
-        add: (s: SectionStore) => {
-            stores.update(old => [...old, s])
-        },
-        set: (sections: ISectionProps[]) => {
-            stores.set(sections.map(s => createSectionStore(s)))
-        },
+    return _baseStoreForList<ISection, ISectionStore, IAllSectionStore>
+    (stores, ({init, add, all, getStore, allStores}) => ({
+        ...stores, init, add, all, getStore, allStores,
+        getActive: () => all()?.find(s => s.isActive),
+
         resetActiveMark: () => stores.update(all => all.map(s => {
             s.self().isActive = false;
             return s
         })),
-        all: () => get(stores).map(s => s.self()),
-        allStores: () => get(stores),
-        subscribe: stores.subscribe,
-    } as IAllSectionStore
+    }))
 }
 
 export const allSectionsStore = createAllSectionStore()
+
