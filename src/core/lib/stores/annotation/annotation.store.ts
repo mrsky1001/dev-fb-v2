@@ -1,25 +1,15 @@
-import {get, type Unsubscriber, writable} from "svelte/store";
+import {writable} from "svelte/store";
+import _baseStore, {type WrapperProps} from "../_base.store";
 import type {IAnnotation} from "./annotation";
 import Annotation from "./annotation";
 
-export interface AnnotationStore {
-    set(): void;
+export type AnnotationStore = WrapperProps<IAnnotation>
 
-    self(): Annotation;
+export const createAnnotationStore = (s?: IAnnotation): AnnotationStore => {
+    const store = writable<IAnnotation>(new Annotation(s))
 
-    subscribe(v: any): Unsubscriber;
+    return _baseStore(store, ({init, self}) => ({
+        ...store, init, self,
+    }))
 }
-
-export const createAnnotationStore = (s: IAnnotation): AnnotationStore => {
-    const store = writable(new Annotation(s))
-
-    return {
-        set: (s: IAnnotation) => store.set(new Annotation(s)),
-
-        self: () => get(store),
-
-        subscribe: store.subscribe,
-    } as AnnotationStore
-}
-
 

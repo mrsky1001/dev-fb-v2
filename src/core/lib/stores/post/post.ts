@@ -8,10 +8,13 @@ import type {IComment} from "../../models/interfaces/article/IComment";
 import type {IUser} from "../../models/interfaces/auth/IUser";
 import User from "../../models/classes/auth/User";
 import statuses from "../../collections/statuses";
-import Annotation, {type IAnnotation} from "../annotation/annotation";
 import type {IBase} from "../_base.store";
+import {setId} from "../_base.store";
+import type {AnnotationStore} from "../annotation/annotation.store";
+import {createAnnotationStore} from "../annotation/annotation.store";
+import type {IAnnotation} from "../annotation/annotation";
 
-export interface IPost extends IBase {
+export interface IPostProps extends IBase {
     _id?: string
     title?: string
     urlTitle: string
@@ -32,7 +35,11 @@ export interface IPost extends IBase {
     shares: number
     author: IUser // | null
     comments: IComment[]
-    annotation: IAnnotation // | null
+    annotation?: IAnnotation // | null
+}
+
+export interface IPost extends IPostProps {
+    annotationStore: AnnotationStore // | null
 }
 
 
@@ -57,7 +64,7 @@ export default class Post implements IPost {
     comments: IComment[] = []
     author: IUser = new User()
     status: number = statuses.DRAFT.value
-    annotation: IAnnotation = new Annotation()
+    annotationStore: AnnotationStore = createAnnotationStore()
 
     constructor(initObj?: IPost) {
         if (initObj) {
@@ -72,19 +79,19 @@ export default class Post implements IPost {
         this.urlTitle = ''
         this.content = ''
         this.sectionId = ''
-        this.annotation = new Annotation()
         this.tags = []
     }
 
 
     private _init(obj: IPost): void {
+        this.id = setId(obj)
         this.title = obj.title ?? this.title
         this.urlTitle = obj.urlTitle ?? this.urlTitle
         this.content = obj.content ?? this.content
         this.photoPosts = obj.photoPosts ?? this.photoPosts
         this.sectionId = obj.sectionId ?? this.sectionId
         this.domain = obj.domain ?? this.domain
-        this.annotation = obj.annotation ?? this.annotation
+        obj.annotation && this.annotationStore.set(obj.annotation)
         this.tags = obj.tags ?? this.tags
         this.countSymbols = obj.countSymbols ?? this.countSymbols
 

@@ -10,6 +10,7 @@ import type {IAllPostStore} from "../post/all-posts.store";
 import {createAllPostStore} from "../post/all-posts.store";
 import type {IPost} from "../post/post";
 import type {IBase} from "../_base.store";
+import {setId} from "../_base.store";
 
 export interface ISection extends IBase {
     author: IUser | null
@@ -53,16 +54,9 @@ export default class Section implements ISection {
         initObj && this.init(initObj)
     }
 
-    private _setId(obj: ISectionProps) {
-        if (obj._id) {
-            this.id = obj._id
-        } else if (obj.id) {
-            this.id = obj.id
-        }
-    }
 
     init(obj: ISectionProps): void {
-        this._setId(obj)
+        this.id = setId(obj)
         this.name = obj.name ?? this.name
         this.description = obj.description ?? this.description
         this.domain = obj.domain ?? this.domain

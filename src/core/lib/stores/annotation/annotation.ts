@@ -3,9 +3,10 @@
  */
 
 
-import GenericModel from "../../models/classes/app/GenericModel";
+import type {IBase} from "../_base.store";
+import {setId} from "../_base.store";
 
-export interface IAnnotation {
+export interface IAnnotation extends IBase {
     text: string
     keywords: string[]
     imgUrl: string
@@ -14,6 +15,7 @@ export interface IAnnotation {
 
 
 export default class Annotation {
+    id = ''
     imgUrl = ''
     keywords: string[] = []
     imgFile?: File
@@ -35,6 +37,7 @@ export default class Annotation {
     }
 
     init(obj: IAnnotation): void {
+        this.id = setId(obj)
         this.text = obj.text ?? this._text
         this.imgUrl = obj.imgUrl ?? this.imgUrl
         this.keywords = obj.keywords ?? this.keywords
