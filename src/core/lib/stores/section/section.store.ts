@@ -5,11 +5,11 @@ import {allSectionsStore} from "./all-sections.store";
 import {getPosts} from "../../services/post.services";
 import _baseStore, {type WrapperProps} from "../_base.store";
 
-export interface ISectionStore extends WrapperProps<ISection> {
+export interface SectionStore extends WrapperProps<ISection> {
     setActive(val: boolean): void;
 }
 
-export const createSectionStore = (s: ISectionProps): ISectionStore => {
+export const createSectionStore = (s: ISectionProps): SectionStore => {
     const store = writable<ISection>(new Section(s))
 
     return _baseStore(store, ({init, self}) => ({

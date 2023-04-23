@@ -9,8 +9,8 @@ import type {ISection, ISectionProps} from "../core/lib/stores/section/section";
 
 export const load = async () => {
     const sections: ISectionProps[] = await getSections()
-    allSectionsStore.set(sections)
-    sections.length && allSectionsStore.getStore(sections[0]._id).setActive(true)
+    allSectionsStore.setLikeStores(sections)
+    sections.length && allSectionsStore.getStore(sections[0]?._id)?.setActive(true)
 
     return {}
 }
