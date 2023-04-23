@@ -8,12 +8,11 @@ import type {IComment} from "../../models/interfaces/article/IComment";
 import type {IUser} from "../../models/interfaces/auth/IUser";
 import User from "../../models/classes/auth/User";
 import statuses from "../../collections/statuses";
-import type {IAnnotation} from "../../models/interfaces/article/IAnnotation";
-import Annotation from "../annotation/annotation";
+import Annotation, {type IAnnotation} from "../annotation/annotation";
+import type {IBase} from "../_base.store";
 
-export interface IPost {
+export interface IPost extends IBase {
     _id?: string
-    id?: string
     title?: string
     urlTitle: string
     content?: string
