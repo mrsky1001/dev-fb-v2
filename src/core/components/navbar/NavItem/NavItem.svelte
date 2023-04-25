@@ -1,6 +1,6 @@
 <script>
     import {NavLi} from "flowbite-svelte";
-    import CustomComponent from "../../CustomComponent/CustomComponent.svelte";
+    import CustomComponent from "../../custom/CustomComponent.svelte";
 
     export let icon = '';
     export let type = '';

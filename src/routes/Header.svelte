@@ -1,11 +1,11 @@
 <script lang="ts">
-    import type {INavItem} from "../core/lib/models/entitys";
-    import PhotoSVG from "../components/svg/page-icons/PhotoSVG.svelte";
-    import HomeSVG from "../components/svg/page-icons/HomeSVG.svelte";
-    import TravelSVG from "../components/svg/page-icons/TravelSVG.svelte";
-    import StoreSVG from "../components/svg/page-icons/StoreSVG.svelte";
-    import AboutSVG from "../components/svg/page-icons/AboutSVG.svelte";
-    import ContactsSVG from "../components/svg/page-icons/ContactsSVG.svelte";
+    import type {INavItem} from "../core/server/models/entitys";
+    import PhotoSVG from "../core/components/svg/page-icons/PhotoSVG.svelte";
+    import HomeSVG from "../core/components/svg/page-icons/HomeSVG.svelte";
+    import TravelSVG from "../core/components/svg/page-icons/TravelSVG.svelte";
+    import StoreSVG from "../core/components/svg/page-icons/StoreSVG.svelte";
+    import AboutSVG from "../core/components/svg/page-icons/AboutSVG.svelte";
+    import ContactsSVG from "../core/components/svg/page-icons/ContactsSVG.svelte";
     import {
         Button,
         Navbar,
@@ -97,7 +97,7 @@
     <!--        <div class="flex lg:hidden">-->
     <!--            <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">-->
     <!--                <span class="sr-only">Open main menu</span>-->
-    <!--                <CustomComponent component="{BarsSVG}"/>-->
+    <!--                <custom component="{BarsSVG}"/>-->
     <!--            </button>-->
     <!--        </div>-->
     <!--        <ul class="hidden  menu menu-horizontal px-1 lg:flex lg:gap-x-12">-->
@@ -121,7 +121,7 @@
 
     <!--                <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">-->
     <!--                    <span class="sr-only">Close menu</span>-->
-    <!--                    <CustomComponent component="{BarsSVG}"/>-->
+    <!--                    <custom component="{BarsSVG}"/>-->
     <!--                </button>-->
     <!--            </div>-->
     <!--            <div class="mt-6 flow-root">-->

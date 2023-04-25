@@ -1,5 +1,5 @@
 <script>
-    import fomka from '$lib/images/fomka.svg'
+    import fomka from '$server/images/fomka.svg'
     import anime from 'animejs/lib/anime'
     import {onMount} from "svelte";
 

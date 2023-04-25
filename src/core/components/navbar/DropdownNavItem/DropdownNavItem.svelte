@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type {INavItem} from "../../../lib/models/entitys";
-    import CustomComponent from "../../CustomComponent/CustomComponent.svelte";
-    import DropdownSVG from "../../../../components/svg/btn-icons/DropdownSVG.svelte";
+    import type {INavItem} from "../../../server/models/entitys";
+    import CustomComponent from "../../custom/CustomComponent.svelte";
+    import DropdownSVG from "../../svg/btn-icons/DropdownSVG.svelte";
     import {Chevron, Dropdown, NavLi} from "flowbite-svelte";
-    import ChevronSVG from "../../../../components/svg/btn-icons/ChevronSVG.svelte";
+    import ChevronSVG from "../../svg/btn-icons/ChevronSVG.svelte";
 
     export let type = '';
     export let navItems: INavItem[] = [];

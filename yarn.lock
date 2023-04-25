@@ -2761,6 +2761,11 @@ svelte-check@^3.0.1:
     svelte-preprocess "^5.0.0"
     typescript "^4.9.4"
 
+svelte-heros@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/svelte-heros/-/svelte-heros-3.1.0.tgz#2d0e0e294df927b88068113d4f34684437ca2c47"
+  integrity sha512-SW5GPH/hDsuzNcdHVfpqbED37XvAl1k4Ksvec3fyPwkb30NtvO/GYjeaUHcDHrT/DjXhsVsoJJSnzJ1CEhx3ww==
+
 svelte-hmr@^0.15.1:
   version "0.15.1"
   resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.15.1.tgz#d11d878a0bbb12ec1cba030f580cd2049f4ec86b"

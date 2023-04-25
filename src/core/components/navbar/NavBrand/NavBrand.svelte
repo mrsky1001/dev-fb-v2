@@ -1,6 +1,6 @@
 <script lang="ts">
-    import CustomComponent from "../../CustomComponent/CustomComponent.svelte";
-    import LogoSVG from "../../../../components/svg/btn-icons/LogoSVG.svelte";
+    import CustomComponent from "../../custom/CustomComponent.svelte";
+    import LogoSVG from "../../svg/btn-icons/LogoSVG.svelte";
     import {NavBrand} from "flowbite-svelte";
 
     export let type = ''
@@ -25,7 +25,7 @@
     <!--    -->
     <!--    <a rel="noreferrer" href="{href}" target="_blank" class="btn btn-ghost normal-case text-xl">-->
     <!--        <span class="sr-only">{name}</span>-->
-    <!--        <CustomComponent component="{LogoSVG}"/>-->
+    <!--        <custom component="{LogoSVG}"/>-->
     <!--    </a>-->
 {/if}
 
