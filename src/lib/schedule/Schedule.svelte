@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let scheduleName: string = '';
+    export let scheduleName = '';
 </script>
 
 <div class="max-w-3xl mx-auto text-center">

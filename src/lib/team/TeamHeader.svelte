@@ -1,7 +1,7 @@
 <script lang="ts">
     import classNames from 'classnames';
 
-    export let divClass: string = 'mx-auto max-w-screen-sm text-center mb-8 lg:mb-16';
+    export let divClass = 'mx-auto max-w-screen-sm text-center mb-8 lg:mb-16';
 </script>
 
 <div class={classNames(divClass, $$props.classDiv)}>

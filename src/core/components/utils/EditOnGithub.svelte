@@ -2,10 +2,10 @@
     import classNames from 'classnames';
     import Github from './icons/Github.svelte';
 
-    export let href: string = '';
-    export let size: string = '20';
-    export let color: string = '';
-    export let iconClass: string = '';
+    export let href = '';
+    export let size = '20';
+    export let color = '';
+    export let iconClass = '';
 </script>
 
 <div class={classNames('flex justify-between items-center my-2', $$props.class)}>

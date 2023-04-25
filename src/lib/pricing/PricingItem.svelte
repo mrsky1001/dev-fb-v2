@@ -2,12 +2,12 @@
     import type {SvelteComponent} from 'svelte';
     import classNames from 'classnames';
 
-    export let liClass: string = 'flex items-center space-x-3';
+    export let liClass = 'flex items-center space-x-3';
     import {Check} from 'svelte-heros';
 
     export let Icon: typeof SvelteComponent = Check;
     export let iconSize = 14;
-    export let iconClass: string = '';
+    export let iconClass = '';
 </script>
 
 <li class={classNames(liClass, $$props.class)}>

@@ -3,9 +3,9 @@
     import classNames from 'classnames';
     import {ChevronRight} from 'svelte-heros';
 
-    export let href: string = '/';
-    export let iconSize: string = '18';
-    export let iconClass: string = '';
+    export let href = '/';
+    export let iconSize = '18';
+    export let iconClass = '';
     export let icon: typeof SvelteComponent = ChevronRight;
 </script>
 

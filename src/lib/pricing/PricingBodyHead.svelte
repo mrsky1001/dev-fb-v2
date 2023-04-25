@@ -1,9 +1,9 @@
 <script lang="ts">
     import classNames from 'classnames';
 
-    export let h3Class: string = 'mb-4 text-2xl font-semibold';
-    export let pClass: string = 'font-light text-gray-500 sm:text-lg dark:text-gray-400';
-    export let priceClass: string = 'flex justify-center items-baseline my-8';
+    export let h3Class = 'mb-4 text-2xl font-semibold';
+    export let pClass = 'font-light text-gray-500 sm:text-lg dark:text-gray-400';
+    export let priceClass = 'flex justify-center items-baseline my-8';
 </script>
 
 {#if $$slots.h3}

@@ -1,10 +1,10 @@
 <script lang="ts">
     import classNames from 'classnames';
 
-    export let divClass: string =
+    export let divClass =
         'flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900';
-    export let h3Class: string = 'mb-2 text-xl font-bold dark:text-white';
-    export let pClass: string = 'text-gray-500 dark:text-gray-400';
+    export let h3Class = 'mb-2 text-xl font-bold dark:text-white';
+    export let pClass = 'text-gray-500 dark:text-gray-400';
 </script>
 
 <div>

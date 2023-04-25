@@ -1,7 +1,7 @@
 <script lang="ts">
     import classNames from 'classnames';
 
-    export let sectionClass: string = 'bg-white dark:bg-gray-900';
+    export let sectionClass = 'bg-white dark:bg-gray-900';
     export let name:
         | 'blog'
         | 'cta'

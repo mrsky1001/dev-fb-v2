@@ -2,7 +2,7 @@
     import classNames from 'classnames';
     import BookOpen from './icons/BookOpen.svelte';
 
-    export let page: string = '';
+    export let page = '';
     const href = `https://flowbite-svelte-blocks.pages.dev/${page}`;
 </script>
 

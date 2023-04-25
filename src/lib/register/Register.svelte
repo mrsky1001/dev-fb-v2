@@ -1,10 +1,10 @@
 <script lang="ts">
     import classNames from 'classnames';
 
-    export let href: string = '';
-    export let aClass: string =
+    export let href = '';
+    export let aClass =
         'flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white';
-    export let divClass: string =
+    export let divClass =
         'w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700';
 </script>
 

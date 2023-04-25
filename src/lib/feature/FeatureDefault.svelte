@@ -1,7 +1,7 @@
 <script lang="ts">
     import classNames from 'classnames';
 
-    export let divClass: string =
+    export let divClass =
         'space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0';
 </script>
 

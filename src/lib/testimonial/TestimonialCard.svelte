@@ -1,8 +1,8 @@
 <script lang="ts">
     import classNames from 'classnames';
 
-    export let headerClass: string = 'mx-auto max-w-screen-sm';
-    export let divClass: string = 'grid mb-8 lg:mb-12 lg:grid-cols-2';
+    export let headerClass = 'mx-auto max-w-screen-sm';
+    export let divClass = 'grid mb-8 lg:mb-12 lg:grid-cols-2';
 </script>
 
 {#if $$slots.header}

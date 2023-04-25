@@ -1,8 +1,8 @@
 <script lang="ts">
     import classNames from 'classnames';
 
-    export let divClass: string = 'max-w-screen-lg text-gray-500 sm:text-lg dark:text-gray-400';
-    export let h2Class: string =
+    export let divClass = 'max-w-screen-lg text-gray-500 sm:text-lg dark:text-gray-400';
+    export let h2Class =
         'mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white';
 </script>
 

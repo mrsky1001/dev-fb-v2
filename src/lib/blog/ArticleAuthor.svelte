@@ -1,8 +1,8 @@
 <script lang="ts">
     import classNames from 'classnames';
 
-    export let authorDiv: string = 'flex justify-between items-center';
-    export let authorImgDiv: string = 'flex items-center space-x-4';
+    export let authorDiv = 'flex justify-between items-center';
+    export let authorImgDiv = 'flex items-center space-x-4';
 </script>
 
 <div class={classNames(authorDiv, $$props.classAuthorDiv)}>

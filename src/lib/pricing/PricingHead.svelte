@@ -1,10 +1,10 @@
 <script lang="ts">
     import classNames from 'classnames';
 
-    export let divClass: string = 'mx-auto max-w-screen-md text-center mb-8 lg:mb-12';
-    export let h2Class: string =
+    export let divClass = 'mx-auto max-w-screen-md text-center mb-8 lg:mb-12';
+    export let h2Class =
         'mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white';
-    export let pClass: string = 'mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400';
+    export let pClass = 'mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400';
 </script>
 
 <div class={classNames(divClass, $$props.classDiv)}>

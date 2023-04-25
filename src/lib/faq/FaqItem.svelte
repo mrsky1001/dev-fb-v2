@@ -2,8 +2,8 @@
     import classNames from 'classnames';
     import {QuestionMarkCircle} from 'svelte-heros';
 
-    export let divClass: string = 'mb-10';
-    export let h3Class: string =
+    export let divClass = 'mb-10';
+    export let h3Class =
         'flex items-center mb-4 text-lg font-medium text-gray-900 dark:text-white';
 </script>
 

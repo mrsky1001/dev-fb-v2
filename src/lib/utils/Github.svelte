@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let href: string = '';
+    export let href = '';
 </script>
 
 <a {href} class="text-gray-500 hover:text-gray-900 dark:hover:text-white">

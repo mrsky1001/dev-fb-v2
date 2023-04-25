@@ -4,8 +4,8 @@
     import type {SvelteComponent} from 'svelte';
 
     export let icon: typeof SvelteComponent | null = null;
-    export let figureClass: string = 'max-w-screen-md mx-auto';
-    export let figureFooterClass: string = 'flex items-center justify-center mt-6 space-x-3';
+    export let figureClass = 'max-w-screen-md mx-auto';
+    export let figureFooterClass = 'flex items-center justify-center mt-6 space-x-3';
 </script>
 
 <figure class={classNames(figureClass, $$props.classFigure)}>

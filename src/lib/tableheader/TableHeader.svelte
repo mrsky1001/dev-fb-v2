@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let divOuterClass: string = 'relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg';
+    export let divOuterClass = 'relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg';
     export let headerType: 'search' | 'textbtn' | 'custom' = 'search';
     const divInnerClasses = {
         search:
@@ -8,7 +8,7 @@
             'flex-row items-center justify-between p-4 space-y-3 sm:flex sm:space-y-0 sm:space-x-4',
         custom: ''
     };
-    export let divSlotClass: string =
+    export let divSlotClass =
         'flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3';
 </script>
 
