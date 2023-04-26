@@ -1,39 +1,37 @@
-import type {PostStore} from "./post.store";
-import type {IPost} from "./post";
-import {get, type Unsubscriber, writable} from "svelte/store";
-import {createPostStore} from "./post.store";
+import type { IPost } from './post'
+import { get, type Unsubscriber, writable } from 'svelte/store'
+import type { IPostStore } from './post.store'
+import { createPostStore } from './post.store'
 
 export interface IAllPostStore {
-    add(s: PostStore): void;
+    add(s: IPostStore): void
 
-    getStore(post: IPost): PostStore;
+    getStore(post: IPost): IPostStore
 
-    set(posts: IPost[]): void;
+    set(posts: IPost[]): void
 
-    all(): IPost[];
+    all(): IPost[]
 
-    allStores(): PostStore[];
+    allStores(): IPostStore[]
 
-
-    subscribe(v: any): Unsubscriber;
+    subscribe(v: any): Unsubscriber
 }
 
 export const createAllPostStore = () => {
-    const stores = writable<PostStore[]>([])
+    const stores = writable<IPostStore[]>([])
 
     return {
-        getStore: (post: IPost) => {
-            return get(stores).find(s => s.self().id === post.id)
+        getStore: (data: IPost) => {
+            return get(stores).find((s) => s.self().id === data.id)
         },
-        add: (s: PostStore) => {
-            stores.update(old => [...old, s])
+        add: (s: IPostStore) => {
+            stores.update((old) => [...old, s])
         },
-        set: (posts: IPost[]) => {
-            stores.set(posts.map(s => createPostStore(s)))
+        set: (arr: IPost[]) => {
+            stores.set(arr.map((data) => createPostStore(data)))
         },
         allStores: () => get(stores),
-        all: () => get(stores).map(s => s.self()),
-        subscribe: stores.subscribe,
+        all: () => get(stores).map((s) => s.self()),
+        subscribe: stores.subscribe
     } as IAllPostStore
 }
-

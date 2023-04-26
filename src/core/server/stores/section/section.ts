@@ -2,15 +2,14 @@
  * Copyright (c) 21.11.2021, 23:33  Kolyada Nikita Vladimirovich nikita.nk16@yandex.ru
  */
 
-
-import config from "../../../../config/config";
-import type {IUser} from "../../models/interfaces/auth/IUser";
-import {nanoid} from "nanoid";
-import type {IAllPostStore} from "../post/all-posts.store";
-import {createAllPostStore} from "../post/all-posts.store";
-import type {IPost} from "../post/post";
-import type {IBase} from "../_base.store";
-import {setId} from "../_base.store";
+import config from '../../../../config/config'
+import { nanoid } from 'nanoid'
+import type { IAllPostStore } from '../post/all-posts.store'
+import { createAllPostStore } from '../post/all-posts.store'
+import type { IPost } from '../post/post'
+import type { IBase } from '../_base.store'
+import { setId } from '../_base.store'
+import type { IUser } from '../user/user'
 
 export interface ISection extends IBase {
     author: IUser | null
@@ -20,7 +19,6 @@ export interface ISection extends IBase {
     creatingDate: Date
     isActive: boolean
     allPostStore: IAllPostStore
-
 
     init: (obj: ISectionProps) => void
     setPosts: (posts: IPost[]) => void
@@ -54,7 +52,6 @@ export default class Section implements ISection {
         initObj && this.init(initObj)
     }
 
-
     init(obj: ISectionProps): void {
         this.id = setId(obj)
         this.name = obj.name ?? this.name
@@ -75,5 +72,4 @@ export default class Section implements ISection {
     setPosts(posts: IPost[]): void {
         posts?.length && this._allPostStores.set(posts)
     }
-
 }

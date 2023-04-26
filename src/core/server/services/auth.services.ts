@@ -178,7 +178,7 @@
 // //             .then((res: AxiosResponse) => {
 // //                 responseHandler(res)
 // //                     .then((data) => {
-// //                         const roles = data.map((role: IRole) => new Role(role))
+// //                         const roles = data.map((role: IRole) => new Comment(role))
 // //                         resolve(roles)
 // //                     })
 // //                     .catch((err: AxiosError) => {

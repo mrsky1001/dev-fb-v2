@@ -1,39 +1,37 @@
-import type {AnnotationStore} from "./annotation.store";
-import type {IPost} from "./post";
-import {get, type Unsubscriber, writable} from "svelte/store";
-import {createPostStore} from "./annotation.store";
+import type { IAnnotationStore } from './annotation.store'
+import type { IPost } from './post'
+import { get, type Unsubscriber, writable } from 'svelte/store'
+import { createPostStore } from './annotation.store'
 
 export interface IAllPostStore {
-    add(s: AnnotationStore): void;
+    add(s: IAnnotationStore): void
 
-    getStore(post: IPost): AnnotationStore;
+    getStore(post: IPost): IAnnotationStore
 
-    set(posts: IPost[]): void;
+    set(posts: IPost[]): void
 
-    all(): IPost[];
+    all(): IPost[]
 
-    allStores(): AnnotationStore[];
+    allStores(): IAnnotationStore[]
 
-
-    subscribe(v: any): Unsubscriber;
+    subscribe(v: any): Unsubscriber
 }
 
 export const createAllPostStore = () => {
-    const stores = writable<AnnotationStore[]>([])
+    const stores = writable<IAnnotationStore[]>([])
 
     return {
         getStore: (post: IPost) => {
-            return get(stores).find(s => s.self().id === post.id)
+            return get(stores).find((s) => s.self().id === post.id)
         },
-        add: (s: AnnotationStore) => {
-            stores.update(old => [...old, s])
+        add: (s: IAnnotationStore) => {
+            stores.update((old) => [...old, s])
         },
         set: (posts: IPost[]) => {
-            stores.set(posts.map(s => createPostStore(s)))
+            stores.set(posts.map((s) => createPostStore(s)))
         },
         allStores: () => get(stores),
-        all: () => get(stores).map(s => s.self()),
-        subscribe: stores.subscribe,
+        all: () => get(stores).map((s) => s.self()),
+        subscribe: stores.subscribe
     } as IAllPostStore
 }
-

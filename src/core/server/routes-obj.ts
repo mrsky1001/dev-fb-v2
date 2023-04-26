@@ -3,9 +3,8 @@
  */
 
 // const checkAuth = (to, from, next, role = roles.USER) => {
-//   User.checkRole(role) && services.isAuthorized() ? next() : next(routesObj.LOGIN)
+//   Comment.checkRole(role) && services.isAuthorized() ? next() : next(routesObj.LOGIN)
 // }
-
 
 // const checkAuth = (to: any, from: any, next: any, role = roles.USER) => {
 //     isAuthorized(true)
@@ -21,8 +20,8 @@
 //         })
 // }
 
-import roles from "./collections/roles";
-import config from "../../config/config";
+import roles from './collections/roles'
+import config from '../../config/config'
 
 export const routesObj = {
     STORE: {
@@ -40,9 +39,8 @@ export const routesObj = {
 
         meta: {
             title: 'Лавка',
-            description:
-                'В нашей лавке вы найдете авторские открытки, принты, футболки, сумки, мешочки и многое другое',
-        },
+            description: 'В нашей лавке вы найдете авторские открытки, принты, футболки, сумки, мешочки и многое другое'
+        }
     },
     HOME: {
         path: '/',
@@ -55,8 +53,8 @@ export const routesObj = {
 
         meta: {
             title: config.router.metaTitle,
-            description: config.router.metaDescription,
-        },
+            description: config.router.metaDescription
+        }
     },
     ABOUT: {
         path: 'https://foma-blog.ru/#aboutPage',
@@ -68,8 +66,8 @@ export const routesObj = {
         role: roles.UNAUTHORIZED,
         meta: {
             title: 'О нас и истории создании блога',
-            description: 'Повествование о том как мы дошли дожни такой и кто мы есть',
-        },
+            description: 'Повествование о том как мы дошли дожни такой и кто мы есть'
+        }
         // redirect: {
         //     name: 'POST',
         //     params: {
@@ -117,8 +115,8 @@ export const routesObj = {
         meta: {
             title: 'Графический дизайн и веб-дизайн',
             description:
-                'Заметки на тему графического дизайна, веб-дизайна, работе в программах Adobe Illustrator, Figma и др',
-        },
+                'Заметки на тему графического дизайна, веб-дизайна, работе в программах Adobe Illustrator, Figma и др'
+        }
     },
     NOTES: {
         path: '',
@@ -126,7 +124,7 @@ export const routesObj = {
         icon: 'mdi-camera',
         isGroup: true,
         name: 'NOTES',
-        role: roles.UNAUTHORIZED,
+        role: roles.UNAUTHORIZED
     },
     PHOTO: {
         path: 'https://photo.foma-blog.ru',
@@ -139,8 +137,8 @@ export const routesObj = {
 
         meta: {
             title: 'Фотография и обработка фото',
-            description: 'Заметки на тему фотографии, обработки фотографии, работа в программе Adobe Photoshop и др',
-        },
+            description: 'Заметки на тему фотографии, обработки фотографии, работа в программе Adobe Photoshop и др'
+        }
     },
     TRAVEL: {
         path: 'https://travel.foma-blog.ru',
@@ -155,8 +153,8 @@ export const routesObj = {
         meta: {
             title: 'Путешествия',
             description:
-                'Заметки на тему путешествия, фотографии и видео из путешествий, с какими трудностями пришлось столкнуться и др',
-        },
+                'Заметки на тему путешествия, фотографии и видео из путешествий, с какими трудностями пришлось столкнуться и др'
+        }
     },
     YOUTUBE: {
         path: '/youtube',
@@ -170,8 +168,8 @@ export const routesObj = {
         role: roles.UNAUTHORIZED,
         meta: {
             title: 'YOUTUBE',
-            description: 'Заметки на тему монтажа видео и работы на сервисе YOUTUBE',
-        },
+            description: 'Заметки на тему монтажа видео и работы на сервисе YOUTUBE'
+        }
     },
     FLOWER: {
         path: '/flower',
@@ -185,8 +183,8 @@ export const routesObj = {
 
         meta: {
             title: 'Про цветы',
-            description: 'Заметки на тему разведения комнатных цветов (фиалки, замиокулькас, каланхое) и др',
-        },
+            description: 'Заметки на тему разведения комнатных цветов (фиалки, замиокулькас, каланхое) и др'
+        }
     },
     ART: {
         path: '/art',
@@ -199,8 +197,8 @@ export const routesObj = {
 
         meta: {
             title: 'АРТ',
-            description: 'Заметки на тему истории искусств, арт объектов и в целом об искусстве',
-        },
+            description: 'Заметки на тему истории искусств, арт объектов и в целом об искусстве'
+        }
     },
 
     EMBROIDERY: {
@@ -214,8 +212,8 @@ export const routesObj = {
 
         meta: {
             title: 'Рукоделие',
-            description: 'Заметки на тему рукоделия, вышивки и др',
-        },
+            description: 'Заметки на тему рукоделия, вышивки и др'
+        }
     },
     GADGETS: {
         path: '/gadgets',
@@ -229,36 +227,36 @@ export const routesObj = {
 
         meta: {
             title: 'Про технику',
-            description: 'Заметки на тему смартфонов, персональных компьютеров и других устройствах помогающих в жизни',
-        },
+            description: 'Заметки на тему смартфонов, персональных компьютеров и других устройствах помогающих в жизни'
+        }
     },
     POST: {
         path: '/post/:title',
         name: 'POST',
         text: 'Статья',
         icon: 'mdi-post-outline',
-        role: roles.UNAUTHORIZED,
+        role: roles.UNAUTHORIZED
     },
     POST_BY_ID: {
         path: '/post-id/:postId',
         name: 'POST',
         text: 'Статья',
         icon: 'mdi-post-outline',
-        role: roles.UNAUTHORIZED,
+        role: roles.UNAUTHORIZED
     },
     SECTION: {
         path: '/section/:sectionId',
         name: 'SECTION',
         text: 'Раздел',
         icon: 'mdi-post-outline',
-        role: roles.UNAUTHORIZED,
+        role: roles.UNAUTHORIZED
     },
     SEARCH: {
         path: '/search/:searchText',
         name: 'SEARCH',
         text: 'Поиск',
         icon: 'mdi-code-braces',
-        role: roles.UNAUTHORIZED,
+        role: roles.UNAUTHORIZED
     },
     NEW_POST: {
         path: '/new',
@@ -271,8 +269,8 @@ export const routesObj = {
         // beforeEnter: (to, from, next) => checkAuth(to, from, next, roles.EDITOR),
         meta: {
             title: 'Новая статья',
-            description: 'Страница создания новой статьи',
-        },
+            description: 'Страница создания новой статьи'
+        }
     },
     EDIT_POST: {
         path: '/post/:title/:postId',
@@ -284,8 +282,8 @@ export const routesObj = {
         // beforeEnter: (to, from, next) => checkAuth(to, from, next, roles.EDITOR),
         meta: {
             title: 'Редактирование статьи',
-            description: 'Страница редактирования статьи',
-        },
+            description: 'Страница редактирования статьи'
+        }
     },
     LOGIN: {
         path: '/loginST',
@@ -296,8 +294,8 @@ export const routesObj = {
         role: roles.UNAUTHORIZED,
         meta: {
             title: 'Вход',
-            description: 'Страница входа на сайт',
-        },
+            description: 'Страница входа на сайт'
+        }
     },
     ACCOUNT: {
         path: '/account',
@@ -308,8 +306,8 @@ export const routesObj = {
         role: roles.USER,
         meta: {
             title: 'Учетная запись',
-            description: 'Страница настроек учетной записи',
-        },
+            description: 'Страница настроек учетной записи'
+        }
     },
     REGISTRATION: {
         path: '/registration',
@@ -320,8 +318,8 @@ export const routesObj = {
         onAvatarBar: true,
         meta: {
             title: 'Регистрация',
-            description: 'Страница регистрации на сайте',
-        },
+            description: 'Страница регистрации на сайте'
+        }
     },
     LOGOUT: {
         path: '/logout',
@@ -333,8 +331,8 @@ export const routesObj = {
         role: roles.USER,
         meta: {
             title: 'Выход',
-            description: 'Страница выхода на сайте',
-        },
+            description: 'Страница выхода на сайте'
+        }
     },
     DELETE_ACCOUNT: {
         path: '/deleteAccount',
@@ -344,8 +342,8 @@ export const routesObj = {
         role: roles.USER,
         meta: {
             title: 'Удаление аккаунта',
-            description: 'Страница удаления аккаунта на сайте',
-        },
+            description: 'Страница удаления аккаунта на сайте'
+        }
     },
     CONDITIONS: {
         path: '/conditions',
@@ -354,8 +352,8 @@ export const routesObj = {
         role: roles.UNAUTHORIZED,
         meta: {
             title: 'Условия предоставления информации',
-            description: 'Страница об условиях предоставления информации',
-        },
+            description: 'Страница об условиях предоставления информации'
+        }
     },
     DISCLAIMER: {
         path: '/disclaimer',
@@ -364,8 +362,8 @@ export const routesObj = {
         role: roles.UNAUTHORIZED,
         meta: {
             title: 'Отказ от ответственности',
-            description: 'Страница об отказе от ответственности',
-        },
+            description: 'Страница об отказе от ответственности'
+        }
     },
     COPYRIGHT_HOLDERS: {
         path: '/copyrightHolders',
@@ -374,8 +372,8 @@ export const routesObj = {
         role: roles.UNAUTHORIZED,
         meta: {
             title: 'Правообладателям',
-            description: 'Страница для правообладателей',
-        },
+            description: 'Страница для правообладателей'
+        }
     },
     AGREEMENT: {
         path: '/agreement',
@@ -384,8 +382,8 @@ export const routesObj = {
         role: roles.UNAUTHORIZED,
         meta: {
             title: 'Согласие на обработку персональных данных',
-            description: 'Страница с условиями согласия на обработку персональных данных',
-        },
+            description: 'Страница с условиями согласия на обработку персональных данных'
+        }
     },
     ALL: {
         path: '/*',
@@ -393,8 +391,8 @@ export const routesObj = {
         text: 'Всё',
         icon: 'mdi-airballoon',
         redirect: '/',
-        role: roles.UNAUTHORIZED,
-    },
+        role: roles.UNAUTHORIZED
+    }
 }
 
 export default routesObj

@@ -2,17 +2,23 @@
  * Copyright (c) 21.11.2021, 23:33  Kolyada Nikita Vladimirovich nikita.nk16@yandex.ru
  */
 
-import config from "../../../../config/config";
-import type IPhotoPost from "../../models/interfaces/article/IPhotoPost";
-import type {IComment} from "../../models/interfaces/article/IComment";
-import type {IUser} from "../../models/interfaces/auth/IUser";
-import User from "../../models/classes/auth/User";
-import statuses from "../../collections/statuses";
-import type {IBase} from "../_base.store";
-import {setId} from "../_base.store";
-import type {AnnotationStore} from "../annotation/annotation.store";
-import {createAnnotationStore} from "../annotation/annotation.store";
-import type {IAnnotation} from "../annotation/annotation";
+import config from '../../../../config/config'
+import type IPhotoPost from '../../models/interfaces/article/IPhotoPost'
+import statuses from '../../collections/statuses'
+import type { IBase } from '../_base.store'
+import { setId } from '../_base.store'
+import type { IAnnotationStore } from '../annotation/annotation.store'
+import { createAnnotationStore } from '../annotation/annotation.store'
+import type { IAnnotation } from '../annotation/annotation'
+import type { IUser } from '../user/user'
+import User from '../user/user'
+import type { IUserStore } from '../user/user.store'
+import { createUserStore } from '../user/user.store'
+import type { ICommentStore } from '../comment/comment.store'
+import { createCommentStore } from '../comment/comment.store'
+import type { IAllCommentStore } from '../comment/all-comment.store'
+import { createAllCommentStore } from '../comment/all-comment.store'
+import type { IComment } from '../comment/comment'
 
 export interface IPostProps extends IBase {
     _id?: string
@@ -33,15 +39,16 @@ export interface IPostProps extends IBase {
     likes: string[]
     status: number
     shares: number
-    author: IUser // | null
-    comments: IComment[]
+    author?: IUser // | null
+    comments?: IComment[]
     annotation?: IAnnotation // | null
 }
 
 export interface IPost extends IPostProps {
-    annotationStore: AnnotationStore // | null
+    commentsStore: IAllCommentStore // | null
+    authorStore: IUserStore // | null
+    annotationStore: IAnnotationStore // | null
 }
-
 
 export default class Post implements IPost {
     id = ''
@@ -61,10 +68,10 @@ export default class Post implements IPost {
     likes: string[] = []
     shares = 0
     countComments = 0
-    comments: IComment[] = []
-    author: IUser = new User()
+    commentsStore: IAllCommentStore = createAllCommentStore()
+    authorStore: IUserStore = createUserStore()
     status: number = statuses.DRAFT.value
-    annotationStore: AnnotationStore = createAnnotationStore()
+    annotationStore: IAnnotationStore = createAnnotationStore()
 
     constructor(initObj?: IPost) {
         if (initObj) {
@@ -82,7 +89,6 @@ export default class Post implements IPost {
         this.tags = []
     }
 
-
     private _init(obj: IPost): void {
         this.id = setId(obj)
         this.title = obj.title ?? this.title
@@ -95,7 +101,6 @@ export default class Post implements IPost {
         this.tags = obj.tags ?? this.tags
         this.countSymbols = obj.countSymbols ?? this.countSymbols
 
-        this.author = obj.author ?? this.author
         this.creatingDate = obj.creatingDate ?? this.creatingDate
         this.updatingDate = obj.updatingDate ?? this.updatingDate
         this.publishedDate = obj.publishedDate ?? this.publishedDate
@@ -104,7 +109,6 @@ export default class Post implements IPost {
         this.shares = obj.shares ?? this.shares
         this.status = obj.status ?? this.status
         this.readTime = obj.readTime ?? this.readTime
-        this.comments = obj.comments ?? this.comments
         this.countComments = obj.countComments ?? this.countComments
 
         if (obj.annotationStore) {
@@ -112,6 +116,26 @@ export default class Post implements IPost {
         } else if (obj.annotation) {
             this.annotationStore.set(obj.annotation)
         }
+
+        if (obj.authorStore) {
+            this.authorStore.set(obj.authorStore.self())
+        } else if (obj.author) {
+            this.authorStore.set(obj.author)
+        }
+
+        if (obj.commentsStore) {
+            this.commentsStore.set(obj.commentsStore.all())
+        } else if (obj.comments) {
+            this.commentsStore.set(obj.comments)
+        }
+    }
+
+    getFormattedPublishDate(): string {
+        if (this.publishedDate) {
+            return new Date(this.publishedDate).toLocaleDateString()
+        }
+
+        return ''
     }
 
     get photoContent() {
@@ -125,6 +149,4 @@ export default class Post implements IPost {
     removeTag(tag: string) {
         this.tags = this.tags.filter((t) => t !== tag)
     }
-
-
 }

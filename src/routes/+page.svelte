@@ -30,7 +30,7 @@
 </script>
 
 <div class="flex w-full">
-    <div class="flex-auto max-w-4xl min-w-0 pt-6 lg:px-8 lg:pt-8 pb:12 xl:pb-24 lg:pb-16">
+    <div class="flex-auto max-w-8xl min-w-0 pt-6 lg:px-8 lg:pt-8 pb:12 xl:pb-24 lg:pb-16">
         <!--{#each posts as post }-->
         <BlogSection></BlogSection>
         <!--            <Card img="{img}">-->
