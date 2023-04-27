@@ -74,7 +74,7 @@
                                 <span class="text-sm">{post.getFormattedPublishDate()}</span>
                             </ArticleHead>
                             <ArticleBody>
-                                <svelte:fragment slot="h2">
+                                <svelte:fragment slot="h3">
                                     <a href="/dev-fb-v2/static">{post.title} </a>
                                 </svelte:fragment>
                                 <svelte:fragment slot="paragraph">
