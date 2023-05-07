@@ -75,7 +75,7 @@
                             </ArticleHead>
                             <ArticleBody>
                                 <svelte:fragment slot="h3">
-                                    <a href="/dev-fb-v2/static">{post.title} </a>
+                                    <a href={post.getRoute()}>{post.title} </a>
                                 </svelte:fragment>
                                 <svelte:fragment slot="paragraph">
                                     <p class="mb-5 font-light text-gray-500 dark:text-gray-400">

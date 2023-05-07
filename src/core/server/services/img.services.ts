@@ -2,7 +2,7 @@
 //  * Copyright (©) 09.07.2021, 17:13. Kolyada Nikita Vladimirovich (nikita.nk16@yandex.ru)
 //  */
 //
-// import Post from '../models/classes/article/Post'
+// import Post from '../models/classes/post/Post'
 // import { handlerError, responseHandler } from '@/core/server/response-handler'
 // import api from '@/core/services/api'
 // import urls from '@/core/collections/urls'

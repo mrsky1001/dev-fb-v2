@@ -130,6 +130,10 @@ export default class Post implements IPost {
         }
     }
 
+    getRoute() {
+        return `/post/${this.urlTitle}`
+    }
+
     getFormattedPublishDate(): string {
         if (this.publishedDate) {
             return new Date(this.publishedDate).toLocaleDateString()
