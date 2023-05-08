@@ -12,6 +12,7 @@
 
     onMount(() => {
         console.log(data)
+        console.log(data.post)
     })
     //     console.log(posts[0]?.annotationStore.self().text)
     //     console.log(allSectionsStore.getActive())
@@ -25,11 +26,10 @@
     // onDestroy(() => allUnsubscribe())
 </script>
 
-<div>
-    {#if data.post}
-        <Page pageStore={data.post} />
-    {/if}
-</div>
+{#if data.post}
+    asd
+    <Page postStore={data.post} />
+{/if}
 
 <style lang="scss">
 </style>
