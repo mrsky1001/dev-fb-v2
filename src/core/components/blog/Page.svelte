@@ -1,25 +1,11 @@
 <script lang="ts">
-    import {
-        ArticleAuthor,
-        ArticleBody,
-        ArticleHead,
-        ArticleWrapper,
-        BlogBodyWrapper,
-        BlogHead,
-        Section
-    } from '../flowbite'
-    import { ExampleDiv, SectionBlock, SectionHeader } from '../utils/index.ts'
-    import { ArrowSmallRight, Newspaper } from 'svelte-heros'
-    import { allSectionsStore } from '../../server/stores/section/all-sections.store'
-    import { subscribeAll } from '../../server/stores/subscribe-all'
+    import { ArticleAuthor, ArticleBody, ArticleHead, ArticleWrapper } from '../flowbite'
+    import { ArrowSmallRight } from 'svelte-heros'
     import { onDestroy, onMount } from 'svelte'
     import type { IPost } from '../../server/stores/post/post'
-    import type { ISection } from '../../server/stores/section/section'
-    import ArticleImg from '../flowbite/blog/ArticleImg.svelte'
     import ArticleContent from '../flowbite/blog/ArticleContent.svelte'
     import type { IPostStore } from '../../server/stores/post/post.store'
     import { subscribe } from 'svelte/internal'
-    import Post from '../../server/stores/post/post'
 
     export let postStore: IPostStore | undefined = undefined
     let post: IPost | undefined
@@ -46,18 +32,21 @@
 
 <main class="pb-16 xl:pb-24 bg-white">
     <header class="header-img w-full h-[calc(50vh-5rem)] bg-no-repeat bg-cover bg-center bg-blend-darken relative">
-        <div
-            class="absolute container items-center px-4 mx-auto w-full translate-y-1/4 top-1/2 peer-placeholder-shown:-translate-y-1/2"
-        >
-            <span class="block mb-4 text-gray-300"
-                >Published in <a href="#" class="font-semibold text-white _5zvlMLkN1qETxEl3IhT">World News</a></span
+        <div class="container mx-auto">
+            <div
+                class="absolute items-center px-4 mx-auto w-full translate-y-1/4 top-1/2 peer-placeholder-shown:-translate-y-1/2"
             >
-            <h1 class="mb-4 max-w-4xl text-2xl font-extrabold leading-none text-white">
-                Flowbite Blocks Tutorial - Learn how to get started with custom sections using the Flowbite Blocks
-            </h1>
-            <p class="sm:text-lg font-normal text-gray-300">
-                Before going digital, you might scribbling down some ideas in a sketchbook.
-            </p>
+                <span class="block mb-4 text-gray-300">
+                    Published in
+                    <a href="#" class="font-semibold text-white _5zvlMLkN1qETxEl3IhT">World News</a>
+                </span>
+                <h1 class="mb-4 max-w-4xl text-5xl font-extrabold leading-none text-white">
+                    Flowbite Blocks Tutorial - Learn how to get started with custom sections using the Flowbite Blocks
+                </h1>
+                <p class="sm:text-lg font-normal text-gray-300">
+                    Before going digital, you might scribbling down some ideas in a sketchbook.
+                </p>
+            </div>
         </div>
     </header>
     <div
@@ -210,13 +199,14 @@
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
-                                ><path
+                            >
+                                <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
                                     d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                                /></svg
-                            >
+                                />
+                            </svg>
                         </button>
                         <div
                             id="tooltip-link"
@@ -245,13 +235,14 @@
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
-                                ><path
+                            >
+                                <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
                                     d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                                /></svg
-                            >
+                                />
+                            </svg>
                         </button>
                         <div
                             id="tooltip-save"
@@ -279,10 +270,11 @@
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
-                                ><path
-                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                                /></svg
                             >
+                                <path
+                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+                                />
+                            </svg>
                         </button>
                         <!-- Dropdown menu -->
                         <div
@@ -522,8 +514,8 @@
                         <button
                             type="button"
                             class="py-2 px-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 qHIOIw8TObHgD3VvKa5x DpMPWwlSESiYA8EE1xKM hover:text-primary-700 m_8FxTcpOfmK___hAaJ6 _FONMPVaCsLFJJGDaaIL _bKyZ1er5YE_NnrwOCm9 __8kBLtrR_iuU2wW25Lp bg-gray-800 text-gray-400 dark:border-gray-600 DTyjKhtXBNaebZa5L0l9 _OovBxfPdK7Rjv2nh2Ot"
-                            >Subscribe</button
-                        >
+                            >Subscribe
+                        </button>
                     </div>
                 </div>
                 <form class="mb-6">
@@ -1083,8 +1075,8 @@
                         type="button"
                         data-modal-toggle="newsletter-modal"
                         class="text-white bg-primary-700 hover:bg-primary-800 _FONMPVaCsLFJJGDaaIL focus:ring-primary-300 font-medium rounded-lg text-sm px-5 _gKcj49wZgnwx1LpcJi6 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 qHIOIw8TObHgD3VvKa5x dark:focus:ring-primary-800 text-center container"
-                        >Subscribe</button
-                    >
+                        >Subscribe
+                    </button>
                 </div>
                 <div class="md:mb-12">
                     <h4 class="mb-4 text-sm font-bold text-gray-900 text-white uppercase">Latest news</h4>
@@ -1169,12 +1161,13 @@
                             fill="currentColor"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
-                            ><path
+                        >
+                            <path
                                 fill-rule="evenodd"
                                 d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
                                 clip-rule="evenodd"
-                            /></svg
-                        >
+                            />
+                        </svg>
                     </a>
                     <p class="mb-2 text-sm font-light text-gray-500 text-gray-400">
                         Students and Teachers, save up to 60% on Flowbite Creative Cloud.
