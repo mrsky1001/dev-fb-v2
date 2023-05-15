@@ -44,6 +44,7 @@ module.exports = {
 		},
 		extend: {
 			backgroundColor:{
+				gray: colors.gray,
 				primary: colors.blue,
 			},
 			spacing: {

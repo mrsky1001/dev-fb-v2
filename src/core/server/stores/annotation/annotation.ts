@@ -2,17 +2,16 @@
  * Copyright (c) 21.11.2021, 23:33  Kolyada Nikita Vladimirovich nikita.nk16@yandex.ru
  */
 
-
-import type {IBase} from "../_base.store";
-import {setId} from "../_base.store";
+import type { IBase } from '../_base.store'
+import { setId } from '../_base.store'
 
 export interface IAnnotation extends IBase {
     text: string
     keywords: string[]
     imgUrl: string
+    shortText: string
     imgFile?: File
 }
-
 
 export default class Annotation {
     id = ''
@@ -50,5 +49,9 @@ export default class Annotation {
 
     set text(value: string) {
         this._text = value.trim()
+    }
+
+    get shortText() {
+        return this._text.substring(0, 100) + '...'
     }
 }

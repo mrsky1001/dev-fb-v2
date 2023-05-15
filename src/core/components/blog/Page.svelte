@@ -1,31 +1,34 @@
 <script lang="ts">
-    import { ArticleAuthor, ArticleBody, ArticleHead, ArticleWrapper } from '../flowbite'
-    import { ArrowSmallRight } from 'svelte-heros'
+    import articleIcon from '../../../assets/images/article.svg'
     import { onDestroy, onMount } from 'svelte'
     import type { IPost } from '../../server/stores/post/post'
-    import ArticleContent from '../flowbite/blog/ArticleContent.svelte'
     import type { IPostStore } from '../../server/stores/post/post.store'
     import { subscribe } from 'svelte/internal'
     import type { IAnnotation } from '../../server/stores/annotation/annotation'
     import type { IUser } from '../../server/stores/user/user'
+    import PageContent from './PageContent.svelte'
+    import Post from '../../server/stores/post/post'
+    import ArticleSVG from '../svg/ArticleSVG.svelte'
 
     export let postStore: IPostStore | undefined = undefined
+    export let latestPosts: Post[] | undefined = []
     let post: IPost | undefined
     let author: IUser | undefined
     let annotation: IAnnotation | undefined
 
     const unsubscribe = subscribe(postStore, () => {
         post = postStore?.self()
-        author = post?.authorStore?.self()
-        annotation = post?.annotationStore?.self()
+        author = post?.authorStore.self()
+        annotation = post?.annotationStore.self()
     })
 
-    onMount(() => {
-        console.log('sss')
-        console.log(postStore)
+    // const unsubscribePosts = subscribe(allSectionsStore, () => {
+    //     latestPosts = allSectionsStore.getStore()?.allPostStore.all() ?? []
+    // })
+    onDestroy(() => {
+        unsubscribe()
+        // unsubscribePosts()
     })
-
-    onDestroy(() => unsubscribe())
 </script>
 
 <!--<MetaTag {breadcrumb_title} {title} {dir} {description}/>-->
@@ -48,7 +51,7 @@
                     Опубликовано на
                     <a href="#" class="font-semibold text-white _5zvlMLkN1qETxEl3IhT">FOMA-BLOG.RU</a>
                 </span>
-                <h1 class="mb-4 max-w-4xl text-5xl font-extrabold leading-none text-white">
+                <h1 class="mb-4 max-w-5xl text-5xl leading-tight font-extrabold text-white">
                     {post.title}
                 </h1>
                 <p class="sm:text-lg font-normal text-gray-300">
@@ -58,7 +61,7 @@
         </div>
     </header>
     <div
-        class="flex relative z-20 justify-between p-6 O7PVNyZQb9PCjpNKbt_t mx-4 container bg-white rounded w-article-container arrNNfkSdu1f3lPZlfMG mx-auto"
+        class="flex relative z-20 justify-between p-7 O7PVNyZQb9PCjpNKbt_t mx-4 container bg-white rounded w-article-container arrNNfkSdu1f3lPZlfMG mx-auto"
     >
         <article
             class="w-article container max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert"
@@ -66,7 +69,6 @@
             <div class="flex flex-row justify-between items-center">
                 <div class="flex items-center B1cgbA6Bb4LQo0qFJKck text-gray-500 text-base mb-2">
                     <span>
-                        By
                         <a href="#" class="text-gray-900 _5zvlMLkN1qETxEl3IhT no-underline font-semibold">
                             {author.username}
                         </a>
@@ -75,9 +77,8 @@
                     <span class="ml-3">
                         <time
                             class="font-normal text-gray-500 text-gray-400"
-                            pubdate=""
-                            datetime="2022-03-08"
-                            title="August 3rd, 2022">August 3, 2022, 2:20am EDT</time
+                            datetime={post.publishedDate}
+                            title={post.getFormattedPublishDate()}>{post.getFormattedPublishDate()}</time
                         >
                     </span>
                 </div>
@@ -85,7 +86,8 @@
                     <div class="not-format">
                         <button
                             data-tooltip-target="tooltip-facebook"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy bg-gray-800 _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg
+                             DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
@@ -97,7 +99,9 @@
                             >
                                 <g clip-path="url(#clip0_13676_82298)">
                                     <path
-                                        d="M18 9C18 4.02943 13.9706 0 9 0C4.02943 0 0 4.02943 0 9C0 13.4921 3.29115 17.2155 7.59375 17.8907V11.6016H5.30859V9H7.59375V7.01719C7.59375 4.76156 8.93742 3.51562 10.9932 3.51562C11.9776 3.51562 13.0078 3.69141 13.0078 3.69141V5.90625H11.873C10.755 5.90625 10.4062 6.60006 10.4062 7.3125V9H12.9023L12.5033 11.6016H10.4062V17.8907C14.7088 17.2155 18 13.4921 18 9Z"
+                                        d="M18 9C18 4.02943 13.9706 0 9 0C4.02943 0 0 4.02943 0 9C0 13.4921 3.29115 17.2155 7.59375
+                                        17.8907V11.6016H5.30859V9H7.59375V7.01719C7.59375 4.76156 8.93742 3.51562 10.9932 3.51562C11.9776 3.51562
+                                        13.0078 3.69141 13.0078 3.69141V5.90625H11.873C10.755 5.90625 10.4062 6.60006 10.4062 7.3125V9H12.9023L12.5033 11.6016H10.4062V17.8907C14.7088 17.2155 18 13.4921 18 9Z"
                                     />
                                 </g>
                                 <defs>
@@ -110,7 +114,8 @@
                         <div
                             id="tooltip-facebook"
                             role="tooltip"
-                            class="inline-block absolute z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm transition-opacity duration-300 Usqns9w__onp5CWoXDJ0 bg-gray-700 opacity-0 tooltip-arrow"
+                            class="inline-block absolute z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm
+                            transition-opacity duration-300 Usqns9w__onp5CWoXDJ0 bg-gray-700 opacity-0 tooltip-arrow"
                             style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(564px, -6365px);"
                             data-popper-placement="top"
                         >
@@ -124,7 +129,8 @@
 
                         <button
                             data-tooltip-target="tooltip-twitter"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy bg-gray-800 _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM
+                             _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
@@ -155,51 +161,81 @@
                         </div>
 
                         <button
-                            data-tooltip-target="tooltip-reddit"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy bg-gray-800 _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            data-tooltip-target="tooltip-vk"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
-                                class="w-5 h-5 text-gray-500 text-gray-400"
+                                class="w-6 h-6 text-gray-500 text-gray-400"
                                 aria-hidden="true"
-                                viewBox="0 0 18 18"
+                                viewBox="0 0 24 20"
                                 fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg"
                             >
                                 <g clip-path="url(#clip0_13676_82300)">
                                     <path
-                                        d="M9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18Z"
-                                    />
-                                    <path
-                                        d="M15.0004 8.99997C15.0004 8.27365 14.411 7.68418 13.6846 7.68418C13.3267 7.68418 13.011 7.82102 12.7794 8.0526C11.8846 7.41049 10.6425 6.98944 9.27412 6.93681L9.87412 4.12628L11.8215 4.53681C11.8425 5.03155 12.2531 5.43155 12.7583 5.43155C13.2741 5.43155 13.6952 5.01049 13.6952 4.4947C13.6952 3.97891 13.2741 3.55786 12.7583 3.55786C12.3899 3.55786 12.0741 3.76839 11.9267 4.08418L9.7478 3.62102C9.68464 3.61049 9.62148 3.62102 9.56885 3.6526C9.51622 3.68418 9.48464 3.73681 9.46359 3.79997L8.80043 6.93681C7.40043 6.97891 6.1478 7.38944 5.24254 8.0526C5.01096 7.83155 4.68464 7.68418 4.33727 7.68418C3.61096 7.68418 3.02148 8.27365 3.02148 8.99997C3.02148 9.53681 3.33727 9.98944 3.80043 10.2C3.77938 10.3263 3.76885 10.4631 3.76885 10.6C3.76885 12.621 6.11622 14.2526 9.02149 14.2526C11.9267 14.2526 14.2741 12.621 14.2741 10.6C14.2741 10.4631 14.2636 10.3368 14.2425 10.2105C14.6741 9.99997 15.0004 9.53681 15.0004 8.99997ZM6.00043 9.93681C6.00043 9.42102 6.42148 8.99997 6.93727 8.99997C7.45306 8.99997 7.87412 9.42102 7.87412 9.93681C7.87412 10.4526 7.45306 10.8737 6.93727 10.8737C6.42148 10.8737 6.00043 10.4526 6.00043 9.93681ZM11.232 12.4105C10.5899 13.0526 9.36885 13.0947 9.01096 13.0947C8.65306 13.0947 7.42148 13.0421 6.7899 12.4105C6.69517 12.3158 6.69517 12.1579 6.7899 12.0631C6.88464 11.9684 7.04254 11.9684 7.13727 12.0631C7.53727 12.4631 8.40043 12.6105 9.02149 12.6105C9.64254 12.6105 10.4952 12.4631 10.9057 12.0631C11.0004 11.9684 11.1583 11.9684 11.2531 12.0631C11.3267 12.1684 11.3267 12.3158 11.232 12.4105ZM11.0636 10.8737C10.5478 10.8737 10.1267 10.4526 10.1267 9.93681C10.1267 9.42102 10.5478 8.99997 11.0636 8.99997C11.5794 8.99997 12.0004 9.42102 12.0004 9.93681C12.0004 10.4526 11.5794 10.8737 11.0636 10.8737Z"
-                                        fill="white"
+                                        d="M20 13c.24-.45 1.09-1.74 1.73-2.7C23.65 7.46 24 6.86 24 6.5a.5.5 0 0 0-.5-.5H19a.5.5 0 0 0-.49.41c-.25 1.38-3.49 5.34-4 5.59-.21 0-.5-.52-.5-1.5V6.28a1.18 1.18 0 0 0-.24-.93C13.43 5 12.92 5 11.5 5 8.92 5 8 5.77 8 6.5a.46.46 0 0 0 .45.5S9 7.36 9 9.5a14.61 14.61 0 0 1-.13 2.5C7.6 11.77 5.84 8.6 5 6.32A.5.5 0 0 0 4.5 6h-4a.5.5 0 0 0-.5.59C.56 9.61 6.91 19 11 19h2c1.06 0 1.14-1.15 1.2-1.91s.11-1.09.3-1.09c.62 0 1.89 1.1 2.72 1.82S18.59 19 19 19h2.5c1.29 0 2.5 0 2.5-1 0-.38-.33-.82-2.23-3-.63-.69-1.48-1.64-1.77-2Z"
+                                        data-name="VK Logo"
                                     />
                                 </g>
-                                <defs>
-                                    <clipPath id="clip0_13676_82300">
-                                        <rect width="18" height="18" />
-                                    </clipPath>
-                                </defs>
                             </svg>
                         </button>
-                        <div
-                            id="tooltip-reddit"
-                            role="tooltip"
-                            class="inline-block absolute tooltip-arrow z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 Usqns9w__onp5CWoXDJ0 bg-gray-700"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(930px, -5975px);"
-                            data-popper-placement="top"
+                        <button
+                            data-tooltip-target="tooltip-telegram"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            type="button"
                         >
-                            Post on Reddit
-                            <div
-                                class="tooltip-arrow"
-                                data-popper-arrow=""
-                                style="position: absolute; left: 0px; transform: translate(57px, 0px);"
-                            />
-                        </div>
+                            <svg
+                                class="w-6 h-6 text-gray-500 text-gray-400"
+                                aria-hidden="true"
+                                viewBox="0 0 24 20"
+                                fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <g clip-path="url(#clip0_13676_82300)">
+                                    <path
+                                        d="M22.26465,2.42773a2.04837,2.04837,0,0,0-2.07813-.32421L2.26562,9.33887a2.043,2.043,0,0,0,.1045,3.81836l3.625,1.26074,2.0205,6.68164A.998.998,0,0,0,8.134,21.352c.00775.012.01868.02093.02692.03259a.98844.98844,0,0,0,.21143.21576c.02307.01758.04516.03406.06982.04968a.98592.98592,0,0,0,.31073.13611l.01184.001.00671.00287a1.02183,1.02183,0,0,0,.20215.02051c.00653,0,.01233-.00312.0188-.00324a.99255.99255,0,0,0,.30109-.05231c.02258-.00769.04193-.02056.06384-.02984a.9931.9931,0,0,0,.20429-.11456,250.75993,250.75993,0,0,1,.15222-.12818L12.416,18.499l4.03027,3.12207a2.02322,2.02322,0,0,0,1.24121.42676A2.05413,2.05413,0,0,0,19.69531,20.415L22.958,4.39844A2.02966,2.02966,0,0,0,22.26465,2.42773ZM9.37012,14.73633a.99357.99357,0,0,0-.27246.50586l-.30951,1.504-.78406-2.59307,4.06525-2.11695ZM17.67188,20.04l-4.7627-3.68945a1.00134,1.00134,0,0,0-1.35352.11914l-.86541.9552.30584-1.48645,7.083-7.083a.99975.99975,0,0,0-1.16894-1.59375L6.74487,12.55432,3.02051,11.19141,20.999,3.999Z"
+                                    />
+                                </g>
+                            </svg>
+                        </button>
+                        <button
+                            data-tooltip-target="tooltip-instagram"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            type="button"
+                        >
+                            <svg
+                                class="w-7 h-7 text-gray-500 text-gray-400"
+                                aria-hidden="true"
+                                viewBox="0 0 120 100"
+                                fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <g clip-path="url(#clip0_13676_82300)">
+                                    <path
+                                        d="M87.2 33.6c-3.1 0-5.6 2.5-5.6 5.6 0 3.1 2.5 5.6 5.6 5.6 3.1 0 5.6-2.5 5.6-5.6 0-3.1-2.5-5.6-5.6-5.6zm-25 7.2c-13 0-23.6 10.6-23.6 23.6S49.2 88 62.2 88s23.6-10.6 23.6-23.6-10.6-23.6-23.6-23.6zm0 38.8c-8.4 0-15.1-6.8-15.1-15.1 0-8.4 6.8-15.1 15.1-15.1 8.4 0 15.1 6.8 15.1 15.1s-6.8 15.1-15.1 15.1zm47.7-34.8C109.9 28.9 97 16 81.1 16H43c-15.9 0-28.8 12.9-28.8 28.8v38.1c0 15.9 12.9 28.8 28.8 28.8h38c15.9 0 28.8-12.9 28.8-28.8V44.8zm-9.1 38c0 10.9-8.9 19.8-19.8 19.8H43c-10.9 0-19.8-8.9-19.8-19.8v-38C23.2 33.8 32 25 43 25h38c10.9 0 19.8 8.9 19.8 19.8v38z"
+                                    />
+                                </g>
+                            </svg>
+                        </button>
+                        <!--                        <div-->
+                        <!--                            id="tooltip-vk"-->
+                        <!--                            role="tooltip"-->
+                        <!--                            class="inline-block absolute tooltip-arrow z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 Usqns9w__onp5CWoXDJ0 bg-gray-700"-->
+                        <!--                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(930px, -5975px);"-->
+                        <!--                            data-popper-placement="top"-->
+                        <!--                        >-->
+                        <!--                            Post on Reddit-->
+                        <!--                            <div-->
+                        <!--                                class="tooltip-arrow"-->
+                        <!--                                data-popper-arrow=""-->
+                        <!--                                style="position: absolute; left: 0px; transform: translate(57px, 0px);"-->
+                        <!--                            />-->
+                        <!--                        </div>-->
 
                         <button
                             data-tooltip-target="tooltip-link"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy bg-gray-800 _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
@@ -234,7 +270,7 @@
 
                         <button
                             data-tooltip-target="tooltip-save"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy bg-gray-800 _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
@@ -270,7 +306,7 @@
                         <button
                             id="dropdownMenuIconHorizontalButton"
                             data-dropdown-toggle="dropdownDotsHorizontal"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy bg-gray-800 _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
@@ -315,874 +351,98 @@
                     </div>
                 </aside>
             </div>
-            <p class="lead">
-                Flowbite is an open-source library of UI components built with the utility-first classes from Tailwind
-                CSS. It also includes interactive elements such as dropdowns, modals, datepickers.
-            </p>
-            <p>
-                Before going digital, you might benefit from scribbling down some ideas in a sketchbook. This way, you
-                can think things through before committing to an actual design project.
-            </p>
-            <p>
-                But then I found a <a href="https://flowbite.com"
-                    >component library based on Tailwind CSS called Flowbite</a
-                >. It comes with the most commonly used UI components, such as buttons, navigation bars, cards, form
-                elements, and more which are conveniently built with the utility classes from Tailwind CSS.
-            </p>
-            <figure>
-                <img
-                    src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png"
-                    alt=""
-                    class="mx-auto"
-                />
-                <figcaption>Digital art by Anonymous</figcaption>
-            </figure>
-            <h2>Getting started with Flowbite</h2>
-            <p>
-                First of all you need to understand how Flowbite works. This library is not another framework. Rather,
-                it is a set of components based on Tailwind CSS that you can just copy-paste from the documentation.
-            </p>
-            <p>
-                It also includes a JavaScript file that enables interactive components, such as modals, dropdowns, and
-                datepickers which you can optionally include into your project via CDN or NPM.
-            </p>
-            <p>
-                You can check out the <a href="https://flowbite.com/docs/getting-started/quickstart/"
-                    >quickstart guide</a
-                > to explore the elements by including the CDN files into your project. But if you want to build a project
-                with Flowbite I recommend you to follow the build tools steps so that you can purge and minify the generated
-                CSS.
-            </p>
-            <p>
-                You'll also receive a lot of useful application UI, marketing UI, and e-commerce pages that can help you
-                get started with your projects even faster. You can check out this <a
-                    href="https://flowbite.com/docs/components/tables/">comparison table</a
-                > to better understand the differences between the open-source and pro version of Flowbite.
-            </p>
-            <h2>When does design come in handy?</h2>
-            <p>
-                While it might seem like extra work at a first glance, here are some key moments in which prototyping
-                will come in handy:
-            </p>
-            <ol>
-                <li>
-                    <strong>Usability testing</strong>. Does your user know how to exit out of screens? Can they follow
-                    your intended user journey and buy something from the site you’ve designed? By running a usability
-                    test, you’ll be able to see how users will interact with your design once it’s live;
-                </li>
-                <li>
-                    <strong>Involving stakeholders</strong>. Need to check if your GDPR consent boxes are displaying
-                    properly? Pass your prototype to your data protection team and they can test it for real;
-                </li>
-                <li>
-                    <strong>Impressing a client</strong>. Prototypes can help explain or even sell your idea by
-                    providing your client with a hands-on experience;
-                </li>
-                <li>
-                    <strong>Communicating your vision</strong>. By using an interactive medium to preview and test
-                    design elements, designers and developers can understand each other — and the project — better.
-                </li>
-            </ol>
-            <h3>Laying the groundwork for best design</h3>
-            <p>
-                Before going digital, you might benefit from scribbling down some ideas in a sketchbook. This way, you
-                can think things through before committing to an actual design project.
-            </p>
-            <p>Let's start by including the CSS file inside the <code>head</code> tag of your HTML.</p>
-            <h3>Understanding typography</h3>
-            <h4>Type properties</h4>
-            <p>
-                A typeface is a collection of letters. While each letter is unique, certain shapes are shared across
-                letters. A typeface represents shared patterns across a collection of letters.
-            </p>
-            <h4>Baseline</h4>
-            <p>
-                A typeface is a collection of letters. While each letter is unique, certain shapes are shared across
-                letters. A typeface represents shared patterns across a collection of letters.
-            </p>
-            <h4>Measurement from the baseline</h4>
-            <p>
-                A typeface is a collection of letters. While each letter is unique, certain shapes are shared across
-                letters. A typeface represents shared patterns across a collection of letters.
-            </p>
-            <h3>Type classification</h3>
-            <h4>Serif</h4>
-            <p>
-                A serif is a small shape or projection that appears at the beginning or end of a stroke on a letter.
-                Typefaces with serifs are called serif typefaces. Serif fonts are classified as one of the following:
-            </p>
-            <h4>Old-Style serifs</h4>
-            <ul>
-                <li>Low contrast between thick and thin strokes</li>
-                <li>Diagonal stress in the strokes</li>
-                <li>Slanted serifs on lower-case ascenders</li>
-            </ul>
-            <img src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-2.png" alt="" />
-            <ol>
-                <li>Low contrast between thick and thin strokes</li>
-                <li>Diagonal stress in the strokes</li>
-                <li>Slanted serifs on lower-case ascenders</li>
-            </ol>
-            <h3>Laying the best for successful prototyping</h3>
-            <p>A serif is a small shape or projection that appears at the beginning:</p>
-            <blockquote>
-                <p>
-                    Flowbite is just awesome. It contains tons of predesigned components and pages starting from login
-                    screen to complex dashboard. Perfect choice for your next SaaS application.
-                </p>
-            </blockquote>
-            <h4>Code example</h4>
-            <p>
-                A serif is a small shape or projection that appears at the beginning or end of a stroke on a letter.
-                Typefaces with serifs are called serif typefaces. Serif fonts are classified as one of the following:
-            </p>
-            <pre><code class="language-html"
-                    >&lt;dl class="grid grid-cols-2 gap-8 max-w-screen-md text-gray-900 sm:grid-cols-3 dark:text-white"&gt;
-&lt;div class="flex flex-col justify-center items-center"&gt;
-  &lt;dt class="mb-2 text-3xl font-extrabold"&gt;73M+&lt;/dt&gt;
-  &lt;dd class="text-lg font-normal text-gray-500 dark:text-gray-400"&gt;developers&lt;/dd&gt;
-&lt;/div&gt;
-&lt;div class="flex flex-col justify-center items-center"&gt;
-  &lt;dt class="mb-2 text-3xl font-extrabold"&gt;1B+&lt;/dt&gt;
-  &lt;dd class="text-lg font-normal text-gray-500 dark:text-gray-400"&gt;contributors&lt;/dd&gt;
-&lt;/div&gt;
-&lt;div class="flex flex-col justify-center items-center"&gt;
-  &lt;dt class="mb-2 text-3xl font-extrabold"&gt;4M+&lt;/dt&gt;
-  &lt;dd class="text-lg font-normal text-gray-500 dark:text-gray-400"&gt;organizations&lt;/dd&gt;
-&lt;/div&gt;
-&lt;/dl&gt;
-</code></pre>
-            <h4>Table example</h4>
-            <p>A serif is a small shape or projection that appears at the beginning or end of a stroke on a letter.</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Country</th>
-                        <th>Date &amp; Time</th>
-                        <th>Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>United States</td>
-                        <td>April 21, 2021</td>
-                        <td><strong>$2,300</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Canada</td>
-                        <td>May 31, 2021</td>
-                        <td><strong>$300</strong></td>
-                    </tr>
-                    <tr>
-                        <td>United Kingdom</td>
-                        <td>June 3, 2021</td>
-                        <td><strong>$2,500</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Australia</td>
-                        <td>June 23, 2021</td>
-                        <td><strong>$3,543</strong></td>
-                    </tr>
-                    <tr>
-                        <td>Germany</td>
-                        <td>July 6, 2021</td>
-                        <td><strong>$99</strong></td>
-                    </tr>
-                    <tr>
-                        <td>France</td>
-                        <td>August 23, 2021</td>
-                        <td><strong>$2,540</strong></td>
-                    </tr>
-                </tbody>
-            </table>
-            <h3>Best practices for setting up your prototype</h3>
-            <p>
-                <strong>Low fidelity or high fidelity?</strong> Fidelity refers to how close a prototype will be to the real
-                deal. If you’re simply preparing a quick visual aid for a presentation, a low-fidelity prototype — like a
-                wireframe with placeholder images and some basic text — would be more than enough. But if you’re going for
-                more intricate usability testing, a high-fidelity prototype — with on-brand colors, fonts and imagery — could
-                help get more pointed results.
-            </p>
-            <p>
-                <strong>Consider your user</strong>. To create an intuitive user flow, try to think as your user would
-                when interacting with your product. While you can fine-tune this during beta testing, considering your
-                user’s needs and habits early on will save you time by setting you on the right path.
-            </p>
-            <p>
-                <strong>Start from the inside out</strong>. A nice way to both organize your tasks and create more
-                user-friendly prototypes is by building your prototypes ‘inside out’. Start by focusing on what will be
-                important to your user, like a Buy now button or an image gallery, and list each element by order of
-                priority. This way, you’ll be able to create a prototype that puts your users’ needs at the heart of
-                your design.
-            </p>
-            <p>And there you have it! Everything you need to design and share prototypes — right in Flowbite Figma.</p>
-            <section class="not-format">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="sm:text-lg text-2xl font-bold text-gray-900 text-white">Discussion (20)</h2>
-                    <div>
-                        <button
-                            type="button"
-                            class="py-2 px-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 qHIOIw8TObHgD3VvKa5x DpMPWwlSESiYA8EE1xKM hover:text-primary-700 m_8FxTcpOfmK___hAaJ6 _FONMPVaCsLFJJGDaaIL _bKyZ1er5YE_NnrwOCm9 __8kBLtrR_iuU2wW25Lp bg-gray-800 text-gray-400 dark:border-gray-600 DTyjKhtXBNaebZa5L0l9 _OovBxfPdK7Rjv2nh2Ot"
-                            >Subscribe
-                        </button>
-                    </div>
-                </div>
-                <form class="mb-6">
-                    <div
-                        class="mb-4 container bg-gray-50 rounded-lg border border-gray-200 bg-gray-700 dark:border-gray-600"
-                    >
-                        <div class="py-2 px-4 bg-gray-50 rounded-t-lg bg-gray-800">
-                            <label for="comment" class="sr-only">Your comment</label>
-                            <textarea
-                                id="comment"
-                                rows="6"
-                                class="px-0 container text-sm text-gray-900 bg-gray-50 border-0 bg-gray-800 W83fbcqTDAidAC5iVTZ9 text-white _DJ2tfp6E9c_teMKVD3z"
-                                placeholder="Write a comment..."
-                                required=""
-                            />
-                        </div>
-                        <div class="flex justify-between items-center py-2 px-3 border-y dark:border-gray-600">
-                            <button
-                                type="submit"
-                                class="inline-flex items-center _gKcj49wZgnwx1LpcJi6 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg _FONMPVaCsLFJJGDaaIL focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
-                            >
-                                Post comment
-                            </button>
-                            <div class="flex pl-0 pz8Hkt0c6QoT_d0LgJ4L pl-2">
-                                <button
-                                    type="button"
-                                    class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer _xQT_qSXfwWf6ZhwRle4 DpMPWwlSESiYA8EE1xKM text-gray-400 DTyjKhtXBNaebZa5L0l9 xotVay0PVtR3gElm6ql5"
-                                >
-                                    <svg
-                                        aria-hidden="true"
-                                        class="w-5 h-5"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                                            clip-rule="evenodd"
-                                        />
-                                    </svg>
-                                    <span class="sr-only">Attach file</span>
-                                </button>
-                                <button
-                                    type="button"
-                                    class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer _xQT_qSXfwWf6ZhwRle4 DpMPWwlSESiYA8EE1xKM text-gray-400 DTyjKhtXBNaebZa5L0l9 xotVay0PVtR3gElm6ql5"
-                                >
-                                    <svg
-                                        aria-hidden="true"
-                                        class="w-5 h-5"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                                            clip-rule="evenodd"
-                                        />
-                                    </svg>
-                                    <span class="sr-only">Set location</span>
-                                </button>
-                                <button
-                                    type="button"
-                                    class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer _xQT_qSXfwWf6ZhwRle4 DpMPWwlSESiYA8EE1xKM text-gray-400 DTyjKhtXBNaebZa5L0l9 xotVay0PVtR3gElm6ql5"
-                                >
-                                    <svg
-                                        aria-hidden="true"
-                                        class="w-5 h-5"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                                            clip-rule="evenodd"
-                                        />
-                                    </svg>
-                                    <span class="sr-only">Upload image</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <article class="p-6 mb-6 text-base bg-gray-50 rounded-lg bg-gray-700">
-                    <footer class="flex justify-between items-center mb-2">
-                        <div class="flex items-center">
-                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 text-white">
-                                <img
-                                    class="mr-2 w-6 h-6 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                                    alt="Michael Gough"
-                                />Michael Gough
-                            </p>
-                            <p class="text-sm text-gray-600 text-gray-400">
-                                <time pubdate="" datetime="2022-02-08" title="February 8th, 2022">Feb. 8, 2022</time>
-                            </p>
-                        </div>
-                        <button
-                            id="dropdownComment1Button"
-                            data-dropdown-toggle="dropdownComment1"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-gray-50 rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x fq6QICPx8VcyAlLZi_Iy bg-gray-700 xotVay0PVtR3gElm6ql5 P53YJBBtllZv8_nFHFHW"
-                            type="button"
-                        >
-                            <svg
-                                class="w-5 h-5"
-                                aria-hidden="true"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                                />
-                            </svg>
-                            <span class="sr-only">Comment settings</span>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div
-                            id="dropdownComment1"
-                            class="hidden z-10 w-36 bg-white rounded FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG shadow bg-gray-700 WoQqugRcWrYbmsWhxCUr"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(1106px, 4441px);"
-                            data-popper-reference-hidden=""
-                            data-popper-escaped=""
-                            data-popper-placement="top"
-                        >
-                            <ul
-                                class="py-1 text-sm text-gray-700 text-gray-200"
-                                aria-labelledby="dropdownMenuIconHorizontalButton"
-                            >
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Edit</a
-                                    >
-                                </li>
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Remove</a
-                                    >
-                                </li>
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Report</a
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-                    </footer>
-                    <p class="text-gray-500 text-gray-400">
-                        Very straight-to-point article. Really worth time reading. Thank you! But tools are just the
-                        instruments for the UX designers. The knowledge of the design tools are as important as the
-                        creation of the design strategy.
-                    </p>
-                    <div class="flex items-center mt-4 ZLpoEVbvjZ2Wkm42QsPD">
-                        <button
-                            type="button"
-                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
-                        >
-                            <svg
-                                aria-hidden="true"
-                                class="mr-1 w-4 h-4"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                            11 Likes
-                        </button>
-                        <button
-                            type="button"
-                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
-                        >
-                            <svg
-                                aria-hidden="true"
-                                class="mr-1 w-4 h-4"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                            Reply
-                        </button>
-                    </div>
-                </article>
-                <article class="p-6 mb-6 pojhoXnf_5BOC6SYUZP4 text-base bg-gray-50 rounded-lg bg-gray-700">
-                    <footer class="flex justify-between items-center mb-2">
-                        <div class="flex items-center">
-                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 text-white">
-                                <img
-                                    class="mr-2 w-6 h-6 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                                    alt="Jese Leos"
-                                />Jese Leos
-                            </p>
-                            <p class="text-sm text-gray-600 text-gray-400">
-                                <time pubdate="" datetime="2022-02-12" title="February 12th, 2022">Feb. 12, 2022</time>
-                            </p>
-                        </div>
-                        <button
-                            id="dropdownComment2Button"
-                            data-dropdown-toggle="dropdownComment2"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-gray-50 rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x fq6QICPx8VcyAlLZi_Iy bg-gray-700 xotVay0PVtR3gElm6ql5 P53YJBBtllZv8_nFHFHW"
-                            type="button"
-                        >
-                            <svg
-                                class="w-5 h-5"
-                                aria-hidden="true"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                                />
-                            </svg>
-                            <span class="sr-only">Comment settings</span>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div
-                            id="dropdownComment2"
-                            class="hidden z-10 w-36 bg-white rounded FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG shadow bg-gray-700 WoQqugRcWrYbmsWhxCUr"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(1106px, 4641px);"
-                            data-popper-reference-hidden=""
-                            data-popper-escaped=""
-                            data-popper-placement="top"
-                        >
-                            <ul
-                                class="py-1 text-sm text-gray-700 text-gray-200"
-                                aria-labelledby="dropdownMenuIconHorizontalButton"
-                            >
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Edit</a
-                                    >
-                                </li>
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Remove</a
-                                    >
-                                </li>
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Report</a
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-                    </footer>
-                    <p class="text-gray-500 text-gray-400">Much appreciated! Glad you liked it ☺️</p>
-                    <div class="flex items-center mt-4 ZLpoEVbvjZ2Wkm42QsPD">
-                        <button
-                            type="button"
-                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
-                        >
-                            <svg
-                                aria-hidden="true"
-                                class="mr-1 w-4 h-4"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                            3 Likes
-                        </button>
-                        <button
-                            type="button"
-                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
-                        >
-                            <svg
-                                aria-hidden="true"
-                                class="mr-1 w-4 h-4"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                            Reply
-                        </button>
-                    </div>
-                </article>
-                <article class="p-6 mb-6 text-base bg-gray-50 rounded-lg bg-gray-700">
-                    <footer class="flex justify-between items-center mb-2">
-                        <div class="flex items-center">
-                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 text-white">
-                                <img
-                                    class="mr-2 w-6 h-6 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                                    alt="Bonnie Green"
-                                />Bonnie Green
-                            </p>
-                            <p class="text-sm text-gray-600 text-gray-400">
-                                <time pubdate="" datetime="2022-03-12" title="March 12th, 2022">Mar. 12, 2022</time>
-                            </p>
-                        </div>
-                        <button
-                            id="dropdownComment3Button"
-                            data-dropdown-toggle="dropdownComment3"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-gray-50 rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x fq6QICPx8VcyAlLZi_Iy bg-gray-700 xotVay0PVtR3gElm6ql5 P53YJBBtllZv8_nFHFHW"
-                            type="button"
-                        >
-                            <svg
-                                class="w-5 h-5"
-                                aria-hidden="true"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                                />
-                            </svg>
-                            <span class="sr-only">Comment settings</span>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div
-                            id="dropdownComment3"
-                            class="hidden z-10 w-36 bg-white rounded FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG shadow bg-gray-700 WoQqugRcWrYbmsWhxCUr"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(1106px, 4817px);"
-                            data-popper-reference-hidden=""
-                            data-popper-escaped=""
-                            data-popper-placement="top"
-                        >
-                            <ul
-                                class="py-1 text-sm text-gray-700 text-gray-200"
-                                aria-labelledby="dropdownMenuIconHorizontalButton"
-                            >
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Edit</a
-                                    >
-                                </li>
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Remove</a
-                                    >
-                                </li>
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Report</a
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-                    </footer>
-                    <p class="text-gray-500 text-gray-400">
-                        The article covers the essentials, challenges, myths and stages the UX designer should consider
-                        while creating the design strategy.
-                    </p>
-                    <div class="flex items-center mt-4 ZLpoEVbvjZ2Wkm42QsPD">
-                        <button
-                            type="button"
-                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
-                        >
-                            <svg
-                                aria-hidden="true"
-                                class="mr-1 w-4 h-4"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                            24 Likes
-                        </button>
-                        <button
-                            type="button"
-                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
-                        >
-                            <svg
-                                aria-hidden="true"
-                                class="mr-1 w-4 h-4"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                            Reply
-                        </button>
-                    </div>
-                </article>
-                <article class="p-6 text-base bg-gray-50 rounded-lg bg-gray-700">
-                    <footer class="flex justify-between items-center mb-2">
-                        <div class="flex items-center">
-                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 text-white">
-                                <img
-                                    class="mr-2 w-6 h-6 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-4.jpg"
-                                    alt="Helene Engels"
-                                />Helene Engels
-                            </p>
-                            <p class="text-sm text-gray-600 text-gray-400">
-                                <time pubdate="" datetime="2022-06-23" title="June 23rd, 2022">Jun. 23, 2022</time>
-                            </p>
-                        </div>
-                        <button
-                            id="dropdownComment4Button"
-                            data-dropdown-toggle="dropdownComment4"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-gray-50 rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x fq6QICPx8VcyAlLZi_Iy bg-gray-700 xotVay0PVtR3gElm6ql5 P53YJBBtllZv8_nFHFHW"
-                            type="button"
-                        >
-                            <svg
-                                class="w-5 h-5"
-                                aria-hidden="true"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                                />
-                            </svg>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div
-                            id="dropdownComment4"
-                            class="hidden z-10 w-36 bg-white rounded FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG shadow bg-gray-700 WoQqugRcWrYbmsWhxCUr"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(1106px, 4993px);"
-                            data-popper-reference-hidden=""
-                            data-popper-escaped=""
-                            data-popper-placement="top"
-                        >
-                            <ul
-                                class="py-1 text-sm text-gray-700 text-gray-200"
-                                aria-labelledby="dropdownMenuIconHorizontalButton"
-                            >
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Edit</a
-                                    >
-                                </li>
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Remove</a
-                                    >
-                                </li>
-                                <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Report</a
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-                    </footer>
-                    <p class="text-gray-500 text-gray-400">
-                        Thanks for sharing this. I do came from the Backend development and explored some of the tools
-                        to design my Side Projects.
-                    </p>
-                    <div class="flex items-center mt-4 ZLpoEVbvjZ2Wkm42QsPD">
-                        <button
-                            type="button"
-                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
-                        >
-                            <svg
-                                aria-hidden="true"
-                                class="mr-1 w-4 h-4"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                            9 Likes
-                        </button>
-                        <button
-                            type="button"
-                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
-                        >
-                            <svg
-                                aria-hidden="true"
-                                class="mr-1 w-4 h-4"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    fill-rule="evenodd"
-                                    d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
-                                    clip-rule="evenodd"
-                                />
-                            </svg>
-                            Reply
-                        </button>
-                    </div>
-                </article>
-            </section>
+            <PageContent postContent={post.content} />
         </article>
         <aside class="block" aria-labelledby="sidebar-label">
             <div class="w-aside sticky top-[8rem]">
                 <h3 id="sidebar-label" class="sr-only">Sidebar</h3>
                 <div class="mb-8">
-                    <h4 class="mb-2 font-bold text-gray-900 uppercase">Flowbite News morning headlines</h4>
+                    <h4 class="mb-2 font-bold text-gray-900 uppercase">FOMA-BLOG - узнать первым</h4>
                     <p class="mb-4 font-light text-gray-500 text-gray-400">
-                        Get all the stories you need-to-know from the most powerful name in news delivered first thing
-                        every morning to your inbox
+                        Чтобы получать информацию о выходе новых статей, рекомендуем подписаться на нас
                     </p>
                     <button
                         type="button"
                         data-modal-toggle="newsletter-modal"
                         class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 text-center container"
-                        >Subscribe
+                    >
+                        Подписаться
                     </button>
                 </div>
                 <div class="md:mb-12">
-                    <h4 class="mb-4 text-sm font-bold text-gray-900 uppercase">Latest news</h4>
-                    <div class="mb-6 flex items-center">
-                        <a href="#" class="shrink-0">
-                            <img
-                                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/articles/image-1.png"
-                                class="mr-4 max-w-full w-24 h-24 rounded-lg"
-                                alt="Image 1"
-                            />
-                        </a>
-                        <div>
-                            <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">Our first office</h5>
-                            <p class="mb-2 font-light text-gray-500 text-gray-400">
-                                Over the past year, Volosoft has undergone changes.
-                            </p>
-                            <a
-                                href="#"
-                                class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_"
-                            >
-                                Read in 9 minutes
-                            </a>
+                    <h4 class="mb-4 text-sm font-bold text-gray-900 uppercase">Свежие статьи</h4>
+                    {#each latestPosts.slice(0, 3) as p}
+                        <div class="mb-6 flex items-center">
+                            {#if p.annotationStore?.self().imgUrl}
+                                <a href="#" class="shrink-0">
+                                    <div
+                                        style={'background-image: url(' + p.annotationStore?.self().imgUrl + ')'}
+                                        class="mr-4 w-24 h-24 rounded-lg bg-center bg-cover"
+                                        alt="Image 1"
+                                    />
+                                </a>
+                            {:else}
+                                <a href="#" class="shrink-0 flex w-28 h-24">
+                                    <ArticleSVG classes="h-16 w-16" color="gray" />
+                                    <!--                                    <img-->
+                                    <!--                                        src={articleIcon}-->
+                                    <!--                                        class=" w-14 text-gray-700 rounded-lg bg-center bg-cover"-->
+                                    <!--                                        alt="Image 1"-->
+                                    <!--                                    />-->
+                                </a>
+                            {/if}
+                            <div>
+                                <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">{p.title}</h5>
+                                <p class="mb-2 font-light text-gray-500 text-gray-400">
+                                    {p.annotationStore?.self().shortText ?? ''}
+                                </p>
+                                <a
+                                    href="#"
+                                    class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_"
+                                >
+                                    Чтение в течение {p.readTime} мин.
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-6 flex items-center">
-                        <a href="#" class="shrink-0">
-                            <img
-                                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/articles/image-2.png"
-                                class="mr-4 max-w-full w-24 h-24 rounded-lg"
-                                alt="Image 2"
-                            />
-                        </a>
-                        <div>
-                            <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">
-                                Enterprise Design tips
-                            </h5>
-                            <p class="mb-2 font-light text-gray-500 text-gray-400">
-                                Over the past year, Volosoft has undergone changes.
-                            </p>
-                            <a
-                                href="#"
-                                class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_"
-                            >
-                                Read in 14 minutes
-                            </a>
-                        </div>
-                    </div>
-                    <div class="mb-6 flex items-center">
-                        <a href="#" class="shrink-0">
-                            <img
-                                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/articles/image-3.png"
-                                class="mr-4 max-w-full w-24 h-24 rounded-lg"
-                                alt="Image 3"
-                            />
-                        </a>
-                        <div>
-                            <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">
-                                Partnered up with Google
-                            </h5>
-                            <p class="mb-2 font-light text-gray-500 text-gray-400">
-                                Over the past year, Volosoft has undergone changes.
-                            </p>
-                            <a
-                                href="#"
-                                class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_"
-                            >
-                                Read in 9 minutes
-                            </a>
-                        </div>
-                    </div>
+                    {/each}
                 </div>
-                <div>
-                    <a href="#" class="flex justify-center items-center mb-3 container h-48 bg-gray-100 rounded-lg">
-                        <svg
-                            aria-hidden="true"
-                            class="w-8 h-8 text-gray-400"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                                clip-rule="evenodd"
-                            />
-                        </svg>
-                    </a>
-                    <p class="mb-2 text-sm font-light text-gray-500 text-gray-400">
-                        Students and Teachers, save up to 60% on Flowbite Creative Cloud.
-                    </p>
-                    <p class="text-xs font-light text-gray-400 uppercase text-gray-500">Ads placeholder</p>
-                </div>
+                <!--                <div>-->
+                <!--                    <a href="#" class="flex justify-center items-center mb-3 container h-48 bg-gray-100 rounded-lg">-->
+                <!--                        <svg-->
+                <!--                            aria-hidden="true"-->
+                <!--                            class="w-8 h-8 text-gray-400"-->
+                <!--                            fill="currentColor"-->
+                <!--                            viewBox="0 0 20 20"-->
+                <!--                            xmlns="http://www.w3.org/2000/svg"-->
+                <!--                        >-->
+                <!--                            <path-->
+                <!--                                fill-rule="evenodd"-->
+                <!--                                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"-->
+                <!--                                clip-rule="evenodd"-->
+                <!--                            />-->
+                <!--                        </svg>-->
+                <!--                    </a>-->
+                <!--                    <p class="mb-2 text-sm font-light text-gray-500 text-gray-400">-->
+                <!--                        Students and Teachers, save up to 60% on Flowbite Creative Cloud.-->
+                <!--                    </p>-->
+                <!--                    <p class="text-xs font-light text-gray-400 uppercase text-gray-500">Ads placeholder</p>-->
+                <!--                </div>-->
             </div>
         </aside>
     </div>
 </main>
 
 <style lang="scss">
-    .header-img {
-        background-image: url(https://flowbite.s3.amazonaws.com/blocks/marketing-ui/articles/background.png);
+    .w-article > :global {
+        blockquote {
+            font-weight: inherit;
+            font-size: medium;
+            color: var(--tw-format-body);
+            padding-left: 3em;
+
+            &::before {
+                scale: 0.6;
+            }
+        }
     }
 </style>

@@ -1,37 +1,37 @@
 import type { IAnnotationStore } from './annotation.store'
-import type { IPost } from './post'
 import { get, type Unsubscriber, writable } from 'svelte/store'
-import { createPostStore } from './annotation.store'
+import { createAnnotationStore } from './annotation.store'
+import type { IAnnotation } from './annotation'
 
-export interface IAllPostStore {
+export interface IAllAnnotationStore {
     add(s: IAnnotationStore): void
 
-    getStore(post: IPost): IAnnotationStore
+    getStore(annotation: IAnnotation): IAnnotationStore
 
-    set(posts: IPost[]): void
+    set(annotations: IAnnotation[]): void
 
-    all(): IPost[]
+    all(): IAnnotation[]
 
     allStores(): IAnnotationStore[]
 
     subscribe(v: any): Unsubscriber
 }
 
-export const createAllPostStore = () => {
+export const createAllAnnotationStore = () => {
     const stores = writable<IAnnotationStore[]>([])
 
     return {
-        getStore: (post: IPost) => {
-            return get(stores).find((s) => s.self().id === post.id)
+        getStore: (annotation: IAnnotation) => {
+            return get(stores).find((s) => s.self().id === annotation.id)
         },
         add: (s: IAnnotationStore) => {
             stores.update((old) => [...old, s])
         },
-        set: (posts: IPost[]) => {
-            stores.set(posts.map((s) => createPostStore(s)))
+        set: (annotations: IAnnotation[]) => {
+            stores.set(annotations.map((s) => createAnnotationStore(s)))
         },
         allStores: () => get(stores),
         all: () => get(stores).map((s) => s.self()),
         subscribe: stores.subscribe
-    } as IAllPostStore
+    } as IAllAnnotationStore
 }

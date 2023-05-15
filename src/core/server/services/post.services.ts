@@ -3,29 +3,29 @@
  */
 
 import api from './api'
-import type {IRule} from "../models/interfaces/lib/IRule";
-import Post from "../stores/post/post";
-import urls from "../collections/urls";
-import config from "../../../config/config";
-import type {AxiosResponse} from 'axios';
-import {validationProp} from "../validation";
-import {handlerError, responseHandler} from "../response-handler";
-import type AxiosError from "axios";
-import type {IPost} from "../models/interfaces/article/IPost";
-import type {IPostsFilter} from "../models/interfaces/filter/filters-posts";
-import PhotoPost from "../models/classes/article/PhotoPost";
+import type { IRule } from '../models/interfaces/lib/IRule'
+import Post from '../stores/post/post'
+import urls from '../collections/urls'
+import config from '../../../config/config'
+import type { AxiosResponse } from 'axios'
+import { validationProp } from '../validation'
+import { handlerError, responseHandler } from '../response-handler'
+import type AxiosError from 'axios'
+import type { IPost } from '../models/interfaces/article/IPost'
+import type { IPostsFilter } from '../models/interfaces/filter/filters-posts'
+import PhotoPost from '../models/classes/article/PhotoPost'
 
 export const getInValidPostFields = (post: Post) => {
     const rules: IRule[] = [
-        {name: 'title', label: 'Заголовок', type: 'string', min: 3},
-        {name: 'content', label: 'Содержание', type: 'string', min: 10},
-        {name: 'sectionId', label: 'Раздел', type: 'string', min: 3},
+        { name: 'title', label: 'Заголовок', type: 'string', min: 3 },
+        { name: 'content', label: 'Содержание', type: 'string', min: 10 },
+        { name: 'sectionId', label: 'Раздел', type: 'string', min: 3 },
         {
             name: 'annotation',
             type: 'object',
-            listCheckFields: [{name: 'text', label: 'Текст аннотации', type: 'string', min: 3}],
+            listCheckFields: [{ name: 'text', label: 'Текст аннотации', type: 'string', min: 3 }]
         },
-        {name: 'tags', label: 'Тэги', type: 'array', min: 1},
+        { name: 'tags', label: 'Тэги', type: 'array', min: 1 }
     ]
     const listError: string[] = []
 
@@ -39,7 +39,7 @@ export const getPost = (postId: string, title = ''): Promise<Post> => {
         const url = postId ? `${urls.GET_POST_BY_ID}/${postId}` : `${urls.GET_POST_BY_TITLE}/${title}`
 
         api()
-            .get(url, {params: {domain: config.server.domain}})
+            .get(url, { params: { domain: config.server.domain } })
             .then((res: AxiosResponse) => {
                 responseHandler(res, null, false)
                     .then((data) => resolve(new Post(data.post)))
@@ -55,15 +55,15 @@ export const getPost = (postId: string, title = ''): Promise<Post> => {
     })
 }
 
-export const getPosts = (sectionId: string, lastCreateDate: Date, searchText = ''): Promise<IPost[]> => {
+export const getPosts = (sectionId: string, lastCreateDate: Date = new Date(), searchText = ''): Promise<Post[]> => {
     return new Promise<IPost[]>((resolve, reject) => {
         const options = {
             params: {
                 domain: config.server.domain,
                 sectionId,
                 searchText,
-                lastCreateDate,
-            },
+                lastCreateDate
+            }
         }
 
         api()
@@ -85,7 +85,7 @@ export const getPosts = (sectionId: string, lastCreateDate: Date, searchText = '
 export const getFiltersPosts = (): Promise<IPostsFilter[]> => {
     return new Promise<IPostsFilter[]>((resolve, reject) => {
         api()
-            .get(urls.GET_FILTERS_POSTS, {params: {domain: config.server.domain}})
+            .get(urls.GET_FILTERS_POSTS, { params: { domain: config.server.domain } })
             .then((res: AxiosResponse) => {
                 responseHandler(res, undefined, false)
                     .then((data) => resolve(data.filtersPosts))
@@ -236,7 +236,7 @@ export const changeStatusPost = (postId: string, status: number): Promise<Post> 
         const url = `${urls.UPDATE_POST_STATUS}/${postId}`
 
         api()
-            .post(url, {status})
+            .post(url, { status })
             .then((res: AxiosResponse) => {
                 responseHandler(res)
                     .then((data) => resolve(new Post(data.post)))
@@ -257,7 +257,7 @@ export const changeSizePhotoPost = (photoPostId: string, size: number): Promise<
         const url = `${urls.UPDATE_POST_PHOTO_SIZE}/${photoPostId}`
 
         api()
-            .post(url, {size})
+            .post(url, { size })
             .then((res: AxiosResponse) => {
                 responseHandler(res)
                     .then((data) => resolve(new PhotoPost(data.photoPost)))

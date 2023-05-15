@@ -19,6 +19,8 @@ import { createCommentStore } from '../comment/comment.store'
 import type { IAllCommentStore } from '../comment/all-comment.store'
 import { createAllCommentStore } from '../comment/all-comment.store'
 import type { IComment } from '../comment/comment'
+import Annotation from '../annotation/annotation'
+import Comment from '../comment/comment'
 
 export interface IPostProps extends IBase {
     _id?: string
@@ -42,6 +44,8 @@ export interface IPostProps extends IBase {
     author?: IUser // | null
     comments?: IComment[]
     annotation?: IAnnotation // | null
+
+    getFormattedPublishDate(): string
 }
 
 export interface IPost extends IPostProps {
@@ -114,19 +118,19 @@ export default class Post implements IPost {
         if (obj.annotationStore) {
             this.annotationStore.set(obj.annotationStore.self())
         } else if (obj.annotation) {
-            this.annotationStore.set(obj.annotation)
+            this.annotationStore.set(new Annotation(obj.annotation))
         }
 
         if (obj.authorStore) {
             this.authorStore.set(obj.authorStore.self())
         } else if (obj.author) {
-            this.authorStore.set(obj.author)
+            this.authorStore.set(new User(obj.author))
         }
 
         if (obj.commentsStore) {
             this.commentsStore.set(obj.commentsStore.all())
         } else if (obj.comments) {
-            this.commentsStore.set(obj.comments)
+            this.commentsStore.set(obj.comments.map((c) => new Comment(c)))
         }
     }
 

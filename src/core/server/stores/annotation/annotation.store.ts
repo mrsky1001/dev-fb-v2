@@ -5,7 +5,7 @@ import Annotation from './annotation'
 
 export type IAnnotationStore = WrapperProps<IAnnotation>
 
-export const createAnnotationStore = (s?: IAnnotation): AnnotationStore => {
+export const createAnnotationStore = (s?: IAnnotation): IAnnotationStore => {
     const store = writable<IAnnotation>(new Annotation(s))
 
     return _baseStore(store, ({ init, self }) => ({

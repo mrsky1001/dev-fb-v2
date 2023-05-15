@@ -43,6 +43,8 @@
     background-color: rgb(0 0 0/var(--tw-bg-opacity));
 }
 
+
+
 @media (min-width: 1280px){
 
     .h-header {
@@ -50,7 +52,7 @@
     }
 
     .w-aside {
-        width: 336px;
+        width: 390px;
     }
 
     .w-article {
@@ -61,3 +63,10 @@
         margin-top: -7rem;
     }
 }
+
+@media (max-width: 1450px){
+    .w-aside {
+        width: 336px;
+    }
+}
+
