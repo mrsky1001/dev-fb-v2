@@ -11,6 +11,7 @@
     "format": "prettier --plugin-search-dir dev-fb-v2 --write "
   },
   "devDependencies": {
+    "@fontsource/inter": "^4.5.15",
     "@fontsource/source-sans-pro": "^4.5.11",
     "@neoconfetti/svelte": "^1.0.0",
     "@sveltejs/adapter-auto": "^2.0.0",
@@ -23,6 +24,7 @@
     "svelte-heros": "^3.1.0",
     "node-sass": "^8.0.0",
     "sass": "^1.58.3",
+    "flowbite-typography": "^1.0.3",
     "postcss": "^8.4.21",
     "autoprefixer": "^10.4.13",
     "flowbite": "^1.6.4",

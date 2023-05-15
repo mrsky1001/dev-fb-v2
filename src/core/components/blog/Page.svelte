@@ -30,11 +30,12 @@
 <!--    {subDescription}-->
 <!--</SectionBlock>-->
 
-<main class="pb-16 xl:pb-24 bg-white">
-    <header class="header-img w-full h-[calc(50vh-5rem)] bg-no-repeat bg-cover bg-center bg-blend-darken relative">
+<main class="mt-10 pb-16 xl:pb-24 bg-white">
+    <header class="header-img h-header w-full bg-no-repeat bg-cover bg-center bg-blend-darken relative">
+        <div class="absolute top-0 left-0 w-full h-full bg-opacity-50 bg-black" />
         <div class="container mx-auto">
             <div
-                class="absolute items-center px-4 mx-auto w-full translate-y-1/4 top-1/2 peer-placeholder-shown:-translate-y-1/2"
+                class="absolute items-center px-4 mx-auto w-full translate-y-1/2 peer-placeholder-shown:-translate-y-1/2"
             >
                 <span class="block mb-4 text-gray-300">
                     Published in
@@ -50,12 +51,12 @@
         </div>
     </header>
     <div
-        class="flex relative z-20 justify-between p-6 O7PVNyZQb9PCjpNKbt_t mx-4 container bg-white rounded _oadEIkQd6OQiaXef3p8 arrNNfkSdu1f3lPZlfMG mx-auto"
+        class="flex relative z-20 justify-between p-6 O7PVNyZQb9PCjpNKbt_t mx-4 container bg-white rounded w-article-container arrNNfkSdu1f3lPZlfMG mx-auto"
     >
         <article
-            class="trp_bA_rt_zvxYf81Zkg container max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert"
+            class="w-article container max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert"
         >
-            <div class="flex flex-col flex-row justify-between items-center">
+            <div class="flex flex-row justify-between items-center">
                 <div class="flex items-center B1cgbA6Bb4LQo0qFJKck text-gray-500 text-base mb-2">
                     <span
                         >By <a href="#" class="text-gray-900 _5zvlMLkN1qETxEl3IhT InmgdriTvIwr8C_lWYEj font-semibold"
@@ -1060,26 +1061,24 @@
                 </article>
             </section>
         </article>
-        <aside class="hidden block" aria-labelledby="sidebar-label">
-            <div class="P_HSe8VFU4IhDA4oLZY6 sticky top-6">
+        <aside class="block" aria-labelledby="sidebar-label">
+            <div class="w-aside sticky top-[8rem]">
                 <h3 id="sidebar-label" class="sr-only">Sidebar</h3>
                 <div class="mb-8">
-                    <h4 class="mb-2 text-sm font-bold text-gray-900 text-white uppercase">
-                        Flowbite News morning headlines
-                    </h4>
-                    <p class="mb-4 text-sm font-light text-gray-500 text-gray-400">
+                    <h4 class="mb-2 font-bold text-gray-900 uppercase">Flowbite News morning headlines</h4>
+                    <p class="mb-4 font-light text-gray-500 text-gray-400">
                         Get all the stories you need-to-know from the most powerful name in news delivered first thing
                         every morning to your inbox
                     </p>
                     <button
                         type="button"
                         data-modal-toggle="newsletter-modal"
-                        class="text-white bg-primary-700 hover:bg-primary-800 _FONMPVaCsLFJJGDaaIL focus:ring-primary-300 font-medium rounded-lg text-sm px-5 _gKcj49wZgnwx1LpcJi6 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 qHIOIw8TObHgD3VvKa5x dark:focus:ring-primary-800 text-center container"
+                        class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 text-center container"
                         >Subscribe
                     </button>
                 </div>
                 <div class="md:mb-12">
-                    <h4 class="mb-4 text-sm font-bold text-gray-900 text-white uppercase">Latest news</h4>
+                    <h4 class="mb-4 text-sm font-bold text-gray-900 uppercase">Latest news</h4>
                     <div class="mb-6 flex items-center">
                         <a href="#" class="shrink-0">
                             <img
@@ -1089,9 +1088,7 @@
                             />
                         </a>
                         <div>
-                            <h5 class="mb-2 sm:text-lg font-bold leading-tight text-white text-gray-900">
-                                Our first office
-                            </h5>
+                            <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">Our first office</h5>
                             <p class="mb-2 font-light text-gray-500 text-gray-400">
                                 Over the past year, Volosoft has undergone changes.
                             </p>
@@ -1112,7 +1109,7 @@
                             />
                         </a>
                         <div>
-                            <h5 class="mb-2 sm:text-lg font-bold leading-tight text-white text-gray-900">
+                            <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">
                                 Enterprise Design tips
                             </h5>
                             <p class="mb-2 font-light text-gray-500 text-gray-400">
@@ -1135,7 +1132,7 @@
                             />
                         </a>
                         <div>
-                            <h5 class="mb-2 sm:text-lg font-bold leading-tight text-white text-gray-900">
+                            <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">
                                 Partnered up with Google
                             </h5>
                             <p class="mb-2 font-light text-gray-500 text-gray-400">
@@ -1151,10 +1148,7 @@
                     </div>
                 </div>
                 <div>
-                    <a
-                        href="#"
-                        class="flex justify-center items-center mb-3 container h-48 bg-gray-100 rounded-lg bg-gray-700"
-                    >
+                    <a href="#" class="flex justify-center items-center mb-3 container h-48 bg-gray-100 rounded-lg">
                         <svg
                             aria-hidden="true"
                             class="w-8 h-8 text-gray-400"

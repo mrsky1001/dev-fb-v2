@@ -27,7 +27,6 @@
 </script>
 
 {#if data.post}
-    asd
     <Page postStore={data.post} />
 {/if}
 
