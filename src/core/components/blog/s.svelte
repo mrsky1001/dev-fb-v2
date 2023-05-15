@@ -1,53 +1,72 @@
-<main class=" pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900">
-    <header
-        class="header-img w-full max-w-screen-xl _xc9_ta26QtN17Sx1_Fe bg-no-repeat bg-cover bg-center zencAbqT6WdOZbhcPVjf QYPW4nl6nHaIbrtaXf4h"
-    >
-        <div
-            class="iZ8W30HPRQAuO6al90LU _ccvJ9JsfoF81kZ3lkJh _J57_xJ7KhmAX1D2Pnei w-full j34KztD3SBxL_tQWzosr _ngJt2TgM57HPYTCC5GA F6maSyXBC_uv_A_dciar"
-        />
-        <div
-            class="iZ8W30HPRQAuO6al90LU PojEYad6nPpbKmAUjVBI c1ibYmNHw6Cxfcu_pPgz veFXkDzfJN473U3ycrV8 RV8RoaI_SlEMC5CEQ3ms w-full HV01LldvyEqRHHy0hljF wfpSIkDBCpd44vEdymO_ BRg_hinIPYxGN5WJ_Xay KWb4ZbhYGt096ggQOJa_ Xjxpb8u_H96dZt4r1eF6"
-        >
-            <span class="ttxtqsLWp2pFRX8yUvWd _9OKVeTXzfSwD_NYO6_G pDeChwIM17vwwm9ZmlIw"
-                >Published in <a href="#" class="LYMps1kO2vF8HBymW3az wP9HMsqy6b96l2HBRbgb _5zvlMLkN1qETxEl3IhT"
-                    >World News</a
-                ></span
+<script lang="ts">
+    import { ArticleAuthor, ArticleBody, ArticleHead, ArticleWrapper } from '../flowbite'
+    import { ArrowSmallRight } from 'svelte-heros'
+    import { onDestroy, onMount } from 'svelte'
+    import type { IPost } from '../../server/stores/post/post'
+    import ArticleContent from '../flowbite/blog/ArticleContent.svelte'
+    import type { IPostStore } from '../../server/stores/post/post.store'
+    import { subscribe } from 'svelte/internal'
+
+    export let postStore: IPostStore | undefined = undefined
+    let post: IPost | undefined
+
+    const unsubscribe = subscribe(postStore, () => {
+        post = postStore?.self()
+    })
+
+    onMount(() => {
+        console.log('sss')
+        console.log(postStore)
+    })
+
+    onDestroy(() => unsubscribe())
+</script>
+
+<!--<MetaTag {breadcrumb_title} {title} {dir} {description}/>-->
+
+<!--<SectionHeader category="marketing" {title} {breadcrumb_title} {description} />-->
+
+<!--<SectionBlock title={subTitle}>-->
+<!--    {subDescription}-->
+<!--</SectionBlock>-->
+
+<main class="mt-10 pb-16 xl:pb-24 bg-white">
+    <header class="header-img h-header w-full bg-no-repeat bg-cover bg-center bg-blend-darken relative">
+        <div class="absolute top-0 left-0 w-full h-full bg-opacity-50 bg-black" />
+        <div class="container mx-auto">
+            <div
+                class="absolute items-center px-4 mx-auto w-full translate-y-1/2 peer-placeholder-shown:-translate-y-1/2"
             >
-            <h1
-                class="_9OKVeTXzfSwD_NYO6_G I5nnt4bpo_o8qp1p2_FC _e063bssp_1bldcJ6kR0 P2kov_od1FPjxxII24T5 MxQqv3Z913orO6JQGGbH wP9HMsqy6b96l2HBRbgb fQ3UmoCh_2qglPqQf5CZ vAGTG1e_BcCgc9_9R6z3"
-            >
-                Flowbite Blocks Tutorial - Learn how to get started with custom sections using the Flowbite Blocks
-            </h1>
-            <p class="VwrSTsh__so52zqMJvws oTkHpmOXEgQRdykOe3sq pDeChwIM17vwwm9ZmlIw">
-                Before going digital, you might scribbling down some ideas in a sketchbook.
-            </p>
+                <span class="block mb-4 text-gray-300">
+                    Published in
+                    <a href="#" class="font-semibold text-white _5zvlMLkN1qETxEl3IhT">World News</a>
+                </span>
+                <h1 class="mb-4 max-w-4xl text-5xl font-extrabold leading-none text-white">
+                    Flowbite Blocks Tutorial - Learn how to get started with custom sections using the Flowbite Blocks
+                </h1>
+                <p class="sm:text-lg font-normal text-gray-300">
+                    Before going digital, you might scribbling down some ideas in a sketchbook.
+                </p>
+            </div>
         </div>
     </header>
     <div
-        class="kqgYncRJQ7spwKfig6It QYPW4nl6nHaIbrtaXf4h MN_MaEuEFmiXUnb4S5NS _T15kfOPGkvwZnqhqKce rhHZLKCNkg6rp7jwfB1J O7PVNyZQb9PCjpNKbt_t KmicKCo2aIIAJvfPPnrM HV01LldvyEqRHHy0hljF yjGyQxv8jnYk9_MGMqLN _cpMMPjFQqjJu4i0Puod YPSoR6AXtPgkmylUmcbT _oadEIkQd6OQiaXef3p8 arrNNfkSdu1f3lPZlfMG _ocA0sk94abY4DpqKzYF"
+        class="flex relative z-20 justify-between p-6 O7PVNyZQb9PCjpNKbt_t mx-4 container bg-white rounded w-article-container arrNNfkSdu1f3lPZlfMG mx-auto"
     >
         <article
-            class="trp_bA_rt_zvxYf81Zkg w-full QFvy_qHEb4VhI8nsNH9k format format-sm sm:format-base lg:format-lg format-blue dark:format-invert"
+            class="w-article container max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert"
         >
-            <div
-                class="kqgYncRJQ7spwKfig6It BrSO24r_jx46AXZOyBJR aXohCatq2P98Q80o4vdb _T15kfOPGkvwZnqhqKce l0hZDMTUghc7ACx15hQU"
-            >
-                <div
-                    class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE B1cgbA6Bb4LQo0qFJKck K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic osxEM2eQc4Pc_arzCZsv rD4HtsUG_hahmbh2Kj09 QTzX2Cr9jhY6WXuEsiB_"
-                >
+            <div class="flex flex-row justify-between items-center">
+                <div class="flex items-center B1cgbA6Bb4LQo0qFJKck text-gray-500 text-base mb-2">
                     <span
-                        >By <a
-                            href="#"
-                            class="g3OYBOqwXUEW4dRGogkH a0Ed69aMSu0vgf4oysz0 _5zvlMLkN1qETxEl3IhT InmgdriTvIwr8C_lWYEj LYMps1kO2vF8HBymW3az"
+                        >By <a href="#" class="text-gray-900 _5zvlMLkN1qETxEl3IhT InmgdriTvIwr8C_lWYEj font-semibold"
                             >Jese Leos</a
                         ></span
                     >
-                    <span
-                        class="HqvWGMU4tAF6SCT7aaHM oa1vnmRHwGkKhMeo1olN eGLbGfR5AYzKjFKW_AQT Kj_JWX8VAGhGDhOAykml n8e6ORKgPTnY6zgs5HS7"
-                    />
+                    <span class="bg-gray-300 bg-gray-400 w-2 h-2 rounded-full" />
                     <span
                         ><time
-                            class="oTkHpmOXEgQRdykOe3sq K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic"
+                            class="font-normal text-gray-500 text-gray-400"
                             pubdate=""
                             datetime="2022-03-08"
                             title="August 3rd, 2022">August 3, 2022, 2:20am EDT</time
@@ -58,11 +77,11 @@
                     <div class="not-format">
                         <button
                             data-tooltip-target="tooltip-facebook"
-                            class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Y34SQMYAJVIAdOFKA3gG MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk _F_1gdhzusC6tSOWHtx_ K1PPCJwslha8GUIvV_Cr yjGyQxv8jnYk9_MGMqLN _Qk4_E9_iLqcHsRZZ4ge DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x a0Ed69aMSu0vgf4oysz0 fq6QICPx8VcyAlLZi_Iy _cpMMPjFQqjJu4i0Puod _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy bg-gray-800 _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
-                                class="eUuXwBkW5W4__eatjSfd RRXFBumaW2SHdseZaWm6 K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic"
+                                class="w-5 h-5 text-gray-500 text-gray-400"
                                 aria-hidden="true"
                                 viewBox="0 0 18 18"
                                 fill="currentColor"
@@ -83,25 +102,25 @@
                         <div
                             id="tooltip-facebook"
                             role="tooltip"
-                            class="ADhvqXKjAizJqFADNpvd iZ8W30HPRQAuO6al90LU p3NM1OB16vfk_yD2siUB _v8hjA9ct_v6OhSQD7fC zhRMeqbg7JsftloqW_W6 MQMN74ivNmI6x68DZajA MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk wP9HMsqy6b96l2HBRbgb J_ldU2ISOuzV8yupuBpE _Qk4_E9_iLqcHsRZZ4ge ltPMSn_g3PKyqeS8vmZk AtHBVur__RVIv6BHiI4a M4SAv60iaayh2_Cd_QyF KB__y25H2tVACg2mjb4C Usqns9w__onp5CWoXDJ0 _t2wg7hRcyKsNN8CSSeU"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(-16px, -6125px);"
+                            class="inline-block absolute z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm transition-opacity duration-300 Usqns9w__onp5CWoXDJ0 bg-gray-700 opacity-0 tooltip-arrow"
+                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(564px, -6365px);"
                             data-popper-placement="top"
                         >
                             Share on Facebook
                             <div
-                                class="POMYoNHqN8pOsNYFYFHr"
+                                class="tooltip-arrow"
                                 data-popper-arrow=""
-                                style="position: absolute; left: 0px; transform: translate(54px, 0px);"
+                                style="position: absolute; left: 0px; transform: translate(73px, 0px);"
                             />
                         </div>
 
                         <button
                             data-tooltip-target="tooltip-twitter"
-                            class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Y34SQMYAJVIAdOFKA3gG MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk _F_1gdhzusC6tSOWHtx_ K1PPCJwslha8GUIvV_Cr yjGyQxv8jnYk9_MGMqLN _Qk4_E9_iLqcHsRZZ4ge DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x a0Ed69aMSu0vgf4oysz0 fq6QICPx8VcyAlLZi_Iy _cpMMPjFQqjJu4i0Puod _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy bg-gray-800 _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
-                                class="eUuXwBkW5W4__eatjSfd RRXFBumaW2SHdseZaWm6 K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic"
+                                class="w-5 h-5 text-gray-500 text-gray-400"
                                 aria-hidden="true"
                                 viewBox="0 0 18 18"
                                 fill="currentColor"
@@ -115,25 +134,25 @@
                         <div
                             id="tooltip-twitter"
                             role="tooltip"
-                            class="ADhvqXKjAizJqFADNpvd iZ8W30HPRQAuO6al90LU p3NM1OB16vfk_yD2siUB _v8hjA9ct_v6OhSQD7fC zhRMeqbg7JsftloqW_W6 MQMN74ivNmI6x68DZajA MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk wP9HMsqy6b96l2HBRbgb J_ldU2ISOuzV8yupuBpE _Qk4_E9_iLqcHsRZZ4ge ltPMSn_g3PKyqeS8vmZk AtHBVur__RVIv6BHiI4a M4SAv60iaayh2_Cd_QyF KB__y25H2tVACg2mjb4C Usqns9w__onp5CWoXDJ0 _t2wg7hRcyKsNN8CSSeU"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(19px, -6125px);"
+                            class="inline-block absolute z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm transition-opacity duration-300 Usqns9w__onp5CWoXDJ0 bg-gray-700 opacity-0 tooltip-arrow"
+                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(615px, -6365px);"
                             data-popper-placement="top"
                         >
                             Share on Twitter
                             <div
-                                class="POMYoNHqN8pOsNYFYFHr"
+                                class="tooltip-arrow"
                                 data-popper-arrow=""
-                                style="position: absolute; left: 0px; transform: translate(59px, 0px);"
+                                style="position: absolute; left: 0px; transform: translate(63px, 0px);"
                             />
                         </div>
 
                         <button
                             data-tooltip-target="tooltip-reddit"
-                            class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Y34SQMYAJVIAdOFKA3gG MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk _F_1gdhzusC6tSOWHtx_ K1PPCJwslha8GUIvV_Cr yjGyQxv8jnYk9_MGMqLN _Qk4_E9_iLqcHsRZZ4ge DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x a0Ed69aMSu0vgf4oysz0 fq6QICPx8VcyAlLZi_Iy _cpMMPjFQqjJu4i0Puod _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy bg-gray-800 _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
-                                class="eUuXwBkW5W4__eatjSfd RRXFBumaW2SHdseZaWm6 K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic"
+                                class="w-5 h-5 text-gray-500 text-gray-400"
                                 aria-hidden="true"
                                 viewBox="0 0 18 18"
                                 fill="currentColor"
@@ -158,125 +177,128 @@
                         <div
                             id="tooltip-reddit"
                             role="tooltip"
-                            class="ADhvqXKjAizJqFADNpvd iZ8W30HPRQAuO6al90LU p3NM1OB16vfk_yD2siUB _v8hjA9ct_v6OhSQD7fC zhRMeqbg7JsftloqW_W6 MQMN74ivNmI6x68DZajA MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk wP9HMsqy6b96l2HBRbgb J_ldU2ISOuzV8yupuBpE _Qk4_E9_iLqcHsRZZ4ge ltPMSn_g3PKyqeS8vmZk AtHBVur__RVIv6BHiI4a M4SAv60iaayh2_Cd_QyF KB__y25H2tVACg2mjb4C Usqns9w__onp5CWoXDJ0 _t2wg7hRcyKsNN8CSSeU"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(64px, -6125px);"
+                            class="inline-block absolute tooltip-arrow z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 Usqns9w__onp5CWoXDJ0 bg-gray-700"
+                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(930px, -5975px);"
                             data-popper-placement="top"
                         >
                             Post on Reddit
                             <div
-                                class="POMYoNHqN8pOsNYFYFHr"
+                                class="tooltip-arrow"
                                 data-popper-arrow=""
-                                style="position: absolute; left: 0px; transform: translate(54px, 0px);"
+                                style="position: absolute; left: 0px; transform: translate(57px, 0px);"
                             />
                         </div>
 
                         <button
                             data-tooltip-target="tooltip-link"
-                            class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Y34SQMYAJVIAdOFKA3gG MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk _F_1gdhzusC6tSOWHtx_ K1PPCJwslha8GUIvV_Cr yjGyQxv8jnYk9_MGMqLN _Qk4_E9_iLqcHsRZZ4ge DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x a0Ed69aMSu0vgf4oysz0 fq6QICPx8VcyAlLZi_Iy _cpMMPjFQqjJu4i0Puod _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy bg-gray-800 _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
-                                class="eUuXwBkW5W4__eatjSfd RRXFBumaW2SHdseZaWm6 K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic"
+                                class="w-5 h-5 text-gray-500 text-gray-400"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
-                                ><path
+                            >
+                                <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
                                     d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                                /></svg
-                            >
+                                />
+                            </svg>
                         </button>
                         <div
                             id="tooltip-link"
                             role="tooltip"
-                            class="ADhvqXKjAizJqFADNpvd iZ8W30HPRQAuO6al90LU _v8hjA9ct_v6OhSQD7fC zhRMeqbg7JsftloqW_W6 MQMN74ivNmI6x68DZajA MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk wP9HMsqy6b96l2HBRbgb J_ldU2ISOuzV8yupuBpE _Qk4_E9_iLqcHsRZZ4ge ltPMSn_g3PKyqeS8vmZk M4SAv60iaayh2_Cd_QyF KB__y25H2tVACg2mjb4C Usqns9w__onp5CWoXDJ0 _t2wg7hRcyKsNN8CSSeU AtHBVur__RVIv6BHiI4a p3NM1OB16vfk_yD2siUB"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(1022px, -5815px);"
+                            class="inline-block absolute z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm transition-opacity duration-300 Usqns9w__onp5CWoXDJ0 bg-gray-700 opacity-0 tooltip-arrow"
+                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(719px, -6365px);"
                             data-popper-placement="top"
                         >
                             Share link
                             <div
-                                class="POMYoNHqN8pOsNYFYFHr"
+                                class="tooltip-arrow"
                                 data-popper-arrow=""
-                                style="position: absolute; left: 0px; transform: translate(39px, 0px);"
+                                style="position: absolute; left: 0px; transform: translate(41px, 0px);"
                             />
                         </div>
 
                         <button
                             data-tooltip-target="tooltip-save"
-                            class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Y34SQMYAJVIAdOFKA3gG MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk _F_1gdhzusC6tSOWHtx_ K1PPCJwslha8GUIvV_Cr yjGyQxv8jnYk9_MGMqLN _Qk4_E9_iLqcHsRZZ4ge DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x a0Ed69aMSu0vgf4oysz0 fq6QICPx8VcyAlLZi_Iy _cpMMPjFQqjJu4i0Puod _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy bg-gray-800 _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
-                                class="eUuXwBkW5W4__eatjSfd RRXFBumaW2SHdseZaWm6 K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic"
+                                class="w-5 h-5 text-gray-500 text-gray-400"
                                 aria-hidden="true"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
-                                ><path
+                            >
+                                <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
                                     d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                                /></svg
-                            >
+                                />
+                            </svg>
                         </button>
                         <div
                             id="tooltip-save"
                             role="tooltip"
-                            class="ADhvqXKjAizJqFADNpvd iZ8W30HPRQAuO6al90LU p3NM1OB16vfk_yD2siUB _v8hjA9ct_v6OhSQD7fC zhRMeqbg7JsftloqW_W6 MQMN74ivNmI6x68DZajA MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk wP9HMsqy6b96l2HBRbgb J_ldU2ISOuzV8yupuBpE _Qk4_E9_iLqcHsRZZ4ge ltPMSn_g3PKyqeS8vmZk AtHBVur__RVIv6BHiI4a M4SAv60iaayh2_Cd_QyF KB__y25H2tVACg2mjb4C Usqns9w__onp5CWoXDJ0 _t2wg7hRcyKsNN8CSSeU"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(140px, -6125px);"
+                            class="inline-block absolute z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm transition-opacity duration-300 Usqns9w__onp5CWoXDJ0 bg-gray-700 opacity-0 tooltip-arrow"
+                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(739px, -6365px);"
                             data-popper-placement="top"
                         >
                             Save this article
                             <div
-                                class="POMYoNHqN8pOsNYFYFHr"
+                                class="tooltip-arrow"
                                 data-popper-arrow=""
-                                style="position: absolute; left: 0px; transform: translate(58px, 0px);"
+                                style="position: absolute; left: 0px; transform: translate(62px, 0px);"
                             />
                         </div>
                         <button
                             id="dropdownMenuIconHorizontalButton"
                             data-dropdown-toggle="dropdownDotsHorizontal"
-                            class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Y34SQMYAJVIAdOFKA3gG MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk _F_1gdhzusC6tSOWHtx_ K1PPCJwslha8GUIvV_Cr yjGyQxv8jnYk9_MGMqLN _Qk4_E9_iLqcHsRZZ4ge DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x a0Ed69aMSu0vgf4oysz0 fq6QICPx8VcyAlLZi_Iy _cpMMPjFQqjJu4i0Puod _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy bg-gray-800 _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
-                                class="eUuXwBkW5W4__eatjSfd RRXFBumaW2SHdseZaWm6 K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic"
+                                class="w-5 h-5 text-gray-500 text-gray-400"
                                 aria-hidden="true"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
-                                ><path
-                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                                /></svg
                             >
+                                <path
+                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+                                />
+                            </svg>
                         </button>
                         <!-- Dropdown menu -->
                         <div
                             id="dropdownDotsHorizontal"
-                            class="j2x7_17hqRVmwte_tWFa _v8hjA9ct_v6OhSQD7fC _jl1uJwgVfyK51huwbk0 yjGyQxv8jnYk9_MGMqLN YPSoR6AXtPgkmylUmcbT FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG lhxYQ_2y3sYNN3W1V_3q _t2wg7hRcyKsNN8CSSeU WoQqugRcWrYbmsWhxCUr"
-                            style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(258px, 418px);"
+                            class="hidden z-10 w-36 bg-white rounded FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG shadow bg-gray-700 WoQqugRcWrYbmsWhxCUr"
+                            style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(1130px, 386px);"
                             data-popper-placement="bottom"
                         >
                             <ul
-                                class="e6xSuaqE4UvMawjVXuq_ MxG1ClE4KPrIvlL5_Q5x jJJfWn8GV_ODBSwRp2nH mEiJmUhVeO0zHYjQchDB"
+                                class="py-1 text-sm text-gray-700 text-gray-200"
                                 aria-labelledby="dropdownMenuIconHorizontalButton"
                             >
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Add to collection</a
                                     >
                                 </li>
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Report</a
                                     >
                                 </li>
@@ -303,7 +325,7 @@
                 <img
                     src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png"
                     alt=""
-                    class="RV8RoaI_SlEMC5CEQ3ms"
+                    class="mx-auto"
                 />
                 <figcaption>Digital art by Anonymous</figcaption>
             </figure>
@@ -487,55 +509,45 @@
             </p>
             <p>And there you have it! Everything you need to design and share prototypes — right in Flowbite Figma.</p>
             <section class="not-format">
-                <div class="kqgYncRJQ7spwKfig6It _T15kfOPGkvwZnqhqKce neyUwteEn7DOg9pBSJJE SGCI_v4dZasZ65DtKHsW">
-                    <h2
-                        class="VwrSTsh__so52zqMJvws V08UEtft_yVfsj8mKvEE _WfIfkoGCi0vvUrnNs4M g3OYBOqwXUEW4dRGogkH a0Ed69aMSu0vgf4oysz0"
-                    >
-                        Discussion (20)
-                    </h2>
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="sm:text-lg text-2xl font-bold text-gray-900 text-white">Discussion (20)</h2>
                     <div>
                         <button
                             type="button"
-                            class="zhRMeqbg7JsftloqW_W6 MQMN74ivNmI6x68DZajA MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk g3OYBOqwXUEW4dRGogkH yjGyQxv8jnYk9_MGMqLN _Qk4_E9_iLqcHsRZZ4ge PWreZZgitgAm_Nv4Noh9 pxHuWvF853ck68OLN6ef qHIOIw8TObHgD3VvKa5x DpMPWwlSESiYA8EE1xKM hover:text-primary-700 m_8FxTcpOfmK___hAaJ6 _FONMPVaCsLFJJGDaaIL _bKyZ1er5YE_NnrwOCm9 __8kBLtrR_iuU2wW25Lp _cpMMPjFQqjJu4i0Puod eCx_6PNzncAD5yo7Qcic _BIVSYBXQUqEf_ltPrSk DTyjKhtXBNaebZa5L0l9 _OovBxfPdK7Rjv2nh2Ot"
-                            >Subscribe</button
-                        >
+                            class="py-2 px-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 qHIOIw8TObHgD3VvKa5x DpMPWwlSESiYA8EE1xKM hover:text-primary-700 m_8FxTcpOfmK___hAaJ6 _FONMPVaCsLFJJGDaaIL _bKyZ1er5YE_NnrwOCm9 __8kBLtrR_iuU2wW25Lp bg-gray-800 text-gray-400 dark:border-gray-600 DTyjKhtXBNaebZa5L0l9 _OovBxfPdK7Rjv2nh2Ot"
+                            >Subscribe
+                        </button>
                     </div>
                 </div>
-                <form class="SGCI_v4dZasZ65DtKHsW">
+                <form class="mb-6">
                     <div
-                        class="_9OKVeTXzfSwD_NYO6_G w-full jCHKuJ3G7rklx_LiAfbf _Qk4_E9_iLqcHsRZZ4ge PWreZZgitgAm_Nv4Noh9 pxHuWvF853ck68OLN6ef _t2wg7hRcyKsNN8CSSeU _BIVSYBXQUqEf_ltPrSk"
+                        class="mb-4 container bg-gray-50 rounded-lg border border-gray-200 bg-gray-700 dark:border-gray-600"
                     >
-                        <div
-                            class="zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 jCHKuJ3G7rklx_LiAfbf QduCFKdo63_zjao7xNee _cpMMPjFQqjJu4i0Puod"
-                        >
-                            <label for="comment" class="BWabIWdbZ5qWNbPXxuBc">Your comment</label>
+                        <div class="py-2 px-4 bg-gray-50 rounded-t-lg bg-gray-800">
+                            <label for="comment" class="sr-only">Your comment</label>
                             <textarea
                                 id="comment"
                                 rows="6"
-                                class="psGSaoX3vEaTuVjCVZ1M w-full MxG1ClE4KPrIvlL5_Q5x g3OYBOqwXUEW4dRGogkH jCHKuJ3G7rklx_LiAfbf cMZ6g1VlTxVbLLDgApBS _cpMMPjFQqjJu4i0Puod W83fbcqTDAidAC5iVTZ9 a0Ed69aMSu0vgf4oysz0 _DJ2tfp6E9c_teMKVD3z"
+                                class="px-0 container text-sm text-gray-900 bg-gray-50 border-0 bg-gray-800 W83fbcqTDAidAC5iVTZ9 text-white _DJ2tfp6E9c_teMKVD3z"
                                 placeholder="Write a comment..."
                                 required=""
                             />
                         </div>
-                        <div
-                            class="kqgYncRJQ7spwKfig6It _T15kfOPGkvwZnqhqKce neyUwteEn7DOg9pBSJJE zhRMeqbg7JsftloqW_W6 MQMN74ivNmI6x68DZajA VPOaIHacePDZ9eYE_phl _BIVSYBXQUqEf_ltPrSk"
-                        >
+                        <div class="flex justify-between items-center py-2 px-3 border-y dark:border-gray-600">
                             <button
                                 type="submit"
-                                class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE _gKcj49wZgnwx1LpcJi6 veFXkDzfJN473U3ycrV8 XklWzT8y98pp042XEQp4 _A6LflweZRUwrcL6M2Tk _F_1gdhzusC6tSOWHtx_ wP9HMsqy6b96l2HBRbgb bg-primary-700 _Qk4_E9_iLqcHsRZZ4ge _FONMPVaCsLFJJGDaaIL focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+                                class="inline-flex items-center _gKcj49wZgnwx1LpcJi6 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg _FONMPVaCsLFJJGDaaIL focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
                             >
                                 Post comment
                             </button>
-                            <div
-                                class="kqgYncRJQ7spwKfig6It t_qQHVH2BPClzURsJ6Fp pz8Hkt0c6QoT_d0LgJ4L OIS7GGe2MuDGegIAgZfY"
-                            >
+                            <div class="flex pl-0 pz8Hkt0c6QoT_d0LgJ4L pl-2">
                                 <button
                                     type="button"
-                                    class="ay0ziTPUL4Ag5d1DkSY7 _WclR59Ji8jwfmjPtOei Y34SQMYAJVIAdOFKA3gG K1PPCJwslha8GUIvV_Cr YPSoR6AXtPgkmylUmcbT avTmsFU5TwHXQh07Ji35 _xQT_qSXfwWf6ZhwRle4 DpMPWwlSESiYA8EE1xKM eCx_6PNzncAD5yo7Qcic DTyjKhtXBNaebZa5L0l9 xotVay0PVtR3gElm6ql5"
+                                    class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer _xQT_qSXfwWf6ZhwRle4 DpMPWwlSESiYA8EE1xKM text-gray-400 DTyjKhtXBNaebZa5L0l9 xotVay0PVtR3gElm6ql5"
                                 >
                                     <svg
                                         aria-hidden="true"
-                                        class="eUuXwBkW5W4__eatjSfd RRXFBumaW2SHdseZaWm6"
+                                        class="w-5 h-5"
                                         fill="currentColor"
                                         viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -546,15 +558,15 @@
                                             clip-rule="evenodd"
                                         />
                                     </svg>
-                                    <span class="BWabIWdbZ5qWNbPXxuBc">Attach file</span>
+                                    <span class="sr-only">Attach file</span>
                                 </button>
                                 <button
                                     type="button"
-                                    class="ay0ziTPUL4Ag5d1DkSY7 _WclR59Ji8jwfmjPtOei Y34SQMYAJVIAdOFKA3gG K1PPCJwslha8GUIvV_Cr YPSoR6AXtPgkmylUmcbT avTmsFU5TwHXQh07Ji35 _xQT_qSXfwWf6ZhwRle4 DpMPWwlSESiYA8EE1xKM eCx_6PNzncAD5yo7Qcic DTyjKhtXBNaebZa5L0l9 xotVay0PVtR3gElm6ql5"
+                                    class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer _xQT_qSXfwWf6ZhwRle4 DpMPWwlSESiYA8EE1xKM text-gray-400 DTyjKhtXBNaebZa5L0l9 xotVay0PVtR3gElm6ql5"
                                 >
                                     <svg
                                         aria-hidden="true"
-                                        class="eUuXwBkW5W4__eatjSfd RRXFBumaW2SHdseZaWm6"
+                                        class="w-5 h-5"
                                         fill="currentColor"
                                         viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -565,15 +577,15 @@
                                             clip-rule="evenodd"
                                         />
                                     </svg>
-                                    <span class="BWabIWdbZ5qWNbPXxuBc">Set location</span>
+                                    <span class="sr-only">Set location</span>
                                 </button>
                                 <button
                                     type="button"
-                                    class="ay0ziTPUL4Ag5d1DkSY7 _WclR59Ji8jwfmjPtOei Y34SQMYAJVIAdOFKA3gG K1PPCJwslha8GUIvV_Cr YPSoR6AXtPgkmylUmcbT avTmsFU5TwHXQh07Ji35 _xQT_qSXfwWf6ZhwRle4 DpMPWwlSESiYA8EE1xKM eCx_6PNzncAD5yo7Qcic DTyjKhtXBNaebZa5L0l9 xotVay0PVtR3gElm6ql5"
+                                    class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer _xQT_qSXfwWf6ZhwRle4 DpMPWwlSESiYA8EE1xKM text-gray-400 DTyjKhtXBNaebZa5L0l9 xotVay0PVtR3gElm6ql5"
                                 >
                                     <svg
                                         aria-hidden="true"
-                                        class="eUuXwBkW5W4__eatjSfd RRXFBumaW2SHdseZaWm6"
+                                        class="w-5 h-5"
                                         fill="currentColor"
                                         viewBox="0 0 20 20"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -584,38 +596,34 @@
                                             clip-rule="evenodd"
                                         />
                                     </svg>
-                                    <span class="BWabIWdbZ5qWNbPXxuBc">Upload image</span>
+                                    <span class="sr-only">Upload image</span>
                                 </button>
                             </div>
                         </div>
                     </div>
                 </form>
-                <article
-                    class="rhHZLKCNkg6rp7jwfB1J SGCI_v4dZasZ65DtKHsW osxEM2eQc4Pc_arzCZsv jCHKuJ3G7rklx_LiAfbf _Qk4_E9_iLqcHsRZZ4ge _t2wg7hRcyKsNN8CSSeU"
-                >
-                    <footer class="kqgYncRJQ7spwKfig6It _T15kfOPGkvwZnqhqKce neyUwteEn7DOg9pBSJJE rD4HtsUG_hahmbh2Kj09">
-                        <div class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE">
-                            <p
-                                class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Cl7RaVW6jbggnJW_S87T MxG1ClE4KPrIvlL5_Q5x g3OYBOqwXUEW4dRGogkH a0Ed69aMSu0vgf4oysz0"
-                            >
+                <article class="p-6 mb-6 text-base bg-gray-50 rounded-lg bg-gray-700">
+                    <footer class="flex justify-between items-center mb-2">
+                        <div class="flex items-center">
+                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 text-white">
                                 <img
-                                    class="_gmxfZ2BpOHxa6nWwqBB nLhohPz5FpffXM9RSdFT _XD2a764x49B1E2F9f8X n8e6ORKgPTnY6zgs5HS7"
+                                    class="mr-2 w-6 h-6 rounded-full"
                                     src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
                                     alt="Michael Gough"
                                 />Michael Gough
                             </p>
-                            <p class="MxG1ClE4KPrIvlL5_Q5x ErtfuPDAbVhbrEDAXyPl eCx_6PNzncAD5yo7Qcic">
+                            <p class="text-sm text-gray-600 text-gray-400">
                                 <time pubdate="" datetime="2022-02-08" title="February 8th, 2022">Feb. 8, 2022</time>
                             </p>
                         </div>
                         <button
                             id="dropdownComment1Button"
                             data-dropdown-toggle="dropdownComment1"
-                            class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Y34SQMYAJVIAdOFKA3gG MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk _F_1gdhzusC6tSOWHtx_ rZZ58B08lxezTX7iNgGT jCHKuJ3G7rklx_LiAfbf _Qk4_E9_iLqcHsRZZ4ge DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x fq6QICPx8VcyAlLZi_Iy _t2wg7hRcyKsNN8CSSeU xotVay0PVtR3gElm6ql5 P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-gray-50 rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x fq6QICPx8VcyAlLZi_Iy bg-gray-700 xotVay0PVtR3gElm6ql5 P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
-                                class="eUuXwBkW5W4__eatjSfd RRXFBumaW2SHdseZaWm6"
+                                class="w-5 h-5"
                                 aria-hidden="true"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
@@ -625,58 +633,58 @@
                                     d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
                                 />
                             </svg>
-                            <span class="BWabIWdbZ5qWNbPXxuBc">Comment settings</span>
+                            <span class="sr-only">Comment settings</span>
                         </button>
                         <!-- Dropdown menu -->
                         <div
                             id="dropdownComment1"
-                            class="j2x7_17hqRVmwte_tWFa _v8hjA9ct_v6OhSQD7fC _jl1uJwgVfyK51huwbk0 yjGyQxv8jnYk9_MGMqLN YPSoR6AXtPgkmylUmcbT FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG lhxYQ_2y3sYNN3W1V_3q _t2wg7hRcyKsNN8CSSeU WoQqugRcWrYbmsWhxCUr"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(581px, 4566px);"
+                            class="hidden z-10 w-36 bg-white rounded FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG shadow bg-gray-700 WoQqugRcWrYbmsWhxCUr"
+                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(1106px, 4441px);"
                             data-popper-reference-hidden=""
                             data-popper-escaped=""
                             data-popper-placement="top"
                         >
                             <ul
-                                class="e6xSuaqE4UvMawjVXuq_ MxG1ClE4KPrIvlL5_Q5x jJJfWn8GV_ODBSwRp2nH mEiJmUhVeO0zHYjQchDB"
+                                class="py-1 text-sm text-gray-700 text-gray-200"
                                 aria-labelledby="dropdownMenuIconHorizontalButton"
                             >
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Edit</a
                                     >
                                 </li>
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Remove</a
                                     >
                                 </li>
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Report</a
                                     >
                                 </li>
                             </ul>
                         </div>
                     </footer>
-                    <p class="K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic">
+                    <p class="text-gray-500 text-gray-400">
                         Very straight-to-point article. Really worth time reading. Thank you! But tools are just the
                         instruments for the UX designers. The knowledge of the design tools are as important as the
                         creation of the design strategy.
                     </p>
-                    <div class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE KgBTWt39fdiAC__YVNt8 ZLpoEVbvjZ2Wkm42QsPD">
+                    <div class="flex items-center mt-4 ZLpoEVbvjZ2Wkm42QsPD">
                         <button
                             type="button"
-                            class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE MxG1ClE4KPrIvlL5_Q5x K1PPCJwslha8GUIvV_Cr _5zvlMLkN1qETxEl3IhT eCx_6PNzncAD5yo7Qcic"
+                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
                         >
                             <svg
                                 aria-hidden="true"
-                                class="b7Lf_ucBvHbZEidPjF8t kbeH5ty3CtPKxXm5TXph eVNhx7m5tjSVbfYQzDdT"
+                                class="mr-1 w-4 h-4"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -691,11 +699,11 @@
                         </button>
                         <button
                             type="button"
-                            class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE MxG1ClE4KPrIvlL5_Q5x K1PPCJwslha8GUIvV_Cr _5zvlMLkN1qETxEl3IhT eCx_6PNzncAD5yo7Qcic"
+                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
                         >
                             <svg
                                 aria-hidden="true"
-                                class="b7Lf_ucBvHbZEidPjF8t kbeH5ty3CtPKxXm5TXph eVNhx7m5tjSVbfYQzDdT"
+                                class="mr-1 w-4 h-4"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -710,32 +718,28 @@
                         </button>
                     </div>
                 </article>
-                <article
-                    class="rhHZLKCNkg6rp7jwfB1J SGCI_v4dZasZ65DtKHsW pojhoXnf_5BOC6SYUZP4 osxEM2eQc4Pc_arzCZsv jCHKuJ3G7rklx_LiAfbf _Qk4_E9_iLqcHsRZZ4ge _t2wg7hRcyKsNN8CSSeU"
-                >
-                    <footer class="kqgYncRJQ7spwKfig6It _T15kfOPGkvwZnqhqKce neyUwteEn7DOg9pBSJJE rD4HtsUG_hahmbh2Kj09">
-                        <div class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE">
-                            <p
-                                class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Cl7RaVW6jbggnJW_S87T MxG1ClE4KPrIvlL5_Q5x g3OYBOqwXUEW4dRGogkH a0Ed69aMSu0vgf4oysz0"
-                            >
+                <article class="p-6 mb-6 pojhoXnf_5BOC6SYUZP4 text-base bg-gray-50 rounded-lg bg-gray-700">
+                    <footer class="flex justify-between items-center mb-2">
+                        <div class="flex items-center">
+                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 text-white">
                                 <img
-                                    class="_gmxfZ2BpOHxa6nWwqBB nLhohPz5FpffXM9RSdFT _XD2a764x49B1E2F9f8X n8e6ORKgPTnY6zgs5HS7"
+                                    class="mr-2 w-6 h-6 rounded-full"
                                     src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                                     alt="Jese Leos"
                                 />Jese Leos
                             </p>
-                            <p class="MxG1ClE4KPrIvlL5_Q5x ErtfuPDAbVhbrEDAXyPl eCx_6PNzncAD5yo7Qcic">
+                            <p class="text-sm text-gray-600 text-gray-400">
                                 <time pubdate="" datetime="2022-02-12" title="February 12th, 2022">Feb. 12, 2022</time>
                             </p>
                         </div>
                         <button
                             id="dropdownComment2Button"
                             data-dropdown-toggle="dropdownComment2"
-                            class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Y34SQMYAJVIAdOFKA3gG MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk _F_1gdhzusC6tSOWHtx_ rZZ58B08lxezTX7iNgGT jCHKuJ3G7rklx_LiAfbf _Qk4_E9_iLqcHsRZZ4ge DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x fq6QICPx8VcyAlLZi_Iy _t2wg7hRcyKsNN8CSSeU xotVay0PVtR3gElm6ql5 P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-gray-50 rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x fq6QICPx8VcyAlLZi_Iy bg-gray-700 xotVay0PVtR3gElm6ql5 P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
-                                class="eUuXwBkW5W4__eatjSfd RRXFBumaW2SHdseZaWm6"
+                                class="w-5 h-5"
                                 aria-hidden="true"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
@@ -745,54 +749,54 @@
                                     d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
                                 />
                             </svg>
-                            <span class="BWabIWdbZ5qWNbPXxuBc">Comment settings</span>
+                            <span class="sr-only">Comment settings</span>
                         </button>
                         <!-- Dropdown menu -->
                         <div
                             id="dropdownComment2"
-                            class="j2x7_17hqRVmwte_tWFa _v8hjA9ct_v6OhSQD7fC _jl1uJwgVfyK51huwbk0 yjGyQxv8jnYk9_MGMqLN YPSoR6AXtPgkmylUmcbT FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG lhxYQ_2y3sYNN3W1V_3q _t2wg7hRcyKsNN8CSSeU WoQqugRcWrYbmsWhxCUr"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(581px, 4790px);"
+                            class="hidden z-10 w-36 bg-white rounded FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG shadow bg-gray-700 WoQqugRcWrYbmsWhxCUr"
+                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(1106px, 4641px);"
                             data-popper-reference-hidden=""
                             data-popper-escaped=""
                             data-popper-placement="top"
                         >
                             <ul
-                                class="e6xSuaqE4UvMawjVXuq_ MxG1ClE4KPrIvlL5_Q5x jJJfWn8GV_ODBSwRp2nH mEiJmUhVeO0zHYjQchDB"
+                                class="py-1 text-sm text-gray-700 text-gray-200"
                                 aria-labelledby="dropdownMenuIconHorizontalButton"
                             >
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Edit</a
                                     >
                                 </li>
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Remove</a
                                     >
                                 </li>
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Report</a
                                     >
                                 </li>
                             </ul>
                         </div>
                     </footer>
-                    <p class="K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic">Much appreciated! Glad you liked it ☺️</p>
-                    <div class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE KgBTWt39fdiAC__YVNt8 ZLpoEVbvjZ2Wkm42QsPD">
+                    <p class="text-gray-500 text-gray-400">Much appreciated! Glad you liked it ☺️</p>
+                    <div class="flex items-center mt-4 ZLpoEVbvjZ2Wkm42QsPD">
                         <button
                             type="button"
-                            class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE MxG1ClE4KPrIvlL5_Q5x K1PPCJwslha8GUIvV_Cr _5zvlMLkN1qETxEl3IhT eCx_6PNzncAD5yo7Qcic"
+                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
                         >
                             <svg
                                 aria-hidden="true"
-                                class="b7Lf_ucBvHbZEidPjF8t kbeH5ty3CtPKxXm5TXph eVNhx7m5tjSVbfYQzDdT"
+                                class="mr-1 w-4 h-4"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -807,11 +811,11 @@
                         </button>
                         <button
                             type="button"
-                            class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE MxG1ClE4KPrIvlL5_Q5x K1PPCJwslha8GUIvV_Cr _5zvlMLkN1qETxEl3IhT eCx_6PNzncAD5yo7Qcic"
+                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
                         >
                             <svg
                                 aria-hidden="true"
-                                class="b7Lf_ucBvHbZEidPjF8t kbeH5ty3CtPKxXm5TXph eVNhx7m5tjSVbfYQzDdT"
+                                class="mr-1 w-4 h-4"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -826,32 +830,28 @@
                         </button>
                     </div>
                 </article>
-                <article
-                    class="rhHZLKCNkg6rp7jwfB1J SGCI_v4dZasZ65DtKHsW osxEM2eQc4Pc_arzCZsv jCHKuJ3G7rklx_LiAfbf _Qk4_E9_iLqcHsRZZ4ge _t2wg7hRcyKsNN8CSSeU"
-                >
-                    <footer class="kqgYncRJQ7spwKfig6It _T15kfOPGkvwZnqhqKce neyUwteEn7DOg9pBSJJE rD4HtsUG_hahmbh2Kj09">
-                        <div class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE">
-                            <p
-                                class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Cl7RaVW6jbggnJW_S87T MxG1ClE4KPrIvlL5_Q5x g3OYBOqwXUEW4dRGogkH a0Ed69aMSu0vgf4oysz0"
-                            >
+                <article class="p-6 mb-6 text-base bg-gray-50 rounded-lg bg-gray-700">
+                    <footer class="flex justify-between items-center mb-2">
+                        <div class="flex items-center">
+                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 text-white">
                                 <img
-                                    class="_gmxfZ2BpOHxa6nWwqBB nLhohPz5FpffXM9RSdFT _XD2a764x49B1E2F9f8X n8e6ORKgPTnY6zgs5HS7"
+                                    class="mr-2 w-6 h-6 rounded-full"
                                     src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
                                     alt="Bonnie Green"
                                 />Bonnie Green
                             </p>
-                            <p class="MxG1ClE4KPrIvlL5_Q5x ErtfuPDAbVhbrEDAXyPl eCx_6PNzncAD5yo7Qcic">
+                            <p class="text-sm text-gray-600 text-gray-400">
                                 <time pubdate="" datetime="2022-03-12" title="March 12th, 2022">Mar. 12, 2022</time>
                             </p>
                         </div>
                         <button
                             id="dropdownComment3Button"
                             data-dropdown-toggle="dropdownComment3"
-                            class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Y34SQMYAJVIAdOFKA3gG MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk _F_1gdhzusC6tSOWHtx_ rZZ58B08lxezTX7iNgGT jCHKuJ3G7rklx_LiAfbf _Qk4_E9_iLqcHsRZZ4ge DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x fq6QICPx8VcyAlLZi_Iy _t2wg7hRcyKsNN8CSSeU xotVay0PVtR3gElm6ql5 P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-gray-50 rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x fq6QICPx8VcyAlLZi_Iy bg-gray-700 xotVay0PVtR3gElm6ql5 P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
-                                class="eUuXwBkW5W4__eatjSfd RRXFBumaW2SHdseZaWm6"
+                                class="w-5 h-5"
                                 aria-hidden="true"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
@@ -861,57 +861,57 @@
                                     d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
                                 />
                             </svg>
-                            <span class="BWabIWdbZ5qWNbPXxuBc">Comment settings</span>
+                            <span class="sr-only">Comment settings</span>
                         </button>
                         <!-- Dropdown menu -->
                         <div
                             id="dropdownComment3"
-                            class="j2x7_17hqRVmwte_tWFa _v8hjA9ct_v6OhSQD7fC _jl1uJwgVfyK51huwbk0 yjGyQxv8jnYk9_MGMqLN YPSoR6AXtPgkmylUmcbT FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG lhxYQ_2y3sYNN3W1V_3q _t2wg7hRcyKsNN8CSSeU WoQqugRcWrYbmsWhxCUr"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(581px, 4966px);"
+                            class="hidden z-10 w-36 bg-white rounded FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG shadow bg-gray-700 WoQqugRcWrYbmsWhxCUr"
+                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(1106px, 4817px);"
                             data-popper-reference-hidden=""
                             data-popper-escaped=""
                             data-popper-placement="top"
                         >
                             <ul
-                                class="e6xSuaqE4UvMawjVXuq_ MxG1ClE4KPrIvlL5_Q5x jJJfWn8GV_ODBSwRp2nH mEiJmUhVeO0zHYjQchDB"
+                                class="py-1 text-sm text-gray-700 text-gray-200"
                                 aria-labelledby="dropdownMenuIconHorizontalButton"
                             >
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Edit</a
                                     >
                                 </li>
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Remove</a
                                     >
                                 </li>
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Report</a
                                     >
                                 </li>
                             </ul>
                         </div>
                     </footer>
-                    <p class="K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic">
+                    <p class="text-gray-500 text-gray-400">
                         The article covers the essentials, challenges, myths and stages the UX designer should consider
                         while creating the design strategy.
                     </p>
-                    <div class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE KgBTWt39fdiAC__YVNt8 ZLpoEVbvjZ2Wkm42QsPD">
+                    <div class="flex items-center mt-4 ZLpoEVbvjZ2Wkm42QsPD">
                         <button
                             type="button"
-                            class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE MxG1ClE4KPrIvlL5_Q5x K1PPCJwslha8GUIvV_Cr _5zvlMLkN1qETxEl3IhT eCx_6PNzncAD5yo7Qcic"
+                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
                         >
                             <svg
                                 aria-hidden="true"
-                                class="b7Lf_ucBvHbZEidPjF8t kbeH5ty3CtPKxXm5TXph eVNhx7m5tjSVbfYQzDdT"
+                                class="mr-1 w-4 h-4"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -926,11 +926,11 @@
                         </button>
                         <button
                             type="button"
-                            class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE MxG1ClE4KPrIvlL5_Q5x K1PPCJwslha8GUIvV_Cr _5zvlMLkN1qETxEl3IhT eCx_6PNzncAD5yo7Qcic"
+                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
                         >
                             <svg
                                 aria-hidden="true"
-                                class="b7Lf_ucBvHbZEidPjF8t kbeH5ty3CtPKxXm5TXph eVNhx7m5tjSVbfYQzDdT"
+                                class="mr-1 w-4 h-4"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -945,32 +945,28 @@
                         </button>
                     </div>
                 </article>
-                <article
-                    class="rhHZLKCNkg6rp7jwfB1J osxEM2eQc4Pc_arzCZsv jCHKuJ3G7rklx_LiAfbf _Qk4_E9_iLqcHsRZZ4ge _t2wg7hRcyKsNN8CSSeU"
-                >
-                    <footer class="kqgYncRJQ7spwKfig6It _T15kfOPGkvwZnqhqKce neyUwteEn7DOg9pBSJJE rD4HtsUG_hahmbh2Kj09">
-                        <div class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE">
-                            <p
-                                class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Cl7RaVW6jbggnJW_S87T MxG1ClE4KPrIvlL5_Q5x g3OYBOqwXUEW4dRGogkH a0Ed69aMSu0vgf4oysz0"
-                            >
+                <article class="p-6 text-base bg-gray-50 rounded-lg bg-gray-700">
+                    <footer class="flex justify-between items-center mb-2">
+                        <div class="flex items-center">
+                            <p class="inline-flex items-center mr-3 text-sm text-gray-900 text-white">
                                 <img
-                                    class="_gmxfZ2BpOHxa6nWwqBB nLhohPz5FpffXM9RSdFT _XD2a764x49B1E2F9f8X n8e6ORKgPTnY6zgs5HS7"
+                                    class="mr-2 w-6 h-6 rounded-full"
                                     src="https://flowbite.com/docs/images/people/profile-picture-4.jpg"
                                     alt="Helene Engels"
                                 />Helene Engels
                             </p>
-                            <p class="MxG1ClE4KPrIvlL5_Q5x ErtfuPDAbVhbrEDAXyPl eCx_6PNzncAD5yo7Qcic">
+                            <p class="text-sm text-gray-600 text-gray-400">
                                 <time pubdate="" datetime="2022-06-23" title="June 23rd, 2022">Jun. 23, 2022</time>
                             </p>
                         </div>
                         <button
                             id="dropdownComment4Button"
                             data-dropdown-toggle="dropdownComment4"
-                            class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE Y34SQMYAJVIAdOFKA3gG MxG1ClE4KPrIvlL5_Q5x _A6LflweZRUwrcL6M2Tk _F_1gdhzusC6tSOWHtx_ rZZ58B08lxezTX7iNgGT jCHKuJ3G7rklx_LiAfbf _Qk4_E9_iLqcHsRZZ4ge DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x fq6QICPx8VcyAlLZi_Iy _t2wg7hRcyKsNN8CSSeU xotVay0PVtR3gElm6ql5 P53YJBBtllZv8_nFHFHW"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-gray-50 rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x fq6QICPx8VcyAlLZi_Iy bg-gray-700 xotVay0PVtR3gElm6ql5 P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
                             <svg
-                                class="eUuXwBkW5W4__eatjSfd RRXFBumaW2SHdseZaWm6"
+                                class="w-5 h-5"
                                 aria-hidden="true"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
@@ -984,52 +980,52 @@
                         <!-- Dropdown menu -->
                         <div
                             id="dropdownComment4"
-                            class="j2x7_17hqRVmwte_tWFa _v8hjA9ct_v6OhSQD7fC _jl1uJwgVfyK51huwbk0 yjGyQxv8jnYk9_MGMqLN YPSoR6AXtPgkmylUmcbT FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG lhxYQ_2y3sYNN3W1V_3q _t2wg7hRcyKsNN8CSSeU WoQqugRcWrYbmsWhxCUr"
-                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(581px, 5166px);"
+                            class="hidden z-10 w-36 bg-white rounded FQJBolKGENZMnnBWg95Y _JhddqALGzNXF3JHzSyG shadow bg-gray-700 WoQqugRcWrYbmsWhxCUr"
+                            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(1106px, 4993px);"
                             data-popper-reference-hidden=""
                             data-popper-escaped=""
                             data-popper-placement="top"
                         >
                             <ul
-                                class="e6xSuaqE4UvMawjVXuq_ MxG1ClE4KPrIvlL5_Q5x jJJfWn8GV_ODBSwRp2nH mEiJmUhVeO0zHYjQchDB"
+                                class="py-1 text-sm text-gray-700 text-gray-200"
                                 aria-labelledby="dropdownMenuIconHorizontalButton"
                             >
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Edit</a
                                     >
                                 </li>
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Remove</a
                                     >
                                 </li>
                                 <li>
                                     <a
                                         href="#"
-                                        class="ttxtqsLWp2pFRX8yUvWd zhRMeqbg7JsftloqW_W6 veFXkDzfJN473U3ycrV8 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
+                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
                                         >Report</a
                                     >
                                 </li>
                             </ul>
                         </div>
                     </footer>
-                    <p class="K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic">
+                    <p class="text-gray-500 text-gray-400">
                         Thanks for sharing this. I do came from the Backend development and explored some of the tools
                         to design my Side Projects.
                     </p>
-                    <div class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE KgBTWt39fdiAC__YVNt8 ZLpoEVbvjZ2Wkm42QsPD">
+                    <div class="flex items-center mt-4 ZLpoEVbvjZ2Wkm42QsPD">
                         <button
                             type="button"
-                            class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE MxG1ClE4KPrIvlL5_Q5x K1PPCJwslha8GUIvV_Cr _5zvlMLkN1qETxEl3IhT eCx_6PNzncAD5yo7Qcic"
+                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
                         >
                             <svg
                                 aria-hidden="true"
-                                class="b7Lf_ucBvHbZEidPjF8t kbeH5ty3CtPKxXm5TXph eVNhx7m5tjSVbfYQzDdT"
+                                class="mr-1 w-4 h-4"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -1044,11 +1040,11 @@
                         </button>
                         <button
                             type="button"
-                            class="kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE MxG1ClE4KPrIvlL5_Q5x K1PPCJwslha8GUIvV_Cr _5zvlMLkN1qETxEl3IhT eCx_6PNzncAD5yo7Qcic"
+                            class="flex items-center text-sm text-gray-500 _5zvlMLkN1qETxEl3IhT text-gray-400"
                         >
                             <svg
                                 aria-hidden="true"
-                                class="b7Lf_ucBvHbZEidPjF8t kbeH5ty3CtPKxXm5TXph eVNhx7m5tjSVbfYQzDdT"
+                                class="mr-1 w-4 h-4"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -1065,110 +1061,86 @@
                 </article>
             </section>
         </article>
-        <aside class="j2x7_17hqRVmwte_tWFa mR36RaQFAM6pQS2STKXX" aria-labelledby="sidebar-label">
-            <div class="P_HSe8VFU4IhDA4oLZY6 qxjgoXRF_qQQkfzkfzVx xbEqutMnv8CGHz3KuLJW">
-                <h3 id="sidebar-label" class="BWabIWdbZ5qWNbPXxuBc">Sidebar</h3>
-                <div class="_BTfre_DcBxkj7buMlKq">
-                    <h4
-                        class="rD4HtsUG_hahmbh2Kj09 MxG1ClE4KPrIvlL5_Q5x _WfIfkoGCi0vvUrnNs4M g3OYBOqwXUEW4dRGogkH a0Ed69aMSu0vgf4oysz0 EwTRjGOFYqbTj4bWVQmN"
-                    >
-                        Flowbite News morning headlines
-                    </h4>
-                    <p
-                        class="_9OKVeTXzfSwD_NYO6_G MxG1ClE4KPrIvlL5_Q5x XdjN1uxS_rsa3F90ox40 K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic"
-                    >
+        <aside class="block" aria-labelledby="sidebar-label">
+            <div class="w-aside sticky top-[8rem]">
+                <h3 id="sidebar-label" class="sr-only">Sidebar</h3>
+                <div class="mb-8">
+                    <h4 class="mb-2 font-bold text-gray-900 uppercase">Flowbite News morning headlines</h4>
+                    <p class="mb-4 font-light text-gray-500 text-gray-400">
                         Get all the stories you need-to-know from the most powerful name in news delivered first thing
                         every morning to your inbox
                     </p>
                     <button
                         type="button"
                         data-modal-toggle="newsletter-modal"
-                        class="wP9HMsqy6b96l2HBRbgb bg-primary-700 hover:bg-primary-800 _FONMPVaCsLFJJGDaaIL focus:ring-primary-300 _A6LflweZRUwrcL6M2Tk _Qk4_E9_iLqcHsRZZ4ge MxG1ClE4KPrIvlL5_Q5x bFARDnno0HUtfhktTXfR _gKcj49wZgnwx1LpcJi6 _gmxfZ2BpOHxa6nWwqBB rD4HtsUG_hahmbh2Kj09 dark:bg-primary-600 dark:hover:bg-primary-700 qHIOIw8TObHgD3VvKa5x dark:focus:ring-primary-800 _F_1gdhzusC6tSOWHtx_ w-full"
-                        >Subscribe</button
-                    >
+                        class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 text-center container"
+                        >Subscribe
+                    </button>
                 </div>
-                <div class="XhVy5CQuIPP_m_yJPyFi">
-                    <h4
-                        class="_9OKVeTXzfSwD_NYO6_G MxG1ClE4KPrIvlL5_Q5x _WfIfkoGCi0vvUrnNs4M g3OYBOqwXUEW4dRGogkH a0Ed69aMSu0vgf4oysz0 EwTRjGOFYqbTj4bWVQmN"
-                    >
-                        Latest news
-                    </h4>
-                    <div class="SGCI_v4dZasZ65DtKHsW kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE">
-                        <a href="#" class="zujhCQXfQfsYXApYjSOW">
+                <div class="md:mb-12">
+                    <h4 class="mb-4 text-sm font-bold text-gray-900 uppercase">Latest news</h4>
+                    <div class="mb-6 flex items-center">
+                        <a href="#" class="shrink-0">
                             <img
                                 src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/articles/image-1.png"
-                                class="_ryfipzijJEI18CFfJIm KQZC0UdhnY84Gv5q7tUB xeBtMrSh_FhIORjiHVcd uqkbEnMtPVL4WjfKYPDo _Qk4_E9_iLqcHsRZZ4ge"
+                                class="mr-4 max-w-full w-24 h-24 rounded-lg"
                                 alt="Image 1"
                             />
                         </a>
                         <div>
-                            <h5
-                                class="rD4HtsUG_hahmbh2Kj09 VwrSTsh__so52zqMJvws _WfIfkoGCi0vvUrnNs4M jGqC6Vyq4r7i62RWVQU_ a0Ed69aMSu0vgf4oysz0 g3OYBOqwXUEW4dRGogkH"
-                            >
-                                Our first office
-                            </h5>
-                            <p
-                                class="rD4HtsUG_hahmbh2Kj09 XdjN1uxS_rsa3F90ox40 K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic"
-                            >
+                            <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">Our first office</h5>
+                            <p class="mb-2 font-light text-gray-500 text-gray-400">
                                 Over the past year, Volosoft has undergone changes.
                             </p>
                             <a
                                 href="#"
-                                class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE _A6LflweZRUwrcL6M2Tk vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_"
+                                class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_"
                             >
                                 Read in 9 minutes
                             </a>
                         </div>
                     </div>
-                    <div class="SGCI_v4dZasZ65DtKHsW kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE">
-                        <a href="#" class="zujhCQXfQfsYXApYjSOW">
+                    <div class="mb-6 flex items-center">
+                        <a href="#" class="shrink-0">
                             <img
                                 src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/articles/image-2.png"
-                                class="_ryfipzijJEI18CFfJIm KQZC0UdhnY84Gv5q7tUB xeBtMrSh_FhIORjiHVcd uqkbEnMtPVL4WjfKYPDo _Qk4_E9_iLqcHsRZZ4ge"
+                                class="mr-4 max-w-full w-24 h-24 rounded-lg"
                                 alt="Image 2"
                             />
                         </a>
                         <div>
-                            <h5
-                                class="rD4HtsUG_hahmbh2Kj09 VwrSTsh__so52zqMJvws _WfIfkoGCi0vvUrnNs4M jGqC6Vyq4r7i62RWVQU_ a0Ed69aMSu0vgf4oysz0 g3OYBOqwXUEW4dRGogkH"
-                            >
+                            <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">
                                 Enterprise Design tips
                             </h5>
-                            <p
-                                class="rD4HtsUG_hahmbh2Kj09 XdjN1uxS_rsa3F90ox40 K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic"
-                            >
+                            <p class="mb-2 font-light text-gray-500 text-gray-400">
                                 Over the past year, Volosoft has undergone changes.
                             </p>
                             <a
                                 href="#"
-                                class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE _A6LflweZRUwrcL6M2Tk vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_"
+                                class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_"
                             >
                                 Read in 14 minutes
                             </a>
                         </div>
                     </div>
-                    <div class="SGCI_v4dZasZ65DtKHsW kqgYncRJQ7spwKfig6It neyUwteEn7DOg9pBSJJE">
-                        <a href="#" class="zujhCQXfQfsYXApYjSOW">
+                    <div class="mb-6 flex items-center">
+                        <a href="#" class="shrink-0">
                             <img
                                 src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/articles/image-3.png"
-                                class="_ryfipzijJEI18CFfJIm KQZC0UdhnY84Gv5q7tUB xeBtMrSh_FhIORjiHVcd uqkbEnMtPVL4WjfKYPDo _Qk4_E9_iLqcHsRZZ4ge"
+                                class="mr-4 max-w-full w-24 h-24 rounded-lg"
                                 alt="Image 3"
                             />
                         </a>
                         <div>
-                            <h5
-                                class="rD4HtsUG_hahmbh2Kj09 VwrSTsh__so52zqMJvws _WfIfkoGCi0vvUrnNs4M jGqC6Vyq4r7i62RWVQU_ a0Ed69aMSu0vgf4oysz0 g3OYBOqwXUEW4dRGogkH"
-                            >
+                            <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">
                                 Partnered up with Google
                             </h5>
-                            <p
-                                class="rD4HtsUG_hahmbh2Kj09 XdjN1uxS_rsa3F90ox40 K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic"
-                            >
+                            <p class="mb-2 font-light text-gray-500 text-gray-400">
                                 Over the past year, Volosoft has undergone changes.
                             </p>
                             <a
                                 href="#"
-                                class="ay0ziTPUL4Ag5d1DkSY7 neyUwteEn7DOg9pBSJJE _A6LflweZRUwrcL6M2Tk vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_"
+                                class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_"
                             >
                                 Read in 9 minutes
                             </a>
@@ -1176,38 +1148,70 @@
                     </div>
                 </div>
                 <div>
-                    <a
-                        href="#"
-                        class="kqgYncRJQ7spwKfig6It _WclR59Ji8jwfmjPtOei neyUwteEn7DOg9pBSJJE cq1ij1EsUw0V2rrqeYEc w-full _xkzoeTBWBn_bbg_hjHV _iRPzRRWy2UNkvZFG8iO _Qk4_E9_iLqcHsRZZ4ge _t2wg7hRcyKsNN8CSSeU"
-                    >
+                    <a href="#" class="flex justify-center items-center mb-3 container h-48 bg-gray-100 rounded-lg">
                         <svg
                             aria-hidden="true"
-                            class="_vZPglRSyqi4oTXg5L1_ _pwSRUXRHN5bHphyTRKz rZZ58B08lxezTX7iNgGT"
+                            class="w-8 h-8 text-gray-400"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
-                            ><path
+                        >
+                            <path
                                 fill-rule="evenodd"
                                 d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
                                 clip-rule="evenodd"
-                            /></svg
-                        >
+                            />
+                        </svg>
                     </a>
-                    <p
-                        class="rD4HtsUG_hahmbh2Kj09 MxG1ClE4KPrIvlL5_Q5x XdjN1uxS_rsa3F90ox40 K1PPCJwslha8GUIvV_Cr eCx_6PNzncAD5yo7Qcic"
-                    >
+                    <p class="mb-2 text-sm font-light text-gray-500 text-gray-400">
                         Students and Teachers, save up to 60% on Flowbite Creative Cloud.
                     </p>
-                    <p
-                        class="XklWzT8y98pp042XEQp4 XdjN1uxS_rsa3F90ox40 rZZ58B08lxezTX7iNgGT EwTRjGOFYqbTj4bWVQmN jt7K__cy_iHy7aMDMaLX"
-                    >
-                        Ads placeholder
-                    </p>
+                    <p class="text-xs font-light text-gray-400 uppercase text-gray-500">Ads placeholder</p>
                 </div>
             </div>
         </aside>
     </div>
 </main>
+
+<!--    <Section name="page">-->
+<ArticleWrapper>
+    <!--            <ArticleImg />-->
+
+    <ArticleContent>
+        <ArticleHead>
+            <span
+                class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex
+                                    items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800"
+            >
+                Tutorial
+            </span>
+            <span class="text-sm" />
+        </ArticleHead>
+        <ArticleBody>
+            <svelte:fragment slot="h3">
+                <a>{post.title} </a>
+            </svelte:fragment>
+            <svelte:fragment slot="paragraph">
+                <p class="mb-5 font-light text-gray-500 dark:text-gray-400" />
+            </svelte:fragment>
+        </ArticleBody>
+        <ArticleAuthor>
+            <svelte:fragment slot="author">
+                <img class="w-7 h-7 rounded-full" alt="Jese Leos avatar" />
+                <span class="font-medium dark:text-white" />
+            </svelte:fragment>
+            <a
+                href="/dev-fb-v2/static"
+                class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
+            >
+                Прочитать
+                <ArrowSmallRight class="ml-2" />
+            </a>
+        </ArticleAuthor>
+    </ArticleContent>
+</ArticleWrapper>
+
+<!--    </Section>-->
 
 <style lang="scss">
     .header-img {

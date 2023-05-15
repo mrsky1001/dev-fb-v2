@@ -6,12 +6,18 @@
     import ArticleContent from '../flowbite/blog/ArticleContent.svelte'
     import type { IPostStore } from '../../server/stores/post/post.store'
     import { subscribe } from 'svelte/internal'
+    import type { IAnnotation } from '../../server/stores/annotation/annotation'
+    import type { IUser } from '../../server/stores/user/user'
 
     export let postStore: IPostStore | undefined = undefined
     let post: IPost | undefined
+    let author: IUser | undefined
+    let annotation: IAnnotation | undefined
 
     const unsubscribe = subscribe(postStore, () => {
         post = postStore?.self()
+        author = post?.authorStore?.self()
+        annotation = post?.annotationStore?.self()
     })
 
     onMount(() => {
@@ -31,21 +37,22 @@
 <!--</SectionBlock>-->
 
 <main class="mt-10 pb-16 xl:pb-24 bg-white">
-    <header class="header-img h-header w-full bg-no-repeat bg-cover bg-center bg-blend-darken relative">
+    <header
+        style="background-image: {'url(' + annotation.imgUrl + ')'}"
+        class=" h-header w-full bg-no-repeat bg-cover bg-center bg-blend-darken relative"
+    >
         <div class="absolute top-0 left-0 w-full h-full bg-opacity-50 bg-black" />
         <div class="container mx-auto">
-            <div
-                class="absolute items-center px-4 mx-auto w-full translate-y-1/2 peer-placeholder-shown:-translate-y-1/2"
-            >
+            <div class=" items-center px-4 mx-auto translate-y-1/2 peer-placeholder-shown:-translate-y-1/2">
                 <span class="block mb-4 text-gray-300">
-                    Published in
-                    <a href="#" class="font-semibold text-white _5zvlMLkN1qETxEl3IhT">World News</a>
+                    Опубликовано на
+                    <a href="#" class="font-semibold text-white _5zvlMLkN1qETxEl3IhT">FOMA-BLOG.RU</a>
                 </span>
                 <h1 class="mb-4 max-w-4xl text-5xl font-extrabold leading-none text-white">
-                    Flowbite Blocks Tutorial - Learn how to get started with custom sections using the Flowbite Blocks
+                    {post.title}
                 </h1>
                 <p class="sm:text-lg font-normal text-gray-300">
-                    Before going digital, you might scribbling down some ideas in a sketchbook.
+                    {annotation.text}
                 </p>
             </div>
         </div>
@@ -58,20 +65,21 @@
         >
             <div class="flex flex-row justify-between items-center">
                 <div class="flex items-center B1cgbA6Bb4LQo0qFJKck text-gray-500 text-base mb-2">
-                    <span
-                        >By <a href="#" class="text-gray-900 _5zvlMLkN1qETxEl3IhT InmgdriTvIwr8C_lWYEj font-semibold"
-                            >Jese Leos</a
-                        ></span
-                    >
-                    <span class="bg-gray-300 bg-gray-400 w-2 h-2 rounded-full" />
-                    <span
-                        ><time
+                    <span>
+                        By
+                        <a href="#" class="text-gray-900 _5zvlMLkN1qETxEl3IhT no-underline font-semibold">
+                            {author.username}
+                        </a>
+                    </span>
+                    <span class="ml-3 bg-gray-300 bg-gray-400 w-2 h-2 rounded-full" />
+                    <span class="ml-3">
+                        <time
                             class="font-normal text-gray-500 text-gray-400"
                             pubdate=""
                             datetime="2022-03-08"
                             title="August 3rd, 2022">August 3, 2022, 2:20am EDT</time
-                        ></span
-                    >
+                        >
+                    </span>
                 </div>
                 <aside aria-label="Share social media">
                     <div class="not-format">
@@ -1172,46 +1180,6 @@
         </aside>
     </div>
 </main>
-
-<!--    <Section name="page">-->
-<ArticleWrapper>
-    <!--            <ArticleImg />-->
-
-    <ArticleContent>
-        <ArticleHead>
-            <span
-                class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex
-                                    items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800"
-            >
-                Tutorial
-            </span>
-            <span class="text-sm" />
-        </ArticleHead>
-        <ArticleBody>
-            <svelte:fragment slot="h3">
-                <a>{post.title} </a>
-            </svelte:fragment>
-            <svelte:fragment slot="paragraph">
-                <p class="mb-5 font-light text-gray-500 dark:text-gray-400" />
-            </svelte:fragment>
-        </ArticleBody>
-        <ArticleAuthor>
-            <svelte:fragment slot="author">
-                <img class="w-7 h-7 rounded-full" alt="Jese Leos avatar" />
-                <span class="font-medium dark:text-white" />
-            </svelte:fragment>
-            <a
-                href="/dev-fb-v2/static"
-                class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
-            >
-                Прочитать
-                <ArrowSmallRight class="ml-2" />
-            </a>
-        </ArticleAuthor>
-    </ArticleContent>
-</ArticleWrapper>
-
-<!--    </Section>-->
 
 <style lang="scss">
     .header-img {
