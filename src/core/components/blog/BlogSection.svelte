@@ -17,17 +17,21 @@
     import type { ISection } from '../../server/stores/section/section'
     import ArticleImg from '../flowbite/blog/ArticleImg.svelte'
     import ArticleContent from '../flowbite/blog/ArticleContent.svelte'
+    import domains from '../../server/collections/domains'
 
-    const breadcrumb_title = 'Blog Sections'
     const title = 'Разработка'
     const dir = 'marketing'
-    const description =
-        'Раздел посвящен веб-разработке, программированию и другими аспектами IT. Здесь вы найдете полезные статьи, которые помогут вам узнать о новейших технологиях, изучить лучшие практики разработки и получить ответы на вопросы, связанные с программированием и сферой IT в целом. '
-
     const subTitle = 'Давай с нами!'
     const subDescription = 'Присоединяйтесь к нашему сообществу и станьте частью мира IT-разработки!'
     let activeSection: ISection | undefined
     let posts: IPost[]
+
+    $: domain = activeSection?.domain
+    $: objDomain = domains[activeSection?.domain.toUpperCase()]
+    $: descriptionDomain = objDomain?.description
+
+    $: section = activeSection?.name
+    $: nameSection = activeSection?.name
 
     const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), () => {
         activeSection = allSectionsStore.getActive()
@@ -41,7 +45,7 @@
 
 <!--<MetaTag {breadcrumb_title} {title} {dir} {description}/>-->
 
-<SectionHeader category="marketing" {title} {breadcrumb_title} {description} />
+<SectionHeader {domain} nameDomain={objDomain?.text} {section} {nameSection} {descriptionDomain} />
 
 <SectionBlock title={subTitle}>
     {subDescription}

@@ -18,8 +18,8 @@
             </p>
         </div>
         <div class="flex items-center lg:justify-end mt-2 lg:mt-0">
-            <EditOnGithub size="16" {href} iconClass="text-gray-500" target="_blank" />
-            <DocsLink page={title.toLowerCase().replace(/\s+/g, '-')} target="_blank" />
+            <!--            <EditOnGithub size="16" {href} iconClass="text-gray-500" target="_blank" />-->
+            <!--            <DocsLink page={title.toLowerCase().replace(/\s+/g, '-')} target="_blank" />-->
         </div>
     </div>
 </Section>

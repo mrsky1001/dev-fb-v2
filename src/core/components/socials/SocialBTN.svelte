@@ -1,5 +1,6 @@
 <script lang="ts">
     export let name = 'social'
+    export let url = '#'
 </script>
 
 <button
@@ -7,7 +8,9 @@
     class="inline-flex items-center p-2 text-sm font-medium text-center rounded-lg hover:bg-gray-100 text-gray-700"
     type="button"
 >
-    <slot />
+    <a href={url} target="_blank">
+        <slot />
+    </a>
 </button>
 <div
     id="tooltip-{name}"

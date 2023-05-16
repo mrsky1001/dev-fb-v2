@@ -27,6 +27,8 @@
     let author: IUser | undefined
     let annotation: IAnnotation | undefined
 
+    let url = window.location.href
+
     const unsubscribe = subscribe(postStore, () => {
         post = postStore?.self()
         author = post?.authorStore.self()
@@ -95,12 +97,12 @@
                 </div>
                 <aside aria-label="Share social media">
                     <div class="not-format">
-                        <SocialBTN><BehanceSVG /></SocialBTN>
-                        <SocialBTN><FacebookSVG /></SocialBTN>
-                        <SocialBTN><TwitterSVG /></SocialBTN>
-                        <SocialBTN><VKSVG /></SocialBTN>
-                        <SocialBTN><TelegramSVG /></SocialBTN>
-                        <SocialBTN><InstagramSVG /></SocialBTN>
+                        <SocialBTN url="https://www.behance.net/foma_design"><BehanceSVG /></SocialBTN>
+                        <SocialBTN url="https://www.facebook.com/sharer/sharer.php?u={url}"><FacebookSVG /></SocialBTN>
+                        <SocialBTN url="https://twitter.com/share?url={url}"><TwitterSVG /></SocialBTN>
+                        <SocialBTN url="https://vk.com/share.php?url={url}"><VKSVG /></SocialBTN>
+                        <SocialBTN url="https://t.me/share/url?url={url}"><TelegramSVG /></SocialBTN>
+                        <SocialBTN url="https://www.instagram.com/foma_des/"><InstagramSVG /></SocialBTN>
                         <SocialBTN><LinkSVG /></SocialBTN>
                         <SocialBTN><KeepSVG /></SocialBTN>
                         <button
@@ -184,11 +186,6 @@
                             {:else}
                                 <a href="#" class="shrink-0 flex w-28 h-24">
                                     <ArticleSVG classes="h-16 w-16" color="gray" />
-                                    <!--                                    <img-->
-                                    <!--                                        src={articleIcon}-->
-                                    <!--                                        class=" w-14 text-gray-700 rounded-lg bg-center bg-cover"-->
-                                    <!--                                        alt="Image 1"-->
-                                    <!--                                    />-->
                                 </a>
                             {/if}
                             <div>
@@ -241,6 +238,7 @@
             padding-left: 3em;
 
             &::before {
+                width: 2em;
                 scale: 0.6;
             }
         }
