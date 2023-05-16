@@ -2,19 +2,19 @@
  * Copyright (©) 09.07.2021, 17:13. Kolyada Nikita Vladimirovich (nikita.nk16@yandex.ru)
  */
 
-import Section, {type ISectionProps} from "../stores/section/section";
-import type {IRule} from "../models/interfaces/lib/IRule";
-import {validationProp} from "../validation";
-import urls from "../collections/urls";
-import api from "./api";
-import type {AxiosError, AxiosResponse} from "axios";
-import {handlerError, responseHandler} from "../response-handler";
-import config from "../../../config/config";
+import Section, { type ISectionProps } from '../stores/section/section'
+import type { IRule } from '../models/interfaces/lib/IRule'
+import { validationProp } from '../validation'
+import urls from '../collections/urls'
+import api from './api'
+import type { AxiosError, AxiosResponse } from 'axios'
+import { handlerError, responseHandler } from '../response-handler'
+import config from '../../../config/config'
 
 const getInValidSectionFields = (section: Section) => {
     const rules: IRule[] = [
-        {name: 'name', label: 'Имя', type: 'string', min: 3},
-        {name: 'description', label: 'Описание', type: 'string', min: 3},
+        { name: 'name', label: 'Имя', type: 'string', min: 3 },
+        { name: 'description', label: 'Описание', type: 'string', min: 3 }
     ]
 
     const listError: string[] = []
@@ -45,16 +45,18 @@ export const getSection = (sectionId: string): Promise<Section> => {
     })
 }
 
-export const getSections = (): Promise<ISectionProps[]> => {
+export const getSections = (domain: string): Promise<ISectionProps[]> => {
     return new Promise<ISectionProps[]>((resolve, reject) => {
         api()
-            .get(`${urls.GET_SECTIONS}`, {params: {domain: config.server.domain}})
+            .get(`${urls.GET_SECTIONS}`, { params: { domain } })
             .then((res: AxiosResponse) => {
                 responseHandler(res, undefined, false)
-                    .then((data) => resolve(
-                        data.sections
-                            .sort((a: Section, b: Section) => a.name.localeCompare(b.name))
-                            .map((section: ISectionProps) => section))
+                    .then((data) =>
+                        resolve(
+                            data.sections
+                                .sort((a: Section, b: Section) => a.name.localeCompare(b.name))
+                                .map((section: ISectionProps) => section)
+                        )
                     )
                     .catch((err: AxiosError) => {
                         handlerError(err)

@@ -6,8 +6,8 @@
  * Copyright (c)  Kolyada Nikita Vladimirovich <nikita.nk16@yandex.ru> 12.09.2021, 15:42
  */
 interface IConfig {
-    router: {
-        siteName: string
+    front: {
+        host: string
         homeName: string
         homeText: string
         metaTitle: string
@@ -25,20 +25,22 @@ interface IConfig {
 
 const isProd = false
 const isTestProd = false
-const port = isProd ? 8081 : 8082
+const serverPort = isProd ? 8081 : 8082
+const frontPort = 5173
 
 export const config: IConfig = {
-    router: {
+    front: {
         homeName: 'DEV',
-        siteName: 'foma-blog.ru/dev',
+        host: isProd || isTestProd ? `https://foma-blog.ru` : `http://localhost:${frontPort}`,
         homeText: 'Разработка',
         homeIcon: 'mdi-code-braces',
         metaTitle: 'Веб-разработка и программирование',
-        metaDescription: 'Заметки на тему веб-разработки, программирования (JavaScript, TypeScript, NodeJS, ReactJs, VueJS, Java, Scala) и др',
+        metaDescription:
+            'Заметки на тему веб-разработки, программирования (JavaScript, TypeScript, NodeJS, ReactJs, VueJS, Java, Scala) и др'
     },
     server: {
         domain: 'dev',
-        fullHost: isProd || isTestProd ? `https://foma-blog.ru:${port}` : `http://localhost:${port}`
+        fullHost: isProd || isTestProd ? `https://foma-blog.ru:${serverPort}` : `http://localhost:${serverPort}`
     },
     paths: {
         footerImgs: 'https://dev.foma-blog.ru/assets/footer-imgs/'

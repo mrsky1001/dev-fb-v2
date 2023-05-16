@@ -44,16 +44,16 @@ export const routesObj = {
     },
     HOME: {
         path: '/',
-        name: config.router.homeName,
-        text: config.router.homeText,
-        icon: config.router.homeIcon,
+        name: config.front.homeName,
+        text: config.front.homeText,
+        icon: config.front.homeIcon,
         onMainBar: true,
         isSection: true,
         role: roles.UNAUTHORIZED,
 
         meta: {
-            title: config.router.metaTitle,
-            description: config.router.metaDescription
+            title: config.front.metaTitle,
+            description: config.front.metaDescription
         }
     },
     ABOUT: {

@@ -47,9 +47,9 @@
 
 <SectionHeader {domain} nameDomain={objDomain?.text} {section} {nameSection} {descriptionDomain} />
 
-<SectionBlock title={subTitle}>
-    {subDescription}
-</SectionBlock>
+<!--<SectionBlock title={subTitle}>-->
+<!--    {subDescription}-->
+<!--</SectionBlock>-->
 
 <ExampleDiv>
     {#if activeSection}

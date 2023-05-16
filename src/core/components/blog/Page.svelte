@@ -27,13 +27,15 @@
     let author: IUser | undefined
     let annotation: IAnnotation | undefined
 
-    let url = window.location.href
+    let url = '/'
 
     const unsubscribe = subscribe(postStore, () => {
         post = postStore?.self()
         author = post?.authorStore.self()
         annotation = post?.annotationStore.self()
     })
+
+    onMount(() => (url = window.location.href))
 
     // const unsubscribePosts = subscribe(allSectionsStore, () => {
     //     latestPosts = allSectionsStore.getStore()?.allPostStore.all() ?? []
