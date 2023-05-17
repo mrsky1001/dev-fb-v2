@@ -7,15 +7,20 @@ import type { ISectionProps } from '../../../core/server/stores/section/section'
 import { getSections } from '../../../core/server/services/sections.services'
 import { allSectionsStore } from '../../../core/server/stores/section/all-sections.store'
 
-/** @type {import('./$types').PageLoad} */
-export const load = async ({ params }) => {
-    console.log('info')
-    console.log(params)
-    const sections: ISectionProps[] = await getSections(params.domain)
+export const load = async (info) => {
+    console.log('info domain')
+    console.log(info)
+    const sections: ISectionProps[] = await getSections(info.params.domain)
     console.log(sections)
 
     allSectionsStore.setLikeStores(sections)
 
-    sections.length && allSectionsStore.getStore(sections[0]?._id)?.setActive(true)
-    return {}
+    allSectionsStore.getStore(sections[0]?._id)?.setActive(true)
+
+    const activeSection = allSectionsStore.all().find((s) => s.id === sections[0]?._id)
+
+    return {
+        activeSection: activeSection,
+        posts: activeSection?.allPostStore.all()
+    }
 }

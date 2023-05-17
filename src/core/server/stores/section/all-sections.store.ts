@@ -43,4 +43,5 @@ const createAllSectionStore = (): IAllSectionStore => {
     )
 }
 
+console.log('reset  allSectionsStore')
 export const allSectionsStore = createAllSectionStore()

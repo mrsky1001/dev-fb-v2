@@ -12,19 +12,23 @@
     import { ArrowSmallRight, Newspaper } from 'svelte-heros'
     import { allSectionsStore } from '../../server/stores/section/all-sections.store'
     import { subscribeAll } from '../../server/stores/subscribe-all'
-    import { onDestroy } from 'svelte'
+    import { afterUpdate, onDestroy, onMount } from 'svelte'
     import type { IPost } from '../../server/stores/post/post'
     import type { ISection } from '../../server/stores/section/section'
     import ArticleImg from '../flowbite/blog/ArticleImg.svelte'
     import ArticleContent from '../flowbite/blog/ArticleContent.svelte'
     import domains from '../../server/collections/domains'
+    import { beforeNavigate } from '$app/navigation'
 
     const title = 'Разработка'
     const dir = 'marketing'
     const subTitle = 'Давай с нами!'
     const subDescription = 'Присоединяйтесь к нашему сообществу и станьте частью мира IT-разработки!'
-    let activeSection: ISection | undefined
-    let posts: IPost[]
+
+    export let activeSection
+    export let posts = []
+
+    export const router = false
 
     $: domain = activeSection?.domain
     $: objDomain = domains[activeSection?.domain.toUpperCase()]
@@ -33,14 +37,28 @@
     $: section = activeSection?.name
     $: nameSection = activeSection?.name
 
-    const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), () => {
-        activeSection = allSectionsStore.getActive()
-        posts = activeSection?.allPostStore.all() ?? []
+    // const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), () => {
+    //     activeSection = allSectionsStore.getActive()
+    //     posts = activeSection?.allPostStore.all() ?? []
+    // })
+
+    onMount(() => {
+        console.log('blog section')
+        console.log(posts)
     })
 
-    console.log(activeSection)
+    afterUpdate(() => {
+        console.log('blog section')
+        console.log(activeSection)
+        console.log(activeSection?.domain)
+    })
 
-    onDestroy(() => allUnsubscribe())
+    // beforeNavigate(() => {
+    //     activeSection = allSectionsStore.getActive()
+    //     console.log(allSectionsStore.getActive())
+    // })
+
+    // onDestroy(() => allUnsubscribe())
 </script>
 
 <!--<MetaTag {breadcrumb_title} {title} {dir} {description}/>-->

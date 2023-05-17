@@ -51,12 +51,7 @@
                 <div class="p-4">
                     {#each navItems as navItem}
                         <li class="pb-5">
-                            <a
-                                rel="noreferrer"
-                                href={navItem.href}
-                                target="_blank"
-                                class="group flex gap-x-6 rounded-lg p-4 hover:bg-gray-50"
-                            >
+                            <a href={navItem.href} class="group flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
                                 <div
                                     class="flex flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white"
                                 >

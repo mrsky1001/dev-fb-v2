@@ -5,24 +5,13 @@
     import { subscribeAll } from '../../../core/server/stores/subscribe-all'
     import type { IPost } from '../../../core/server/stores/post/post'
     import BlogSection from '../../../core/components/blog/BlogSection.svelte'
+    import { beforeNavigate } from '$app/navigation'
+    export let data
 
-    let posts: IPost[] = []
-
-    const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), () => {
-        posts = allSectionsStore.getActive()?.allPostStore.all() ?? []
+    beforeNavigate(() => {
+        console.log('domain data +page.svelte')
+        console.log(data)
     })
-
-    onMount(() => {
-        console.log(posts[0]?.annotationStore.self().text)
-        console.log(allSectionsStore.getActive())
-        // console.log($allPostsStore)
-
-        // allUnsubscribe = subscribeAll(allSectionsStore.getActive().allPostStore.allStores(), (values) => {
-        //     posts = values
-        // })
-    })
-
-    onDestroy(() => allUnsubscribe())
 </script>
 
 <div class="w-full px-4 mx-auto max-w-8xl">
@@ -31,7 +20,7 @@
             <div class="flex w-full">
                 <div class="flex-auto max-w-8xl min-w-0 pt-6 lg:px-8 lg:pt-8 pb:12 xl:pb-24 lg:pb-16">
                     <!--{#each posts as post }-->
-                    <BlogSection />
+                    <BlogSection activeSection={data.activeSection} posts={data.posts} />
                     <!--            <Card img="{img}">-->
                     <!--                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>-->
                     <!--                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">-->
