@@ -3,9 +3,9 @@
     import { onDestroy, onMount } from 'svelte'
     import { subscribeAll } from '../../server/stores/subscribe-all'
     import Section from '../../server/stores/section/section'
+    import { subscribe } from 'svelte/internal'
 
     let sections = []
-    let url = ''
 
     const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), (values) => {
         sections = values
@@ -13,9 +13,6 @@
 
     onMount(() => {
         console.log(allSectionsStore.all())
-        const href = window.location.href
-        const lastSlashIdx = href.lastIndexOf('/')
-        url = href.includes('section') ? href.substring(0, lastSlashIdx) + '/' : href + '/section/'
     })
 
     const activeClass = (section: Section) => {
@@ -23,6 +20,13 @@
     }
 
     const setActive = (section: Section) => {
+        const href = window.location.href
+        const sectionIdx = href.lastIndexOf('section/')
+        const url = sectionIdx >= 0 ? href.substring(0, sectionIdx) + 'section/' : href + '/section/'
+        console.log(sectionIdx)
+        console.log(href)
+        console.log(url)
+        window.history.replaceState(history.state, '', url + section.id)
         return allSectionsStore.getStore(section.id)?.setActive(true)
     }
 
@@ -41,7 +45,7 @@
                         class="{activeClass(
                             section
                         )} bg-transparent px-[5px] text-neutral-600 shadow-none dark:text-neutral-200 dark:!text-primary-400 border-solid border-primary dark:border-primary-400"
-                        href={''}>{section.name}</a
+                        >{section.name}</a
                     >
                 </li>
                 <!--{#if section.arr.length}-->

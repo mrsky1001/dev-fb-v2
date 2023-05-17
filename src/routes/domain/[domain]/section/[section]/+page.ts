@@ -16,5 +16,5 @@ export const load = async ({ params }) => {
     allSectionsStore.setLikeStores(sections)
 
     sections.length && allSectionsStore.getStore(params.section)?.setActive(true)
-    return {}
+    return { params }
 }
