@@ -2,9 +2,9 @@
     import { ArticleAuthor, ArticleBody, ArticleHead, ArticleWrapper } from '../flowbite'
     import { ArrowSmallRight } from 'svelte-heros'
     import { onDestroy, onMount } from 'svelte'
-    import type { IPost } from '../../server/stores/post/post'
+    import type { IPost } from '../../stores/post/post'
     import ArticleContent from '../flowbite/blog/ArticleContent.svelte'
-    import type { IPostStore } from '../../server/stores/post/post.store'
+    import type { IPostStore } from '../../stores/post/post.store'
     import { subscribe } from 'svelte/internal'
 
     export let postStore: IPostStore | undefined = undefined

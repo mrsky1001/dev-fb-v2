@@ -2,7 +2,7 @@
  * Copyright (c) 21.11.2021, 23:33  Kolyada Nikita Vladimirovich nikita.nk16@yandex.ru
  */
 
-import config from '../../../../config/config'
+import config from '../../../config/config'
 import { nanoid } from 'nanoid'
 import type { IAllPostStore } from '../post/all-posts.store'
 import { createAllPostStore } from '../post/all-posts.store'

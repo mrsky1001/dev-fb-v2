@@ -1,28 +1,28 @@
 <script lang="ts">
     import { onDestroy, onMount } from 'svelte'
-    import { allSectionsStore } from '../../../../../core/server/stores/section/all-sections.store'
+    import { allSectionsStore } from '../../../../../core/stores/section/all-sections.store'
     import ScrollSpy from '../../../../../core/components/scrollspy/ScrollSpy.svelte'
-    import { subscribeAll } from '../../../../../core/server/stores/subscribe-all'
-    import type { IPost } from '../../../../../core/server/stores/post/post'
+    import { subscribeAll } from '../../../../../core/stores/subscribe-all'
+    import type { IPost } from '../../../../../core/stores/post/post'
     import BlogSection from '../../../../../core/components/blog/BlogSection.svelte'
 
-    let posts: IPost[] = []
+    // let posts: IPost[] = []
+    //
+    // const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), () => {
+    //     posts = allSectionsStore.getActive()?.allPostStore.all() ?? []
+    // })
+    //
+    // onMount(() => {
+    //     console.log(posts[0]?.annotationStore.self().text)
+    //     console.log(allSectionsStore.getActive())
+    //     console.log($allPostsStore)
 
-    const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), () => {
-        posts = allSectionsStore.getActive()?.allPostStore.all() ?? []
-    })
-
-    onMount(() => {
-        console.log(posts[0]?.annotationStore.self().text)
-        console.log(allSectionsStore.getActive())
-        // console.log($allPostsStore)
-
-        // allUnsubscribe = subscribeAll(allSectionsStore.getActive().allPostStore.allStores(), (values) => {
-        //     posts = values
-        // })
-    })
-
-    onDestroy(() => allUnsubscribe())
+    // allUnsubscribe = subscribeAll(allSectionsStore.getActive().allPostStore.allStores(), (values) => {
+    //     posts = values
+    // })
+    // })
+    //
+    // onDestroy(() => allUnsubscribe())
 </script>
 
 <div class="w-full px-4 mx-auto max-w-8xl">

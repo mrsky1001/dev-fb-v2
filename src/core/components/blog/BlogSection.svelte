@@ -10,11 +10,10 @@
     } from '../flowbite'
     import { ExampleDiv, SectionBlock, SectionHeader } from '../utils/index.ts'
     import { ArrowSmallRight, Newspaper } from 'svelte-heros'
-    import { allSectionsStore } from '../../server/stores/section/all-sections.store'
-    import { subscribeAll } from '../../server/stores/subscribe-all'
+    import { subscribeAll } from '../../stores/subscribe-all'
     import { afterUpdate, onDestroy, onMount } from 'svelte'
-    import type { IPost } from '../../server/stores/post/post'
-    import type { ISection } from '../../server/stores/section/section'
+    import type { IPost } from '../../stores/post/post'
+    import type { ISection } from '../../stores/section/section'
     import ArticleImg from '../flowbite/blog/ArticleImg.svelte'
     import ArticleContent from '../flowbite/blog/ArticleContent.svelte'
     import domains from '../../server/collections/domains'
@@ -25,8 +24,16 @@
     const subTitle = 'Давай с нами!'
     const subDescription = 'Присоединяйтесь к нашему сообществу и станьте частью мира IT-разработки!'
 
-    export let activeSection
-    export let posts = []
+    let activeSection
+    let sections
+
+    // subscribeAll(allSectionsStore.allStores(), (allStores) => {
+    //     activeSection = allSectionsStore.getActive()
+    //     sections = allStores
+    //     console.log('after subscribeAll(allSectionsStore.allStores()')
+    // })
+    //
+    let posts = []
 
     export const router = false
 
@@ -44,7 +51,9 @@
 
     onMount(() => {
         console.log('blog section')
-        console.log(posts)
+        // console.log(allSectionsStore.getActive())
+        // console.log(allSectionsStore.getActive()?.allPostStore.all())
+        // console.log(posts)
     })
 
     afterUpdate(() => {

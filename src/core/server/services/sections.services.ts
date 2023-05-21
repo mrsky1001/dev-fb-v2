@@ -2,7 +2,7 @@
  * Copyright (©) 09.07.2021, 17:13. Kolyada Nikita Vladimirovich (nikita.nk16@yandex.ru)
  */
 
-import Section, { type ISectionProps } from '../stores/section/section'
+import Section, { type ISectionProps } from '../../stores/section/section'
 import type { IRule } from '../models/interfaces/lib/IRule'
 import { validationProp } from '../validation'
 import urls from '../collections/urls'

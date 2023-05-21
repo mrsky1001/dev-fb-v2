@@ -1,8 +1,8 @@
 <script lang="ts">
     import { onMount } from 'svelte'
-    import type { IPostStore } from '../../../../../../../core/server/stores/post/post.store'
+    import type { IPostStore } from '../../../../../../../core/stores/post/post.store'
     import Page from '../../../../../../../core/components/blog/Page.svelte'
-    import type { IPost } from '../../../../../../../core/server/stores/post/post.js'
+    import type { IPost } from '../../../../../../../core/stores/post/post.js'
     // let posts: IPost[] = []
     //
     // const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), () => {

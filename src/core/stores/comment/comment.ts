@@ -1,6 +1,6 @@
-import type { IStatus } from '../../models/interfaces/article/IStatus'
+import type { IStatus } from '../../server/models/interfaces/article/IStatus'
 import type { IUser } from '../user/user'
-import statuses from '../../collections/statuses'
+import statuses from '../../server/collections/statuses'
 import type { IBase } from '../_base.store'
 import { setId } from '../_base.store'
 import type { IRole } from '../role/role'

@@ -1,33 +1,34 @@
 <script lang="ts">
-    import { allSectionsStore } from '../../server/stores/section/all-sections.store.js'
+    // import { allSectionsStore } from '../../stores/section/all-sections.store.js'
     import { onDestroy, onMount } from 'svelte'
-    import { subscribeAll } from '../../server/stores/subscribe-all'
-    import Section from '../../server/stores/section/section'
+    import { subscribeAll } from '../../stores/subscribe-all'
+    import Section from '../../stores/section/section'
     import { subscribe } from 'svelte/internal'
 
     let sections = []
     let url = ''
 
-    const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), (values) => {
-        sections = values
-    })
-
-    onMount(() => {
-        console.log(allSectionsStore.all())
-        const href = window.location.href
-        const lastSlashIdx = href.lastIndexOf('/')
-        url = href.includes('section') ? href.substring(0, lastSlashIdx) + '/' : href + '/section/'
-    })
+    // const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), (values) => {
+    //     sections = values
+    // })
+    //
+    // onMount(() => {
+    //     console.log('scroll spy')
+    //     console.log(allSectionsStore.all())
+    //     const href = window.location.href
+    //     const lastSlashIdx = href.lastIndexOf('/')
+    //     url = href.includes('section') ? href.substring(0, lastSlashIdx) + '/' : href + '/section/'
+    // })
 
     const activeClass = (section: Section) => {
         return section.isActive ? 'font-semibold border-l-[0.125rem]  text-primary' : ''
     }
 
-    const setActive = (section: Section) => {
-        return allSectionsStore.getStore(section.id)?.setActive(true)
-    }
+    // const setActive = (section: Section) => {
+    //     return allSectionsStore.getStore(section.id)?.setActive(true)
+    // }
 
-    onDestroy(() => allUnsubscribe())
+    // onDestroy(() => allUnsubscribe())
 </script>
 
 <div class="mb-8">

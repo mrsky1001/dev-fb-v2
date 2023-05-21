@@ -8,13 +8,13 @@ import { _baseStoreForList } from '../_base.store'
 export interface IAllSectionStore extends WrapperPropsForList<ISection, ISectionStore> {
     getActive(): ISection | undefined
 
-    setLikeStores(rawSections: ISectionProps[]): void
+    setRawData(rawSections: ISectionProps[]): void
 
     resetActiveMark(): void
 }
 
-const createAllSectionStore = (): IAllSectionStore => {
-    const stores = writable<ISectionStore[]>([])
+export const createAllSectionStore = (rawSections: ISectionProps[]): IAllSectionStore => {
+    const stores = writable<ISectionStore[]>(rawSections.map((s) => createSectionStore(s)))
 
     return _baseStoreForList<ISection, ISectionStore, IAllSectionStore>(
         stores,
@@ -28,7 +28,7 @@ const createAllSectionStore = (): IAllSectionStore => {
 
             getActive: () => all()?.find((s) => s.isActive),
 
-            setLikeStores: (rawSections: ISectionProps[]) => {
+            setRawData: (rawSections: ISectionProps[]) => {
                 stores.set(rawSections.map((s) => createSectionStore(s)))
             },
 
@@ -43,5 +43,5 @@ const createAllSectionStore = (): IAllSectionStore => {
     )
 }
 
-console.log('reset  allSectionsStore')
-export const allSectionsStore = createAllSectionStore()
+//
+// export const allSectionsStore = createAllSectionStore()

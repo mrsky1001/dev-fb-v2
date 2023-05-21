@@ -1,6 +1,5 @@
 import { get } from 'svelte/store'
 import type { Writable } from 'svelte/store'
-import type { ISectionProps } from './section/section'
 
 export interface IBase {
     _id?: string
