@@ -5,8 +5,10 @@
 
 import type { ISectionProps } from '../../../core/stores/section/section'
 import { getSections } from '../../../core/server/services/sections.services'
+import type { IDomain } from '../../../core/stores/domain/domain'
 
 export const load = async (info) => {
+    const domains: IDomain[] = await getDomains(info.params.domain)
     const sections: ISectionProps[] = await getSections(info.params.domain)
 
     // allSectionsStore.setLikeStores(sections)

@@ -11,18 +11,12 @@
     export let data
 
     $: data && changingData()
-    let active
+    let activeSection
     const changingData = () => {
         console.log('changingData')
         data.sections[0].isActive = true
-        mainStore.set({ id: '0', allSectionsStore: createAllSectionStore(data.sections) })
-        active = mainStore.self().allSectionsStore.getActive()
-        // allSectionsStore.getStore(data.sections[1]?._id)?.setActive(true)
-        // console.log(allSectionsStore.getStore(data.sections[0]?._id)?.self())
-        // console.log(allSectionsStore.all())
-        console.log(active)
-        console.log(data.sections[0]?._id)
-        // console.log(allSectionsStore.getActive())
+        mainStore.updateAllSectionsStore(createAllSectionStore(data.sections))
+        activeSection = mainStore.self().allSectionsStore.getActive()
     }
 
     // const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), () => {
@@ -51,9 +45,8 @@
                     class="flex-auto max-w-8xl min-w-0 pt-6 lg:px-8 lg:pt-8 pb:12 xl:pb-24 lg:pb-16"
                     on:click={() => change()}
                 >
-                    {active?.name}
                     <!--{#each posts as post }-->
-                    <BlogSection />
+                    <BlogSection {activeSection} />
                     <!--            <Card img="{img}">-->
                     <!--                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>-->
                     <!--                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">-->

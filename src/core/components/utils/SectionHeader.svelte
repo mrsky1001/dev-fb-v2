@@ -3,7 +3,7 @@
 
     export let home = ''
     export let domain = ''
-    export let nameDomain = ''
+    export let textDomain = ''
     export let section = ''
     export let nameSection = ''
     export let descriptionDomain = ''
@@ -16,11 +16,11 @@
             <div class="col-span-2 mb-2 lg:mb-0">
                 <Breadcrumb navClass="flex mb-3">
                     <BreadcrumbItem href="/" home>{home}</BreadcrumbItem>
-                    <BreadcrumbItem href="/{domain}">{nameDomain}</BreadcrumbItem>
+                    <BreadcrumbItem href="/{domain}">{textDomain}</BreadcrumbItem>
                     <BreadcrumbItem href="/{domain}/{section}">{nameSection}</BreadcrumbItem>
                 </Breadcrumb>
                 <h1 class="inline-block mb-2 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-                    {nameDomain}
+                    {textDomain}
                 </h1>
                 <p class="text-lg text-gray-500 lg:mb-0 dark:text-gray-400">
                     {descriptionDomain}

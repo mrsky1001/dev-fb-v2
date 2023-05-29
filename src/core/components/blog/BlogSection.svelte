@@ -16,16 +16,16 @@
     import type { ISection } from '../../stores/section/section'
     import ArticleImg from '../flowbite/blog/ArticleImg.svelte'
     import ArticleContent from '../flowbite/blog/ArticleContent.svelte'
-    import domains from '../../server/collections/domains'
     import { beforeNavigate } from '$app/navigation'
 
-    const title = 'Разработка'
-    const dir = 'marketing'
-    const subTitle = 'Давай с нами!'
-    const subDescription = 'Присоединяйтесь к нашему сообществу и станьте частью мира IT-разработки!'
-
-    let activeSection
-    let sections
+    export let activeSection: ISection
+    //
+    // const title = 'Разработка'
+    // const dir = 'marketing'
+    // const subTitle = 'Давай с нами!'
+    // const subDescription = 'Присоединяйтесь к нашему сообществу и станьте частью мира IT-разработки!'
+    //
+    // let sections
 
     // subscribeAll(allSectionsStore.allStores(), (allStores) => {
     //     activeSection = allSectionsStore.getActive()
@@ -35,11 +35,8 @@
     //
     let posts = []
 
-    export const router = false
-
-    $: domain = activeSection?.domain
-    $: objDomain = domains[activeSection?.domain.toUpperCase()]
-    $: descriptionDomain = objDomain?.description
+    $: domain = domains[activeSection?.domain.toUpperCase()]
+    $: descriptionDomain = domain?.description
 
     $: section = activeSection?.name
     $: nameSection = activeSection?.name
@@ -72,7 +69,7 @@
 
 <!--<MetaTag {breadcrumb_title} {title} {dir} {description}/>-->
 
-<SectionHeader {domain} nameDomain={objDomain?.text} {section} {nameSection} {descriptionDomain} />
+<SectionHeader domain={domain.name} textDomain={domain?.text} {section} {nameSection} {descriptionDomain} />
 
 <!--<SectionBlock title={subTitle}>-->
 <!--    {subDescription}-->
