@@ -1,32 +1,42 @@
-import type { IDomainStore } from './domain.store'
-import { get, type Unsubscriber, writable } from 'svelte/store'
-import { createDomainStore } from './domain.store'
+import { _baseStoreForList, type WrapperPropsForList } from '../_base.store'
+import { createDomainStore, type IDomainStore } from './domain.store'
+import { writable } from 'svelte/types/runtime/store'
 import type { IDomain } from './domain'
 
-export interface IAllDomainStore {
-    getStore(domain: IDomain): IDomainStore
+export interface IAllDomainStore extends WrapperPropsForList<IDomain, IDomainStore> {
+    getActive(): IDomain | undefined
 
-    set(domains: IDomain[]): void
+    setRawData(rawDomains: IDomain[]): void
 
-    all(): IDomain[]
-
-    allStores(): IDomainStore[]
-
-    subscribe(v: any): Unsubscriber
+    resetActiveMark(): void
 }
 
-export const createAllDomainStore = () => {
-    const stores = writable<IDomainStore[]>([])
+export const createAllDomainStore = (rawDomains: IDomain[]): IAllDomainStore => {
+    const stores = writable<IDomainStore[]>(rawDomains.map((s) => createDomainStore(s)))
 
-    return {
-        getStore: (domain: IDomain) => {
-            return get(stores).find((s) => s.self().id === domain.id)
-        },
-        set: (domains: IDomain[]) => {
-            stores.set(domains.map((s) => createDomainStore(s)))
-        },
-        allStores: () => get(stores),
-        all: () => get(stores).map((s) => s.self()),
-        subscribe: stores.subscribe
-    } as IAllDomainStore
+    return _baseStoreForList<IDomain, IDomainStore, IAllDomainStore>(
+        stores,
+        ({ init, add, all, getStore, allStores }) => ({
+            ...stores,
+            init,
+            add,
+            all,
+            getStore,
+            allStores,
+
+            getActive: () => all()?.find((s) => s.isActive),
+
+            setRawData: (rawDomains: IDomain[]) => {
+                stores.set(rawDomains.map((s) => createDomainStore(s)))
+            },
+
+            resetActiveMark: () =>
+                stores.update((all) =>
+                    all.map((s) => {
+                        s.self().isActive = false
+                        return s
+                    })
+                )
+        })
+    )
 }

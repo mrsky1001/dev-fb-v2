@@ -9,6 +9,8 @@ export interface IDomain extends IBase {
     name: string
     text: string
     description: string
+
+    isActive: boolean
 }
 
 export default class Domain {
@@ -16,6 +18,8 @@ export default class Domain {
     name = ''
     text = ''
     description = ''
+
+    isActive = false
 
     constructor(initObj?: IDomain) {
         if (initObj) {
@@ -33,8 +37,8 @@ export default class Domain {
 
     init(obj: IDomain): void {
         this.id = setId(obj)
-        this.name ??= obj.name
-        this.text ??= obj.text
+        this.name = obj.name ?? this.name
+        this.text = obj.text ?? this.name
         this.description ??= obj.description
     }
 }

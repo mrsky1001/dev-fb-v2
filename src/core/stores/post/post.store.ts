@@ -8,7 +8,6 @@ export const createPostStore = (s: IPost): IPostStore => {
     const store = writable<IPost>(new Post(s))
 
     return _baseStore(store, ({ init, self }) => ({
-        ...store,
         init,
         self
     }))

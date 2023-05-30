@@ -2,20 +2,22 @@
  * Copyright (©) 09.07.2021, 17:13. Kolyada Nikita Vladimirovich (nikita.nk16@yandex.ru)
  */
 
-import api from './api'
+import api, { apiGet, apiPost, TValidFunc } from './api'
 import type { IRule } from '../models/interfaces/lib/IRule'
-import Post from '../../stores/post/post'
+import Post, { IPost } from '../../stores/post/post'
 import urls from '../collections/urls'
 import config from '../../../config/config'
 import type { AxiosResponse } from 'axios'
 import { validationProp } from '../validation'
 import { handlerError, responseHandler } from '../response-handler'
 import type AxiosError from 'axios'
-import type { IPost } from '../models/interfaces/article/IPost'
 import type { IPostsFilter } from '../models/interfaces/filter/filters-posts'
 import PhotoPost from '../models/classes/article/PhotoPost'
+import { globalStore } from '../../stores/global.store'
 
-export const getInValidPostFields = (post: Post) => {
+export type TValidFunc<T> = (data: T) => string[]
+
+export const getInValidPostFields: TValidFunc<Post> = (post: Post) => {
     const rules: IRule[] = [
         { name: 'title', label: 'Заголовок', type: 'string', min: 3 },
         { name: 'content', label: 'Содержание', type: 'string', min: 10 },
@@ -34,117 +36,49 @@ export const getInValidPostFields = (post: Post) => {
     return listError
 }
 
-export const getPost = (postId: string, title = ''): Promise<Post> => {
-    return new Promise<Post>((resolve, reject) => {
-        const url = postId ? `${urls.GET_POST_BY_ID}/${postId}` : `${urls.GET_POST_BY_TITLE}/${title}`
+export const getPostByTitle = (title: string) => apiGet<IPost>('post', urls.GET_POST_BY_TITLE, title)
 
-        api()
-            .get(url, { params: { domain: config.server.domain } })
-            .then((res: AxiosResponse) => {
-                responseHandler(res, null, false)
-                    .then((data) => resolve(new Post(data.post)))
-                    .catch((err: typeof AxiosError) => {
-                        handlerError(err)
-                        reject(err)
-                    })
-            })
-            .catch((err: typeof AxiosError) => {
-                handlerError(err)
-                reject(err)
-            })
-    })
+export const getPost = (postId: string) => {
+    const config = { params: { domain: globalStore.self().allDomainsStore.getActive()?.name } }
+    return apiGet<IPost>('post', urls.GET_POST_BY_ID, postId, config)
 }
 
-export const getPosts = (sectionId: string, lastCreateDate: Date = new Date(), searchText = ''): Promise<Post[]> => {
-    return new Promise<IPost[]>((resolve, reject) => {
-        const options = {
-            params: {
-                domain: config.server.domain,
-                sectionId,
-                searchText,
-                lastCreateDate
-            }
+export const getPosts = (sectionId: string, lastCreateDate: Date = new Date(), searchText = '') => {
+    const config = {
+        params: {
+            domain: globalStore.self().allDomainsStore.getActive()?.name,
+            sectionId,
+            searchText,
+            lastCreateDate
         }
+    }
 
-        api()
-            .get(`${urls.GET_POSTS}`, options)
-            .then((res: AxiosResponse) => {
-                responseHandler(res, undefined, false)
-                    .then((data) => resolve(data.posts.map((post: IPost) => new Post(post))))
-                    .catch((err: typeof AxiosError) => {
-                        handlerError(err)
-                        reject(err)
-                    })
-            })
-            .catch((err: typeof AxiosError) => {
-                handlerError(err)
-                reject(err)
-            })
-    })
+    return apiGet<IPost[]>('posts', urls.GET_POSTS, undefined, config)
 }
-export const getFiltersPosts = (): Promise<IPostsFilter[]> => {
-    return new Promise<IPostsFilter[]>((resolve, reject) => {
-        api()
-            .get(urls.GET_FILTERS_POSTS, { params: { domain: config.server.domain } })
-            .then((res: AxiosResponse) => {
-                responseHandler(res, undefined, false)
-                    .then((data) => resolve(data.filtersPosts))
-                    .catch((err: typeof AxiosError) => {
-                        handlerError(err)
-                        reject(err)
-                    })
-            })
-            .catch((err: typeof AxiosError) => {
-                handlerError(err)
-                reject(err)
-            })
-    })
-}
-export const addPost = (post: Post): Promise<Post> => {
-    return new Promise<Post>((resolve, reject) => {
-        const listErrors = getInValidPostFields(post)
 
-        if (!listErrors.length) {
-            api()
-                .post(urls.CREATE_POST, post)
-                .then((res: AxiosResponse) => {
-                    responseHandler(res)
-                        .then((data) => resolve(new Post(data.post)))
-                        .catch((err: typeof AxiosError) => {
-                            handlerError(err)
-                            reject(err)
-                        })
-                })
-                .catch((err: typeof AxiosError) => {
-                    handlerError(err)
-                    reject(err)
-                })
-        } else {
-            // const msg: ISnackbarProps = {msg: exceptions.NOT_VALID.text, classes: 'error', params: listErrors}
-            // vxc.snackbar.setSnackBarMsg(msg)
+export const getFiltersPosts = () => {
+    const config = {
+        params: {
+            domain: globalStore.self().allDomainsStore.getActive()?.name
         }
-    })
+    }
+
+    return apiGet<IPostsFilter[]>('filtersPosts', urls.GET_FILTERS_POSTS, undefined, config)
 }
 
-export const addLikePost = (postId: string): Promise<Post> => {
-    return new Promise<Post>((resolve, reject) => {
-        const url = `${urls.SET_POST_LIKE}/${postId}`
+export const addPost = (post: Post) => {
+    const listErrors = getInValidPostFields(post)
 
-        api()
-            .post(url)
-            .then((res: AxiosResponse) => {
-                responseHandler(res, undefined, false)
-                    .then((data) => resolve(new Post(data.post)))
-                    .catch((err: typeof AxiosError) => {
-                        handlerError(err)
-                        reject(err)
-                    })
-            })
-            .catch((err: typeof AxiosError) => {
-                handlerError(err)
-                reject(err)
-            })
-    })
+    if (!listErrors.length) {
+        return apiPost<Post, IPost>('post', urls.CREATE_POST, undefined, post)
+    } else {
+        // const msg: ISnackbarProps = {msg: exceptions.NOT_VALID.text, classes: 'error', params: listErrors}
+        // vxc.snackbar.setSnackBarMsg(msg)
+    }
+}
+
+export const addLikePost = (postId: string) => {
+    return apiPost<IPost>('post', urls.SET_POST_LIKE, postId)
 }
 
 export const removeLikePost = (postId: string): Promise<Post> => {

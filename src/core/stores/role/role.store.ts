@@ -10,7 +10,6 @@ export const createRoleStore = (s?: IRole): IRoleStore => {
     const store = writable<IRole>(new Role(s))
 
     return _baseStore(store, ({ init, self }) => ({
-        ...store,
         init,
         self
     }))

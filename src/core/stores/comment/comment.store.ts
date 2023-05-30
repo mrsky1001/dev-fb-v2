@@ -9,7 +9,6 @@ export const createCommentStore = (s?: IComment): ICommentStore => {
     const store = writable<IComment>(new Comment(s))
 
     return _baseStore(store, ({ init, self }) => ({
-        ...store,
         init,
         self
     }))

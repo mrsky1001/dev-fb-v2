@@ -9,7 +9,6 @@ export const createDomainStore = (s?: IDomain): IDomainStore => {
     const store = writable<IDomain>(new Domain(s))
 
     return _baseStore(store, ({ init, self }) => ({
-        ...store,
         init,
         self
     }))

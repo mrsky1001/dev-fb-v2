@@ -9,7 +9,6 @@ export const createUserStore = (s?: IUser): IUserStore => {
     const store = writable<IUser>(new User(s))
 
     return _baseStore(store, ({ init, self }) => ({
-        ...store,
         init,
         self
     }))

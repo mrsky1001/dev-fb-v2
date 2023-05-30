@@ -7,7 +7,7 @@
     import BlogSection from '../../../core/components/blog/BlogSection.svelte'
     import { beforeNavigate } from '$app/navigation'
     import { customRandom, random } from 'nanoid'
-    import { mainStore } from '../../../core/stores/main.store'
+    import { globalStore } from '../../../core/stores/global.store'
     export let data
 
     $: data && changingData()
@@ -15,8 +15,8 @@
     const changingData = () => {
         console.log('changingData')
         data.sections[0].isActive = true
-        mainStore.updateAllSectionsStore(createAllSectionStore(data.sections))
-        activeSection = mainStore.self().allSectionsStore.getActive()
+        globalStore.update(createAllSectionStore(data.sections))
+        activeSection = globalStore.self().allSectionsStore.getActive()
     }
 
     // const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), () => {

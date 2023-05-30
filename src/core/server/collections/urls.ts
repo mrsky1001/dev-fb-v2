@@ -76,6 +76,14 @@ export default {
     UPDATE_SECTION_BY_ID: '/api/section-id',
 
     /**
+     * DOMAINS
+     */
+    GET_DOMAINS: '/api/domains',
+    GET_DOMAIN_BY_ID: '/api/domain-id',
+    CREATE_DOMAIN: '/api/domain',
+    UPDATE_DOMAIN_BY_ID: '/api/domain-id',
+
+    /**
      * IMGS
      */
     GET_IMG: '/api/uploads/images',
@@ -89,7 +97,7 @@ export default {
     DELETE_POST_IMG: '/api/post-img',
 
     UPLOAD_AVATAR_IMG: '/api/avatar-img',
-    DELETE_AVATAR_IMG: '/api/avatar-img',
+    DELETE_AVATAR_IMG: '/api/avatar-img'
     // GET_ALL_IMGS: 'api/authST/img/all',
     // EDIT_IMG: 'api/authST/img'
 }

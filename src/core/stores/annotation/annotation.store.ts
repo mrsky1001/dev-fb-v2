@@ -9,7 +9,6 @@ export const createAnnotationStore = (s?: IAnnotation): IAnnotationStore => {
     const store = writable<IAnnotation>(new Annotation(s))
 
     return _baseStore(store, ({ init, self }) => ({
-        ...store,
         init,
         self
     }))

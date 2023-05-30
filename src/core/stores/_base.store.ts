@@ -22,7 +22,8 @@ export const setId = (obj: IBase): string => {
     }
 }
 
-export interface WrapperProps<T extends IBase> extends Writable<T> {
+export interface WrapperProps<T extends IBase> {
+    // extends Writable<T>
     init: (s: T) => void
     self: () => T
 }
