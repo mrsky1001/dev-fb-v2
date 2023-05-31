@@ -52,16 +52,89 @@ export function apiGet<T>(
 
 export function apiPost<IRaw>(field: string, url: string, param: string): Promise<IRaw>
 export function apiPost<TData, IRaw>(field: string, url: string, param: string | undefined, data: TData): Promise<IRaw>
+export function apiPost<TData, IRaw>(
+    field: string,
+    url: string,
+    param: string | undefined,
+    data: TData,
+    isShowMsg: boolean
+): Promise<IRaw>
 
-export function apiPost<TData, IRaw>(field: string, url: string, param?: string, data?: TData): Promise<IRaw> {
+export function apiPost<TData, IRaw>(
+    field: string,
+    url: string,
+    param?: string,
+    data?: TData,
+    isShowMsg?: boolean
+): Promise<IRaw> {
     const _url = `${url}${param ? '/' + param : ''}`
 
     return new Promise<IRaw>((resolve, reject) => {
         api()
             .post(_url, data)
             .then((res: AxiosResponse) => {
-                responseHandler(res)
+                responseHandler(res, undefined, isShowMsg)
                     .then((data) => resolve(data[field]))
+                    .catch((err: AxiosError) => {
+                        handlerError(err)
+                        reject(err)
+                    })
+            })
+            .catch((err: AxiosError) => {
+                handlerError(err)
+                reject(err)
+            })
+    })
+}
+
+export function apiPut<IRaw>(field: string, url: string, param: string): Promise<IRaw>
+export function apiPut<TData, IRaw>(field: string, url: string, param: string | undefined, data: TData): Promise<IRaw>
+export function apiPut<TData, IRaw>(
+    field: string,
+    url: string,
+    param: string | undefined,
+    data: TData,
+    isShowMsg: boolean
+): Promise<IRaw>
+
+export function apiPut<TData, IRaw>(
+    field: string,
+    url: string,
+    param?: string,
+    data?: TData,
+    isShowMsg?: boolean
+): Promise<IRaw> {
+    const _url = `${url}${param ? '/' + param : ''}`
+
+    return new Promise<IRaw>((resolve, reject) => {
+        api()
+            .post(_url, data)
+            .then((res: AxiosResponse) => {
+                responseHandler(res, undefined, isShowMsg)
+                    .then((data) => resolve(data[field]))
+                    .catch((err: AxiosError) => {
+                        handlerError(err)
+                        reject(err)
+                    })
+            })
+            .catch((err: AxiosError) => {
+                handlerError(err)
+                reject(err)
+            })
+    })
+}
+
+export function apiDelete<IRaw = void>(field: void, url: string, param: string): Promise<IRaw>
+export function apiDelete<IRaw>(field: string, url: string, param: string): Promise<IRaw>
+export function apiDelete<IRaw = void>(field: string | void, url: string, param?: string): Promise<IRaw> {
+    const _url = `${url}${param ? '/' + param : ''}`
+
+    return new Promise<IRaw>((resolve, reject) => {
+        api()
+            .delete(_url)
+            .then((res: AxiosResponse) => {
+                responseHandler(res, undefined, false)
+                    .then((data) => resolve(field ? data[field] : null))
                     .catch((err: AxiosError) => {
                         handlerError(err)
                         reject(err)
