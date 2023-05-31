@@ -6,9 +6,12 @@
 import type { ISectionProps } from '../../../core/stores/section/section'
 import { getSections } from '../../../core/server/services/sections.services'
 import type { IDomain } from '../../../core/stores/domain/domain'
+import type Section from '../../../core/stores/section/section'
+import { globalStore } from '../../../core/stores/global.store'
 
 export const load = async (info) => {
-    const sections: ISectionProps[] = await getSections(info.params.domain)
+    globalStore.self()?.allDomainsStore?.getStoreByField('name', info.params.domain)
+    const sections: Section[] = await getSections(info.params.domain)
 
     // allSectionsStore.setLikeStores(sections)
     // allSectionsStore.getStore(sections[0]?._id)?.setActive(true)

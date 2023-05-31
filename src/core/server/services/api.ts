@@ -32,12 +32,13 @@ export function apiGet<T>(
 ): Promise<T> {
     return new Promise<T>((resolve, reject) => {
         const _url = `${url}${param ? '/' + param : ''}`
-
         api()
             .get(_url, config)
             .then((res: AxiosResponse) => {
                 responseHandler(res, null, false)
-                    .then((data) => resolve(data[field]))
+                    .then((data) => {
+                        resolve(data[field])
+                    })
                     .catch((err: AxiosError) => {
                         handlerError(err)
                         reject(err)
@@ -87,16 +88,6 @@ export function apiPost<TData, IRaw>(
     })
 }
 
-export function apiPut<IRaw>(field: string, url: string, param: string): Promise<IRaw>
-export function apiPut<TData, IRaw>(field: string, url: string, param: string | undefined, data: TData): Promise<IRaw>
-export function apiPut<TData, IRaw>(
-    field: string,
-    url: string,
-    param: string | undefined,
-    data: TData,
-    isShowMsg: boolean
-): Promise<IRaw>
-
 export function apiPut<TData, IRaw>(
     field: string,
     url: string,
@@ -124,8 +115,6 @@ export function apiPut<TData, IRaw>(
     })
 }
 
-export function apiDelete<IRaw = void>(field: void, url: string, param: string): Promise<IRaw>
-export function apiDelete<IRaw>(field: string, url: string, param: string): Promise<IRaw>
 export function apiDelete<IRaw = void>(field: string | void, url: string, param?: string): Promise<IRaw> {
     const _url = `${url}${param ? '/' + param : ''}`
 

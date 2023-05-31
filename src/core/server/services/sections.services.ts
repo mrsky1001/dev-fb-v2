@@ -2,17 +2,13 @@
  * Copyright (©) 09.07.2021, 17:13. Kolyada Nikita Vladimirovich (nikita.nk16@yandex.ru)
  */
 
-import Section, { ISection, type ISectionProps } from '../../stores/section/section'
+import type Section from '../../stores/section/section'
+import type ISection from '../../stores/section/section'
+import type ISectionProps from '../../stores/section/section'
 import type { IRule } from '../models/interfaces/lib/IRule'
 import { validationProp } from '../validation'
 import urls from '../collections/urls'
-import api, { apiDelete, apiGet, apiPost, apiPut } from './api'
-import type { AxiosError, AxiosResponse } from 'axios'
-import { handlerError, responseHandler } from '../response-handler'
-import config from '../../../config/config'
-import Post, { IPost } from '../../stores/post/post'
-import { globalStore } from '../../stores/global.store'
-import { getInValidPostFields } from './post.services'
+import { apiDelete, apiGet, apiPost, apiPut } from './api'
 
 const getInValidSectionFields = (section: Section) => {
     const rules: IRule[] = [

@@ -47,6 +47,7 @@ export interface WrapperPropsForList<F extends IBase, T extends WrapperProps<F>>
     all: () => F[]
     init: (s: T[]) => void
     getStore: (id: string) => T | undefined
+    getStoreByField: (field: keyof F, value: string) => T | undefined
     allStores: () => T[]
 }
 
@@ -71,9 +72,14 @@ export function _baseStoreForList<F extends IBase, T extends WrapperProps<F>, I>
     const getStore = (id: string): T | undefined => {
         return get(stores).find((s) => s.self().id === id)
     }
+
+    const getStoreByField = (field: keyof F, value: string): T | undefined => {
+        return get(stores).find((s: T) => s.self()[field] === value)
+    }
+
     const allStores = (): T[] => {
         return get(stores)
     }
 
-    return wrapperFn({ ...stores, init, add, all, getStore, allStores })
+    return wrapperFn({ ...stores, init, add, all, getStore, getStoreByField, allStores })
 }

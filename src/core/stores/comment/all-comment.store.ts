@@ -7,7 +7,7 @@ export interface IAllCommentStore {
 
     getStore(post: IComment): ICommentStore
 
-    set(posts: IComment[]): void
+    init(posts: IComment[]): void
 
     all(): IComment[]
 
@@ -26,7 +26,7 @@ export const createAllCommentStore = () => {
         add: (s: ICommentStore) => {
             stores.update((old) => [...old, s])
         },
-        set: (arr: IComment[]) => {
+        init: (arr: IComment[]) => {
             stores.set(arr.map((data) => createCommentStore(data)))
         },
         allStores: () => get(stores),

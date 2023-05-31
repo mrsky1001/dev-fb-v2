@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onDestroy, onMount } from 'svelte'
-    import { allSectionsStore } from '../../../../../core/stores/section/all-sections.store'
+
     import ScrollSpy from '../../../../../core/components/scrollspy/ScrollSpy.svelte'
     import { subscribeAll } from '../../../../../core/stores/subscribe-all'
     import type { IPost } from '../../../../../core/stores/post/post'

@@ -8,7 +8,7 @@ export interface IAllPostStore {
 
     getStore(post: IPost): IPostStore
 
-    set(posts: IPost[]): void
+    init(posts: IPost[]): void
 
     all(): IPost[]
 
@@ -27,7 +27,7 @@ export const createAllPostStore = () => {
         add: (s: IPostStore) => {
             stores.update((old) => [...old, s])
         },
-        set: (arr: IPost[]) => {
+        init: (arr: IPost[]) => {
             stores.set(arr.map((data) => createPostStore(data)))
         },
         allStores: () => get(stores),

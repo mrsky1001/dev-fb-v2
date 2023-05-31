@@ -2,8 +2,6 @@
     import { onDestroy, onMount } from 'svelte'
     import { createAllSectionStore } from '../../../core/stores/section/all-sections.store'
     import ScrollSpy from '../../../core/components/scrollspy/ScrollSpy.svelte'
-    import { subscribeAll } from '../../../core/stores/subscribe-all'
-    import type { IPost } from '../../../core/stores/post/post'
     import BlogSection from '../../../core/components/blog/BlogSection.svelte'
     import { beforeNavigate } from '$app/navigation'
     import { customRandom, random } from 'nanoid'
@@ -15,7 +13,7 @@
     const changingData = () => {
         console.log('changingData')
         data.sections[0].isActive = true
-        globalStore.update(createAllSectionStore(data.sections))
+        globalStore.update({ allSectionsStore: createAllSectionStore(data.sections) })
         activeSection = globalStore.self().allSectionsStore.getActive()
     }
 
@@ -30,6 +28,7 @@
 
     onMount(() => {
         console.log('onMount domain data +page.svelte')
+        console.log(globalStore.self().allDomainsStore)
     })
 
     beforeNavigate(async () => {

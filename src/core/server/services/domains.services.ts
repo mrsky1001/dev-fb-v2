@@ -4,7 +4,9 @@
 
 import urls from '../collections/urls'
 import { apiGet } from './api'
+import type { IDomain } from '../../stores/domain/domain'
 
-export const getDomain = (domainId: string) => apiGet('domain', urls.GET_DOMAIN_BY_ID, domainId)
+export const getDomain = (domainId: string): Promise<IDomain[]> =>
+    apiGet<IDomain[]>('domain', urls.GET_DOMAIN_BY_ID, domainId)
 
-export const getDomains = () => apiGet('domains', urls.GET_DOMAINS)
+export const getDomains = (): Promise<IDomain[]> => apiGet<IDomain[]>('domains', urls.GET_DOMAINS)

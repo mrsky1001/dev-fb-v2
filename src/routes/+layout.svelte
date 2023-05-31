@@ -1,8 +1,12 @@
 <script>
     import './styles.css'
-    import anime from 'animejs/lib/anime'
-    import { onMount } from 'svelte'
     import Header from './Header.svelte'
+    import { initApp } from '../core/server/init-app'
+    import { onMount } from 'svelte'
+
+    onMount(() => {
+        initApp()
+    })
 </script>
 
 <Header />

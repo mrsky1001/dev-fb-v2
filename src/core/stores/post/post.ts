@@ -116,21 +116,21 @@ export default class Post implements IPost {
         this.countComments = obj.countComments ?? this.countComments
 
         if (obj.annotationStore) {
-            this.annotationStore.set(obj.annotationStore.self())
+            this.annotationStore.init(obj.annotationStore.self())
         } else if (obj.annotation) {
-            this.annotationStore.set(new Annotation(obj.annotation))
+            this.annotationStore.init(new Annotation(obj.annotation))
         }
 
         if (obj.authorStore) {
-            this.authorStore.set(obj.authorStore.self())
+            this.authorStore.init(obj.authorStore.self())
         } else if (obj.author) {
-            this.authorStore.set(new User(obj.author))
+            this.authorStore.init(new User(obj.author))
         }
 
         if (obj.commentsStore) {
-            this.commentsStore.set(obj.commentsStore.all())
+            this.commentsStore.init(obj.commentsStore.all())
         } else if (obj.comments) {
-            this.commentsStore.set(obj.comments.map((c) => new Comment(c)))
+            this.commentsStore.init(obj.comments.map((c) => new Comment(c)))
         }
     }
 

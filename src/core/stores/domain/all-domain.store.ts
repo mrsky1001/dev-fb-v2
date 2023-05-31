@@ -1,7 +1,8 @@
 import { _baseStoreForList, type WrapperPropsForList } from '../_base.store'
 import { createDomainStore, type IDomainStore } from './domain.store'
-import { writable } from 'svelte/types/runtime/store'
+
 import type { IDomain } from './domain'
+import { writable } from 'svelte/store'
 
 export interface IAllDomainStore extends WrapperPropsForList<IDomain, IDomainStore> {
     getActive(): IDomain | undefined
@@ -22,6 +23,7 @@ export const createAllDomainStore = (rawDomains: IDomain[]): IAllDomainStore => 
             add,
             all,
             getStore,
+            getStoreByField,
             allStores,
 
             getActive: () => all()?.find((s) => s.isActive),

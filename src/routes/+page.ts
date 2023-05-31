@@ -7,10 +7,10 @@ import { globalStore } from '../core/stores/global.store'
 
 /** @type {import('./$types').PageLoad} */
 export const load = async () => {
-    globalStore.init(await getD)
-
-    allSectionsStore.setLikeStores(sections)
-
-    sections.length && allSectionsStore.getStore(sections[0]?._id)?.setActive(true)
-    return {}
+    // globalStore.init(await getD)
+    //
+    // allSectionsStore.setLikeStores(sections)
+    //
+    // sections.length && allSectionsStore.getStore(sections[0]?._id)?.setActive(true)
+    // return {}
 }

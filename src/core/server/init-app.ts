@@ -1,3 +1,11 @@
-// import type { IGlobalStore } from '../stores/global.store'
-//
-// export const globalStore: IGlobalStore
+import { globalStore } from '../stores/global.store'
+import { getDomains } from './services/domains.services'
+import Domain, { type IDomain } from '../stores/domain/domain'
+import { createAllDomainStore } from '../stores/domain/all-domain.store'
+
+export const initApp = () => {
+    getDomains().then((rawDomains: IDomain[]): void => {
+        const domains: Domain[] = rawDomains.map((d: IDomain) => new Domain(d))
+        globalStore.update({ allDomainsStore: createAllDomainStore(domains) })
+    })
+}
