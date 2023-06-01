@@ -7,7 +7,7 @@ import { writable } from 'svelte/store'
 export interface IAllDomainStore extends WrapperPropsForList<IDomain, IDomainStore> {
     getActive(): IDomain | undefined
 
-    setRawData(rawDomains: IDomain[]): void
+    init(rawDomains: IDomain[]): void
 
     resetActiveMark(): void
 }
@@ -17,9 +17,9 @@ export const createAllDomainStore = (rawDomains: IDomain[]): IAllDomainStore => 
 
     return _baseStoreForList<IDomain, IDomainStore, IAllDomainStore>(
         stores,
-        ({ init, add, all, getStore, allStores }) => ({
+        ({ set, add, all, getStore, getStoreByField, allStores }) => ({
             ...stores,
-            init,
+            set,
             add,
             all,
             getStore,
@@ -28,7 +28,7 @@ export const createAllDomainStore = (rawDomains: IDomain[]): IAllDomainStore => 
 
             getActive: () => all()?.find((s) => s.isActive),
 
-            setRawData: (rawDomains: IDomain[]) => {
+            init: (rawDomains: IDomain[]) => {
                 stores.set(rawDomains.map((s) => createDomainStore(s)))
             },
 

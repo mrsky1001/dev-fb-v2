@@ -10,7 +10,6 @@ import type Section from '../../../core/stores/section/section'
 import { globalStore } from '../../../core/stores/global.store'
 
 export const load = async (info) => {
-    globalStore.self()?.allDomainsStore?.getStoreByField('name', info.params.domain)
     const sections: Section[] = await getSections(info.params.domain)
 
     // allSectionsStore.setLikeStores(sections)
@@ -23,6 +22,7 @@ export const load = async (info) => {
     // console.log(activeSection?.allPostStore.all())
 
     return {
+        domain: info.params.domain,
         sections: sections
     }
 }

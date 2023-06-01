@@ -7,7 +7,7 @@ export interface IAllRoleStore {
 
     getStore(post: IRole): IRoleStore
 
-    set(posts: IRole[]): void
+    init(posts: IRole[]): void
 
     all(): IRole[]
 
@@ -26,7 +26,7 @@ export const createAllRoleStore = () => {
         add: (s: IRoleStore) => {
             stores.update((old) => [...old, s])
         },
-        set: (arr: IRole[]) => {
+        init: (arr: IRole[]) => {
             stores.set(arr.map((data) => createRoleStore(data)))
         },
         allStores: () => get(stores),

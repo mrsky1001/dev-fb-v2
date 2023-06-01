@@ -8,7 +8,8 @@ export type IDomainStore = WrapperProps<IDomain>
 export const createDomainStore = (s?: IDomain): IDomainStore => {
     const store = writable<IDomain>(new Domain(s))
 
-    return _baseStore(store, ({ init, self }) => ({
+    return _baseStore(store, ({ init, subscribe, self }) => ({
+        subscribe,
         init,
         self
     }))

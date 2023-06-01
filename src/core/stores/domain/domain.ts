@@ -11,6 +11,7 @@ export interface IDomain extends IBase {
     description: string
 
     isActive: boolean
+    setActive(val?: boolean): void
 }
 
 export default class Domain {
@@ -38,7 +39,11 @@ export default class Domain {
     init(obj: IDomain): void {
         this.id = setId(obj)
         this.name = obj.name ?? this.name
-        this.text = obj.text ?? this.name
-        this.description ??= obj.description
+        this.text = obj.text ?? this.text
+        this.description = obj.description ?? this.description
+    }
+
+    setActive(val = true) {
+        this.isActive = val
     }
 }

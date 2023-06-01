@@ -8,8 +8,9 @@ export type IAnnotationStore = WrapperProps<IAnnotation>
 export const createAnnotationStore = (s?: IAnnotation): IAnnotationStore => {
     const store = writable<IAnnotation>(new Annotation(s))
 
-    return _baseStore(store, ({ init, self }) => ({
+    return _baseStore(store, ({ init, subscribe, self }) => ({
         init,
+        subscribe,
         self
     }))
 }

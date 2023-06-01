@@ -1,5 +1,6 @@
 import { get } from 'svelte/store'
 import type { Writable } from 'svelte/store'
+import type { Readable } from 'svelte/types/runtime/store'
 
 export interface IBase {
     _id?: string
@@ -22,8 +23,7 @@ export const setId = (obj: IBase): string => {
     }
 }
 
-export interface WrapperProps<T extends IBase> {
-    // extends Writable<T>
+export interface WrapperProps<T extends IBase> extends Readable<T> {
     init: (s: T) => void
     self: () => T
 }
@@ -45,7 +45,7 @@ export default function _baseStore<T extends IBase, I>(store: Writable<T>, wrapp
 export interface WrapperPropsForList<F extends IBase, T extends WrapperProps<F>> extends Writable<T[]> {
     add: (s: T) => void
     all: () => F[]
-    init: (s: T[]) => void
+    set: (s: T[]) => void
     getStore: (id: string) => T | undefined
     getStoreByField: (field: keyof F, value: string) => T | undefined
     allStores: () => T[]
@@ -57,9 +57,9 @@ export function _baseStoreForList<F extends IBase, T extends WrapperProps<F>, I>
 ): I {
     const { set, update, subscribe } = stores
 
-    const init = (s: T[]): void => {
-        set(s)
-    }
+    // const init = (s: F[]): void => {
+    //     set(s)
+    // }
 
     const add = (s: T): void => {
         update((old) => [...old, s])
@@ -81,5 +81,5 @@ export function _baseStoreForList<F extends IBase, T extends WrapperProps<F>, I>
         return get(stores)
     }
 
-    return wrapperFn({ ...stores, init, add, all, getStore, getStoreByField, allStores })
+    return wrapperFn({ ...stores, set, add, all, getStore, getStoreByField, allStores })
 }

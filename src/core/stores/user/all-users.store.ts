@@ -8,7 +8,7 @@ export interface IAllUserStore {
 
     getStore(post: IUser): IUserStore
 
-    set(posts: IUser[]): void
+    init(posts: IUser[]): void
 
     all(): IUser[]
 
@@ -27,7 +27,7 @@ export const createAllUserStore = () => {
         add: (s: IUserStore) => {
             stores.update((old) => [...old, s])
         },
-        set: (arr: IUser[]) => {
+        init: (arr: IUser[]) => {
             stores.set(arr.map((data) => createUserStore(data)))
         },
         allStores: () => get(stores),

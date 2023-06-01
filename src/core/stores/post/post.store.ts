@@ -7,8 +7,9 @@ export type IPostStore = WrapperProps<IPost>
 export const createPostStore = (s: IPost): IPostStore => {
     const store = writable<IPost>(new Post(s))
 
-    return _baseStore(store, ({ init, self }) => ({
+    return _baseStore(store, ({ init, subscribe, self }) => ({
         init,
+        subscribe,
         self
     }))
 }

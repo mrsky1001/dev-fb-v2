@@ -5,7 +5,9 @@
     import Section from '../../stores/section/section'
     import { subscribe } from 'svelte/internal'
 
-    let sections = []
+    export let sections = []
+    export let activeSection
+
     let url = ''
 
     // const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), (values) => {

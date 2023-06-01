@@ -8,7 +8,7 @@ export interface IAllAnnotationStore {
 
     getStore(annotation: IAnnotation): IAnnotationStore
 
-    set(annotations: IAnnotation[]): void
+    init(annotations: IAnnotation[]): void
 
     all(): IAnnotation[]
 
@@ -27,7 +27,7 @@ export const createAllAnnotationStore = () => {
         add: (s: IAnnotationStore) => {
             stores.update((old) => [...old, s])
         },
-        set: (annotations: IAnnotation[]) => {
+        init: (annotations: IAnnotation[]) => {
             stores.set(annotations.map((s) => createAnnotationStore(s)))
         },
         allStores: () => get(stores),

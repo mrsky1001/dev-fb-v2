@@ -6,20 +6,46 @@
     import { beforeNavigate } from '$app/navigation'
     import { customRandom, random } from 'nanoid'
     import { globalStore } from '../../../core/stores/global.store'
+    import { subscribeAll } from '../../../core/stores/subscribe-all'
+    import { subscribe } from 'svelte/internal'
     export let data
 
     $: data && changingData()
-    let activeSection
+
+    let activeSection, activeDomain
+
     const changingData = () => {
         console.log('changingData')
         data.sections[0].isActive = true
         globalStore.update({ allSectionsStore: createAllSectionStore(data.sections) })
         activeSection = globalStore.self().allSectionsStore.getActive()
+
+        // if (globalStore.self()?.allDomainsStore) {
+        //     activeDomain = globalStore.self().allDomainsStore.getStoreByField('name', data.domain)?.self()
+        //
+        //     if (!activeDomain) {
+        //         subscribeAll(globalStore.self().allDomainsStore.allStores(), () => {
+        //             activeDomain.setActive()
+        //         })
+        //     } else {
+        //         activeDomain.setActive()
+        //     }
+        // }
     }
 
-    // const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), () => {
-    //         posts = allSectionsStore.getActive()?.allPostStore.all() ?? []
-    //     })
+    subscribe(globalStore, () => {
+        if (globalStore.self()?.allDomainsStore) {
+            activeDomain = globalStore.self().allDomainsStore.getStoreByField('name', data.domain)?.self()
+
+            if (!activeDomain) {
+                subscribeAll(globalStore.self().allDomainsStore.allStores(), () => {
+                    activeDomain.setActive()
+                })
+            } else {
+                activeDomain.setActive()
+            }
+        }
+    })
 
     const change = () => {
         console.log(customRandom('012345678', 1, random)())
@@ -28,7 +54,6 @@
 
     onMount(() => {
         console.log('onMount domain data +page.svelte')
-        console.log(globalStore.self().allDomainsStore)
     })
 
     beforeNavigate(async () => {
@@ -45,7 +70,7 @@
                     on:click={() => change()}
                 >
                     <!--{#each posts as post }-->
-                    <BlogSection {activeSection} />
+                    <BlogSection {activeSection} {activeDomain} />
                     <!--            <Card img="{img}">-->
                     <!--                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>-->
                     <!--                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">-->

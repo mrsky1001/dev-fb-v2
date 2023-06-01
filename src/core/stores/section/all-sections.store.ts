@@ -8,7 +8,7 @@ import { _baseStoreForList } from '../_base.store'
 export interface IAllSectionStore extends WrapperPropsForList<ISection, ISectionStore> {
     getActive(): ISection | undefined
 
-    setRawData(rawSections: ISectionProps[]): void
+    init(rawSections: ISectionProps[]): void
 
     resetActiveMark(): void
 }
@@ -18,17 +18,18 @@ export const createAllSectionStore = (rawSections: ISectionProps[]): IAllSection
 
     return _baseStoreForList<ISection, ISectionStore, IAllSectionStore>(
         stores,
-        ({ init, add, all, getStore, allStores }) => ({
+        ({ set, add, all, getStore, getStoreByField, allStores }) => ({
             ...stores,
-            init,
+            set,
             add,
             all,
             getStore,
             allStores,
+            getStoreByField,
 
             getActive: () => all()?.find((s) => s.isActive),
 
-            setRawData: (rawSections: ISectionProps[]) => {
+            init: (rawSections: ISectionProps[]) => {
                 stores.set(rawSections.map((s) => createSectionStore(s)))
             },
 

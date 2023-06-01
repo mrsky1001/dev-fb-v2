@@ -8,8 +8,9 @@ export type ICommentStore = WrapperProps<IComment>
 export const createCommentStore = (s?: IComment): ICommentStore => {
     const store = writable<IComment>(new Comment(s))
 
-    return _baseStore(store, ({ init, self }) => ({
+    return _baseStore(store, ({ init, subscribe, self }) => ({
         init,
+        subscribe,
         self
     }))
 }

@@ -36,27 +36,28 @@
     //
     let posts = []
 
-    $: domain = globalStore.self().allDomainsStore?.getActive()
-    $: descriptionDomain = domain?.description
+    export let activeDomain
+    $: descriptionDomain = activeDomain?.description
 
     $: section = activeSection?.name
     $: nameSection = activeSection?.name
 
-    // const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), () => {
-    //     activeSection = allSectionsStore.getActive()
+    // const allUnsubscribe = subscribeAll(globalStore.self().allDomainsStore.allStores(), () => {
+    //     domain = allSectionsStore.getActive()
     //     posts = activeSection?.allPostStore.all() ?? []
     // })
 
     onMount(() => {
         console.log('blog section')
-        console.log(globalStore.self().allDomainsStore)
+        console.log(globalStore.self().allDomainsStore?.getActive())
         // console.log(allSectionsStore.getActive())
         // console.log(allSectionsStore.getActive()?.allPostStore.all())
         // console.log(posts)
     })
 
     afterUpdate(() => {
-        console.log('blog section')
+        console.log('afterUpdate blog section')
+        console.log(activeDomain)
         console.log(activeSection)
         console.log(activeSection?.domain)
     })
@@ -70,15 +71,21 @@
 </script>
 
 <!--<MetaTag {breadcrumb_title} {title} {dir} {description}/>-->
-{#await domain}
-    <SectionHeader domain={domain.name} textDomain={domain?.text} {section} {nameSection} {descriptionDomain} />
+{#if activeDomain}
+    <SectionHeader
+        domain={activeDomain.name}
+        textDomain={activeDomain?.text}
+        {section}
+        {nameSection}
+        {descriptionDomain}
+    />
 
     <!--<SectionBlock title={subTitle}>-->
     <!--    {subDescription}-->
     <!--</SectionBlock>-->
 
     <ExampleDiv>
-        {#await activeSection}
+        {#if activeSection}
             <Section name="blog">
                 <BlogHead>
                     <svelte:fragment slot="h2">{activeSection.name}</svelte:fragment>
@@ -137,6 +144,6 @@
                     {/each}
                 </BlogBodyWrapper>
             </Section>
-        {/await}
+        {/if}
     </ExampleDiv>
-{/await}
+{/if}

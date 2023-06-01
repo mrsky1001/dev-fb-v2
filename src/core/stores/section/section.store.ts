@@ -11,8 +11,9 @@ export interface ISectionStore extends WrapperProps<ISection> {
 export const createSectionStore = (s: ISectionProps): ISectionStore => {
     const store = writable<ISection>(new Section(s))
 
-    return _baseStore(store, ({ init, self }) => ({
+    return _baseStore(store, ({ init, subscribe, self }) => ({
         init,
+        subscribe,
         self,
         setActive: (val: boolean): void => {
             // const section = get(store)

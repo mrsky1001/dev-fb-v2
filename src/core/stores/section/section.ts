@@ -70,6 +70,10 @@ export default class Section implements ISection {
     }
 
     setPosts(posts: IPost[]): void {
-        posts?.length && this._allPostStores.set(posts)
+        posts?.length && this._allPostStores.init(posts)
+    }
+
+    setActive(val = true) {
+        this.isActive = val
     }
 }

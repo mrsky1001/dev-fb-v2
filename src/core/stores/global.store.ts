@@ -20,17 +20,18 @@ const createGlobalStore = (): IGlobalStore => {
     //     init(s)
     // }
 
-    const update = (rawStore: Partial<IGlobal>) => {
+    const updateStore = (rawStore: Partial<IGlobal>) => {
         store.update((s) => {
             return { ...s, ...rawStore }
         })
     }
 
-    return _baseStore(store, ({ init, self }) => ({
+    return _baseStore(store, ({ init, subscribe, self }) => ({
+        subscribe,
         init,
         // init: (s) => _initGlobal(s, init),
         self,
-        update
+        update: updateStore
     }))
 }
 
