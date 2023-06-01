@@ -12,6 +12,6 @@ export const createDomainStore = (s?: IDomain): IDomainStore => {
         subscribe,
         init,
         self,
-        updateByField('views', 123)
+        updateByField
     }))
 }
