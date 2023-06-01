@@ -1,6 +1,6 @@
 <script lang="ts">
     // import { allSectionsStore } from '../../stores/section/all-sections.store.js'
-    import { onDestroy, onMount } from 'svelte'
+    import { afterUpdate, onDestroy, onMount } from 'svelte'
     import { subscribeAll } from '../../stores/subscribe-all'
     import Section from '../../stores/section/section'
     import { subscribe } from 'svelte/internal'
@@ -14,13 +14,14 @@
     //     sections = values
     // })
     //
-    // onMount(() => {
-    //     console.log('scroll spy')
-    //     console.log(allSectionsStore.all())
-    //     const href = window.location.href
-    //     const lastSlashIdx = href.lastIndexOf('/')
-    //     url = href.includes('section') ? href.substring(0, lastSlashIdx) + '/' : href + '/section/'
-    // })
+    afterUpdate(() => {
+        console.log('scroll spy')
+        // console.log(allSectionsStore.all())
+        const href = window.location.href
+        const lastSlashIdx = href.lastIndexOf('/')
+        url = href.includes('section') ? href.substring(0, lastSlashIdx) + '/' : href + '/section/'
+        console.log(url)
+    })
 
     const activeClass = (section: Section) => {
         return section.isActive ? 'font-semibold border-l-[0.125rem]  text-primary' : ''

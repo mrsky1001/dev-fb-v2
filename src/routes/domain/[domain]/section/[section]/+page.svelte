@@ -10,6 +10,7 @@
     import { subscribe } from 'svelte/internal'
     import type { ISection, ISectionProps } from '../../../../../core/stores/section/section'
     import Section from '../../../../../core/stores/section/section'
+    import { SectionHeader } from '../../../../../core/components/utils'
 
     export let data: { sections: Section[]; domain: string; sectionId: string }
 
@@ -18,9 +19,6 @@
     let activeSection, activeDomain, sections
 
     const changingData = () => {
-        console.log('data.sectionId')
-        console.log(data.sectionId)
-        console.log(data.sections)
         data.sections.find((s) => s.id === data.sectionId).setActive()
         globalStore.update({ allSectionsStore: createAllSectionStore(data.sections as ISectionProps[]) })
         activeSection = globalStore.self().allSectionsStore.getActive()
@@ -74,7 +72,15 @@
                     class="flex-auto max-w-8xl min-w-0 pt-6 lg:px-8 lg:pt-8 pb:12 xl:pb-24 lg:pb-16"
                     on:click={() => change()}
                 >
-                    <!--{#each posts as post }-->
+                    {#if activeDomain}
+                        <SectionHeader
+                            domain={activeDomain.name}
+                            textDomain={activeDomain.text}
+                            descriptionDomain={activeDomain.description}
+                            section={activeSection.section}
+                            textSection={activeSection.text}
+                        />
+                    {/if}
                     <BlogSection {activeSection} {activeDomain} />
                     <!--            <Card img="{img}">-->
                     <!--                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>-->
@@ -94,7 +100,7 @@
                     <div
                         class="flex overflow-y-auto sticky top-28 flex-col justify-between pt-10 pb-6 h-[calc(100vh-5rem)]"
                     >
-                        <ScrollSpy {activeSection} {sections} />
+                        <ScrollSpy {sections} />
                     </div>
                 </div>
             </div>

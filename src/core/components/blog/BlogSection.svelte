@@ -39,9 +39,6 @@
     export let activeDomain
     $: descriptionDomain = activeDomain?.description
 
-    $: section = activeSection?.name
-    $: nameSection = activeSection?.name
-
     // const allUnsubscribe = subscribeAll(globalStore.self().allDomainsStore.allStores(), () => {
     //     domain = allSectionsStore.getActive()
     //     posts = activeSection?.allPostStore.all() ?? []
@@ -72,14 +69,6 @@
 
 <!--<MetaTag {breadcrumb_title} {title} {dir} {description}/>-->
 {#if activeDomain}
-    <SectionHeader
-        domain={activeDomain.name}
-        textDomain={activeDomain?.text}
-        {section}
-        {nameSection}
-        {descriptionDomain}
-    />
-
     <!--<SectionBlock title={subTitle}>-->
     <!--    {subDescription}-->
     <!--</SectionBlock>-->
