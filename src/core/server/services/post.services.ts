@@ -40,10 +40,15 @@ export const getPost = (postId: string): Promise<IPost> => {
     return apiGet<IPost>('post', urls.GET_POST_BY_ID, postId, config)
 }
 
-export const getPosts = (sectionId: string, lastCreateDate: Date = new Date(), searchText = ''): Promise<IPost[]> => {
+export const getPosts = (
+    domain: string,
+    sectionId: string,
+    lastCreateDate: Date = new Date(),
+    searchText = ''
+): Promise<IPost[]> => {
     const config = {
         params: {
-            domain: globalStore.self().allDomainsStore.getActive()?.name,
+            domain,
             sectionId,
             searchText,
             lastCreateDate

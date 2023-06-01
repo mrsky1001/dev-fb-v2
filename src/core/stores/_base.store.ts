@@ -23,15 +23,19 @@ export const setId = (obj: IBase): string => {
     }
 }
 
-export interface WrapperProps<T extends IBase> extends Readable<T> {
-    init: (s: T) => void
-    self: () => T
+export interface WrapperProps<TClass extends IBase> extends Readable<TClass> {
+    init: (s: TClass) => void
+    self: () => TClass
+    updateByField: (field: keyof TClass, value: TClass[keyof TClass]) => void
 }
 
-export default function _baseStore<T extends IBase, I>(store: Writable<T>, wrapperFn: (args: WrapperProps<T>) => I): I {
-    const { set } = store
+export default function _baseStore<TClass extends IBase, TStore>(
+    store: Writable<TClass>,
+    wrapperFn: (args: WrapperProps<TClass>) => TStore
+): TStore {
+    const { set, update } = store
 
-    const init = (s: T) => {
+    const init = (s: TClass) => {
         set(s)
     }
 
@@ -39,45 +43,53 @@ export default function _baseStore<T extends IBase, I>(store: Writable<T>, wrapp
         return get(store)
     }
 
-    return wrapperFn({ ...store, init, self })
+    const updateByField = (field: keyof TClass, value: TClass[keyof TClass]): void => {
+        update((s) => {
+            s[field] = value
+            return s
+        })
+    }
+
+    return wrapperFn({ ...store, init, self, updateByField })
 }
 
-export interface WrapperPropsForList<F extends IBase, T extends WrapperProps<F>> extends Writable<T[]> {
-    add: (s: T) => void
-    all: () => F[]
-    set: (s: T[]) => void
-    getStore: (id: string) => T | undefined
-    getStoreByField: (field: keyof F, value: string) => T | undefined
-    allStores: () => T[]
+export interface WrapperPropsForList<TClass extends IBase, TStore extends WrapperProps<TClass>>
+    extends Writable<TStore[]> {
+    add: (s: TStore) => void
+    all: () => TClass[]
+    set: (s: TStore[]) => void
+    getStore: (id: string) => TStore | undefined
+    getStoreByField: (field: keyof TClass, value: TClass[keyof TClass]) => TStore | undefined
+    allStores: () => TStore[]
 }
 
-export function _baseStoreForList<F extends IBase, T extends WrapperProps<F>, I>(
-    stores: Writable<T[]>,
-    wrapperFn: (args: WrapperPropsForList<F, T>) => I
-): I {
+export function _baseStoreForList<TClass extends IBase, TStore extends WrapperProps<TClass>, TAllStore>(
+    stores: Writable<TStore[]>,
+    wrapperFn: (args: WrapperPropsForList<TClass, TStore>) => TAllStore
+): TAllStore {
     const { set, update, subscribe } = stores
 
     // const init = (s: F[]): void => {
     //     set(s)
     // }
 
-    const add = (s: T): void => {
+    const add = (s: TStore): void => {
         update((old) => [...old, s])
     }
 
-    const all = (): F[] => {
+    const all = (): TClass[] => {
         return get(stores).map((s) => s.self())
     }
 
-    const getStore = (id: string): T | undefined => {
+    const getStore = (id: string): TStore | undefined => {
         return get(stores).find((s) => s.self().id === id)
     }
 
-    const getStoreByField = (field: keyof F, value: string): T | undefined => {
-        return get(stores).find((s: T) => s.self()[field] === value)
+    const getStoreByField = (field: keyof TClass, value: TClass[keyof TClass]): TStore | undefined => {
+        return get(stores).find((s: TStore) => s.self()[field] === value)
     }
 
-    const allStores = (): T[] => {
+    const allStores = (): TStore[] => {
         return get(stores)
     }
 

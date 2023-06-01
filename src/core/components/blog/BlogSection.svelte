@@ -18,8 +18,8 @@
     import ArticleContent from '../flowbite/blog/ArticleContent.svelte'
     import { beforeNavigate } from '$app/navigation'
     import { globalStore } from '../../stores/global.store'
+    import Post from '../../stores/post/post'
 
-    export let activeSection: ISection
     //
     // const title = 'Разработка'
     // const dir = 'marketing'
@@ -34,12 +34,14 @@
     //     console.log('after subscribeAll(allSectionsStore.allStores()')
     // })
     //
-    let posts = []
 
     export let activeDomain
+    export let activeSection: Section
+
+    export let posts: Post[] = []
     $: descriptionDomain = activeDomain?.description
 
-    // const allUnsubscribe = subscribeAll(globalStore.self().allDomainsStore.allStores(), () => {
+    // const allUnsubscribe = subscribeAll(globalStore.self().allSectionsStore.getActive(), () => {
     //     domain = allSectionsStore.getActive()
     //     posts = activeSection?.allPostStore.all() ?? []
     // })
@@ -49,14 +51,13 @@
         console.log(globalStore.self().allDomainsStore?.getActive())
         // console.log(allSectionsStore.getActive())
         // console.log(allSectionsStore.getActive()?.allPostStore.all())
-        // console.log(posts)
+        console.log(posts)
     })
 
     afterUpdate(() => {
         console.log('afterUpdate blog section')
-        console.log(activeDomain)
-        console.log(activeSection)
         console.log(activeSection?.domain)
+        console.log(posts)
     })
 
     // beforeNavigate(() => {

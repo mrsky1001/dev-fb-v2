@@ -1,37 +1,31 @@
 import type { IPost } from './post'
-import { get, type Unsubscriber, writable } from 'svelte/store'
+import { writable } from 'svelte/store'
 import type { IPostStore } from './post.store'
 import { createPostStore } from './post.store'
+import type { WrapperPropsForList } from '../_base.store'
+import { _baseStoreForList } from '../_base.store'
 
-export interface IAllPostStore {
-    add(s: IPostStore): void
-
-    getStore(post: IPost): IPostStore
-
+export interface IAllPostStore extends WrapperPropsForList<IPost, IPostStore> {
     init(posts: IPost[]): void
-
-    all(): IPost[]
-
-    allStores(): IPostStore[]
-
-    subscribe(v: any): Unsubscriber
 }
 
 export const createAllPostStore = () => {
     const stores = writable<IPostStore[]>([])
 
-    return {
-        getStore: (data: IPost) => {
-            return get(stores).find((s) => s.self().id === data.id)
-        },
-        add: (s: IPostStore) => {
-            stores.update((old) => [...old, s])
-        },
-        init: (arr: IPost[]) => {
-            stores.set(arr.map((data) => createPostStore(data)))
-        },
-        allStores: () => get(stores),
-        all: () => get(stores).map((s) => s.self()),
-        subscribe: stores.subscribe
-    } as IAllPostStore
+    return _baseStoreForList<IPost, IPostStore, IAllPostStore>(
+        stores,
+        ({ set, add, all, getStore, getStoreByField, allStores }) => ({
+            ...stores,
+            set,
+            add,
+            all,
+            getStore,
+            getStoreByField,
+            allStores,
+
+            init: (arr: IPost[]) => {
+                stores.set(arr.map((data) => createPostStore(data)))
+            }
+        })
+    )
 }

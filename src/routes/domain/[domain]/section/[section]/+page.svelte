@@ -16,7 +16,7 @@
 
     $: data && changingData()
 
-    let activeSection, activeDomain, sections
+    let activeSection: ISection | undefined, activeDomain, sections, posts
 
     const changingData = () => {
         data.sections.find((s) => s.id === data.sectionId).setActive()
@@ -46,6 +46,16 @@
                 })
             } else {
                 activeDomain.setActive()
+            }
+
+            const activeSectionStore = globalStore.self().allSectionsStore.getActiveStore()
+            if (activeSectionStore) {
+                subscribe(activeSectionStore, () => {
+                    posts = activeSectionStore.self().allPostStore.all()
+                    console.log('activeSectionStore')
+                    console.log(activeSectionStore)
+                    console.log(posts)
+                })
             }
         }
     })
@@ -81,7 +91,7 @@
                             textSection={activeSection.text}
                         />
                     {/if}
-                    <BlogSection {activeSection} {activeDomain} />
+                    <BlogSection {activeSection} {activeDomain} {posts} />
                     <!--            <Card img="{img}">-->
                     <!--                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>-->
                     <!--                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">-->
