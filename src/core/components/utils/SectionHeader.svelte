@@ -4,7 +4,7 @@
     export let home = ''
     export let domain = ''
     export let textDomain = ''
-    export let section = ''
+    export let sectionId = ''
     export let textSection = ''
     export let descriptionDomain = ''
     // const capitalized = `${first.toUpperCase()}${rest.join('')}`;
@@ -16,8 +16,10 @@
             <div class="col-span-2 mb-2 lg:mb-0">
                 <Breadcrumb navClass="flex mb-3">
                     <BreadcrumbItem href="/" home>{home}</BreadcrumbItem>
-                    <BreadcrumbItem href="/{domain}">{textDomain}</BreadcrumbItem>
-                    {#if textSection}<BreadcrumbItem href="/{domain}/{section}">{textSection}</BreadcrumbItem>{/if}
+                    <BreadcrumbItem href="/domain/{domain}">{textDomain}</BreadcrumbItem>
+                    {#if sectionId}
+                        <BreadcrumbItem href="/domain/{domain}/section/{sectionId}">{textSection}</BreadcrumbItem>
+                    {/if}
                 </Breadcrumb>
                 <h1 class="inline-block mb-2 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
                     {textDomain}

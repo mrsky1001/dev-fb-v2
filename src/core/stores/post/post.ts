@@ -14,8 +14,6 @@ import type { IUser } from '../user/user'
 import User from '../user/user'
 import type { IUserStore } from '../user/user.store'
 import { createUserStore } from '../user/user.store'
-import type { ICommentStore } from '../comment/comment.store'
-import { createCommentStore } from '../comment/comment.store'
 import type { IAllCommentStore } from '../comment/all-comment.store'
 import { createAllCommentStore } from '../comment/all-comment.store'
 import type { IComment } from '../comment/comment'
@@ -134,9 +132,9 @@ export default class Post implements IPost {
         }
     }
 
-    getRoute() {
-        return `/post/${this.urlTitle}`
-    }
+    // getRoute() {
+    //     return `/post/${this.urlTitle}`
+    // }
 
     getFormattedPublishDate(): string {
         if (this.publishedDate) {

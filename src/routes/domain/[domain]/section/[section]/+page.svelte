@@ -87,8 +87,8 @@
                             domain={activeDomain.name}
                             textDomain={activeDomain.text}
                             descriptionDomain={activeDomain.description}
-                            section={activeSection.section}
-                            textSection={activeSection.text}
+                            sectionId={activeSection.id}
+                            textSection={activeSection.name}
                         />
                     {/if}
                     <BlogSection {activeSection} {activeDomain} {posts} />

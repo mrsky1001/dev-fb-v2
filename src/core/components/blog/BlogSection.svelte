@@ -66,6 +66,11 @@
     // })
 
     // onDestroy(() => allUnsubscribe())
+
+    const buildRoute = (urlTitle: string) => {
+        console.log(`/domain/${activeDomain.name}/sections/${activeSection.id}/${urlTitle}`)
+        return `/domain/${activeDomain.name}/sections/${activeSection.id}/${urlTitle}`
+    }
 </script>
 
 <!--<MetaTag {breadcrumb_title} {title} {dir} {description}/>-->
@@ -88,7 +93,7 @@
                 <BlogBodyWrapper>
                     {#each posts as post}
                         <ArticleWrapper>
-                            <ArticleImg src={post.annotationStore.self().imgUrl} />
+                            <ArticleImg src={post.annotationStore.self().imgUrl} href={buildRoute(post.urlTitle)} />
 
                             <ArticleContent>
                                 <ArticleHead>
@@ -102,7 +107,7 @@
                                 </ArticleHead>
                                 <ArticleBody>
                                     <svelte:fragment slot="h3">
-                                        <a href={post.getRoute()}>{post.title} </a>
+                                        <a href={buildRoute(post.urlTitle)}>{post.title} </a>
                                     </svelte:fragment>
                                     <svelte:fragment slot="paragraph">
                                         <p class="mb-5 font-light text-gray-500 dark:text-gray-400">
@@ -122,7 +127,7 @@
                                         </span>
                                     </svelte:fragment>
                                     <a
-                                        href="/dev-fb-v2/static"
+                                        href={buildRoute(post.urlTitle)}
                                         class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
                                     >
                                         Прочитать
