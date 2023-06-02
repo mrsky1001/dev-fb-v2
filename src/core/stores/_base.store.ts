@@ -67,11 +67,7 @@ export function _baseStoreForList<TClass extends IBase, TStore extends WrapperPr
     stores: Writable<TStore[]>,
     wrapperFn: (args: WrapperPropsForList<TClass, TStore>) => TAllStore
 ): TAllStore {
-    const { set, update, subscribe } = stores
-
-    // const init = (s: F[]): void => {
-    //     set(s)
-    // }
+    const { set, update } = stores
 
     const add = (s: TStore): void => {
         update((old) => [...old, s])

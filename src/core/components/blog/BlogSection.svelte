@@ -8,32 +8,11 @@
         BlogHead,
         Section
     } from '../flowbite'
-    import { ExampleDiv, SectionBlock, SectionHeader } from '../utils/index.ts'
-    import { ArrowSmallRight, Newspaper } from 'svelte-heros'
-    import { subscribeAll } from '../../stores/subscribe-all'
-    import { afterUpdate, onDestroy, onMount } from 'svelte'
-    import type { IPost } from '../../stores/post/post'
-    import type { ISection } from '../../stores/section/section'
+    import { ExampleDiv } from '../utils/index.ts'
+    import { ArrowSmallRight } from 'svelte-heros'
     import ArticleImg from '../flowbite/blog/ArticleImg.svelte'
     import ArticleContent from '../flowbite/blog/ArticleContent.svelte'
-    import { beforeNavigate } from '$app/navigation'
-    import { globalStore } from '../../stores/global.store'
     import Post from '../../stores/post/post'
-
-    //
-    // const title = 'Разработка'
-    // const dir = 'marketing'
-    // const subTitle = 'Давай с нами!'
-    // const subDescription = 'Присоединяйтесь к нашему сообществу и станьте частью мира IT-разработки!'
-    //
-    // let sections
-
-    // subscribeAll(allSectionsStore.allStores(), (allStores) => {
-    //     activeSection = allSectionsStore.getActive()
-    //     sections = allStores
-    //     console.log('after subscribeAll(allSectionsStore.allStores()')
-    // })
-    //
 
     export let activeDomain
     export let activeSection: Section
@@ -41,34 +20,7 @@
     export let posts: Post[] = []
     $: descriptionDomain = activeDomain?.description
 
-    // const allUnsubscribe = subscribeAll(globalStore.self().allSectionsStore.getActive(), () => {
-    //     domain = allSectionsStore.getActive()
-    //     posts = activeSection?.allPostStore.all() ?? []
-    // })
-
-    onMount(() => {
-        console.log('blog section')
-        console.log(globalStore.self().allDomainsStore?.getActive())
-        // console.log(allSectionsStore.getActive())
-        // console.log(allSectionsStore.getActive()?.allPostStore.all())
-        console.log(posts)
-    })
-
-    afterUpdate(() => {
-        console.log('afterUpdate blog section')
-        console.log(activeSection?.domain)
-        console.log(posts)
-    })
-
-    // beforeNavigate(() => {
-    //     activeSection = allSectionsStore.getActive()
-    //     console.log(allSectionsStore.getActive())
-    // })
-
-    // onDestroy(() => allUnsubscribe())
-
     const buildRoute = (urlTitle: string) => {
-        console.log(`/domain/${activeDomain.name}/sections/${activeSection.id}/${urlTitle}`)
         return `/domain/${activeDomain.name}/sections/${activeSection.id}/${urlTitle}`
     }
 </script>

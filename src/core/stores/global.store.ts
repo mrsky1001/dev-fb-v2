@@ -16,21 +16,17 @@ export interface IGlobalStore extends WrapperProps<IGlobal> {
 const createGlobalStore = (): IGlobalStore => {
     const store = writable<IGlobal>()
 
-    // const _initGlobal = (s: IGlobal, init: (s: IGlobal) => void) => {
-    //     init(s)
-    // }
-
     const updateStore = (rawStore: Partial<IGlobal>) => {
         store.update((s) => {
             return { ...s, ...rawStore }
         })
     }
 
-    return _baseStore(store, ({ init, subscribe, self }) => ({
-        subscribe,
+    return _baseStore(store, ({ init, subscribe, self, updateByField }) => ({
         init,
-        // init: (s) => _initGlobal(s, init),
         self,
+        subscribe,
+        updateByField,
         update: updateStore
     }))
 }

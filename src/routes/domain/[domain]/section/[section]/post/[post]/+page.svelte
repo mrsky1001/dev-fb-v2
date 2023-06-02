@@ -11,12 +11,12 @@
     //
     export let data: { postStore: IPostStore; latestPosts: IPost[] }
 
-    onMount(() => {
-        console.log(data)
-        console.log(data.postStore)
-        console.log(data.postStore.self().authorStore.self())
-        console.log(data.latestPosts)
-    })
+    // onMount(() => {
+    //     console.log(data)
+    //     console.log(data.postStore)
+    //     console.log(data.postStore.self().authorStore.self())
+    //     console.log(data.latestPosts)
+    // })
     //     console.log(posts[0]?.annotationStore.self().text)
     //     console.log(allSectionsStore.getActive())
     //     // console.log($allPostsStore)

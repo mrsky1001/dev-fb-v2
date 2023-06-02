@@ -3,8 +3,7 @@
  */
 
 import type Section from '../../stores/section/section'
-import type ISection from '../../stores/section/section'
-import type ISectionProps from '../../stores/section/section'
+import type { ISection, ISectionProps } from '../../stores/section/section'
 import type { IRule } from '../models/interfaces/lib/IRule'
 import { validationProp } from '../validation'
 import urls from '../collections/urls'

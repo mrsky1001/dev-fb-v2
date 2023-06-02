@@ -14,11 +14,6 @@
         post = postStore?.self()
     })
 
-    onMount(() => {
-        console.log('sss')
-        console.log(postStore)
-    })
-
     onDestroy(() => unsubscribe())
 </script>
 

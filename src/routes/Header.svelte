@@ -74,7 +74,6 @@
     ]
 
     const logo = { name: 'FOMA-BLOG', href: config.front.host + '/' }
-    console.log(config.front.host)
 </script>
 
 <header

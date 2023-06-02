@@ -1,14 +1,9 @@
 <script>
-    import { NavLi } from 'flowbite-svelte'
     import CustomComponent from '../../custom/CustomComponent.svelte'
-    import { onMount } from 'svelte'
+
     export let icon = ''
     export let type = ''
     export let href = '/'
-    let href2 = ''
-    onMount(() => {
-        console.log(window.location.href)
-    })
 </script>
 
 {#if type.includes('mobile')}

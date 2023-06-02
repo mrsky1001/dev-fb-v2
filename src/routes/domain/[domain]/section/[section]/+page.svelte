@@ -1,10 +1,7 @@
 <script lang="ts">
-    import { onDestroy, onMount } from 'svelte'
     import { createAllSectionStore } from '../../../../../core/stores/section/all-sections.store'
     import ScrollSpy from '../../../../../core/components/scrollspy/ScrollSpy.svelte'
     import BlogSection from '../../../../../core/components/blog/BlogSection.svelte'
-    import { beforeNavigate } from '$app/navigation'
-    import { customRandom, random } from 'nanoid'
     import { globalStore } from '../../../../../core/stores/global.store'
     import { subscribeAll } from '../../../../../core/stores/subscribe-all'
     import { subscribe } from 'svelte/internal'
@@ -23,17 +20,6 @@
         globalStore.update({ allSectionsStore: createAllSectionStore(data.sections as ISectionProps[]) })
         activeSection = globalStore.self().allSectionsStore.getActive()
         sections = globalStore.self().allSectionsStore.all()
-        // if (globalStore.self()?.allDomainsStore) {
-        //     activeDomain = globalStore.self().allDomainsStore.getStoreByField('name', data.domain)?.self()
-        //
-        //     if (!activeDomain) {
-        //         subscribeAll(globalStore.self().allDomainsStore.allStores(), () => {
-        //             activeDomain.setActive()
-        //         })
-        //     } else {
-        //         activeDomain.setActive()
-        //     }
-        // }
     }
 
     subscribe(globalStore, () => {
@@ -52,25 +38,9 @@
             if (activeSectionStore) {
                 subscribe(activeSectionStore, () => {
                     posts = activeSectionStore.self().allPostStore.all()
-                    console.log('activeSectionStore')
-                    console.log(activeSectionStore)
-                    console.log(posts)
                 })
             }
         }
-    })
-
-    const change = () => {
-        console.log(customRandom('012345678', 1, random)())
-        // allSectionsStore.getStore(data.sections[Number(customRandom('012345678', 1, random)())]?._id)?.setActive(true)
-    }
-
-    onMount(() => {
-        console.log('onMount domain data +page.svelte')
-    })
-
-    beforeNavigate(async () => {
-        console.log('beforeNavigate domain data +page.svelte')
     })
 </script>
 
@@ -78,10 +48,7 @@
     <div class="lg:flex">
         <main class="flex-auto w-full min-w-0 lg:static lg:max-h-full lg:overflow-visible">
             <div class="flex w-full">
-                <div
-                    class="flex-auto max-w-8xl min-w-0 pt-6 lg:px-8 lg:pt-8 pb:12 xl:pb-24 lg:pb-16"
-                    on:click={() => change()}
-                >
+                <div class="flex-auto max-w-8xl min-w-0 pt-6 lg:px-8 lg:pt-8 pb:12 xl:pb-24 lg:pb-16">
                     {#if activeDomain}
                         <SectionHeader
                             domain={activeDomain.name}
