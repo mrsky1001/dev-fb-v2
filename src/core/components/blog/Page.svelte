@@ -44,6 +44,8 @@
         unsubscribe()
         // unsubscribePosts()
     })
+
+    const bgOpacity = annotation?.imgUrl ? 'bg-opacity-30' : 'bg-opacity-80'
 </script>
 
 <!--<MetaTag {breadcrumb_title} {title} {dir} {description}/>-->
@@ -59,7 +61,7 @@
         style="background-image: {'url(' + annotation.imgUrl + ')'}"
         class=" h-header w-full bg-no-repeat bg-cover bg-center bg-blend-darken relative"
     >
-        <div class="absolute top-0 left-0 w-full h-full bg-opacity-50 bg-black" />
+        <div class="absolute top-0 left-0 w-full h-full {bgOpacity} bg-black" />
         <div class="container mx-auto">
             <div class=" items-center px-4 mx-auto translate-y-1/2 peer-placeholder-shown:-translate-y-1/2">
                 <span class="block mb-4 text-gray-300">
@@ -99,14 +101,30 @@
                 </div>
                 <aside aria-label="Share social media">
                     <div class="not-format">
-                        <SocialBTN url="https://www.behance.net/foma_design"><BehanceSVG /></SocialBTN>
-                        <SocialBTN url="https://www.facebook.com/sharer/sharer.php?u={url}"><FacebookSVG /></SocialBTN>
-                        <SocialBTN url="https://twitter.com/share?url={url}"><TwitterSVG /></SocialBTN>
-                        <SocialBTN url="https://vk.com/share.php?url={url}"><VKSVG /></SocialBTN>
-                        <SocialBTN url="https://t.me/share/url?url={url}"><TelegramSVG /></SocialBTN>
-                        <SocialBTN url="https://www.instagram.com/foma_des/"><InstagramSVG /></SocialBTN>
-                        <SocialBTN><LinkSVG /></SocialBTN>
-                        <SocialBTN><KeepSVG /></SocialBTN>
+                        <SocialBTN url="https://www.behance.net/foma_design">
+                            <BehanceSVG />
+                        </SocialBTN>
+                        <SocialBTN url="https://www.facebook.com/sharer/sharer.php?u={url}">
+                            <FacebookSVG />
+                        </SocialBTN>
+                        <SocialBTN url="https://twitter.com/share?url={url}">
+                            <TwitterSVG />
+                        </SocialBTN>
+                        <SocialBTN url="https://vk.com/share.php?url={url}">
+                            <VKSVG />
+                        </SocialBTN>
+                        <SocialBTN url="https://t.me/share/url?url={url}">
+                            <TelegramSVG />
+                        </SocialBTN>
+                        <SocialBTN url="https://www.instagram.com/foma_des/">
+                            <InstagramSVG />
+                        </SocialBTN>
+                        <SocialBTN>
+                            <LinkSVG />
+                        </SocialBTN>
+                        <SocialBTN>
+                            <KeepSVG />
+                        </SocialBTN>
                         <button
                             id="dropdownMenuIconHorizontalButton"
                             data-dropdown-toggle="dropdownDotsHorizontal"

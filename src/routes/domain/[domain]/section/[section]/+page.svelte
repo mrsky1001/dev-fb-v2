@@ -15,10 +15,15 @@
 
     let activeSection: ISection | undefined, activeDomain, sections, posts
 
-    const changingData = () => {
+    const initActiveSection = () => {
         data.sections.find((s) => s.id === data.sectionId).setActive()
         globalStore.update({ allSectionsStore: createAllSectionStore(data.sections as ISectionProps[]) })
         activeSection = globalStore.self().allSectionsStore.getActive()
+    }
+
+    const changingData = () => {
+        initActiveSection()
+
         sections = globalStore.self().allSectionsStore.all()
     }
 
@@ -35,6 +40,8 @@
             }
 
             const activeSectionStore = globalStore.self().allSectionsStore.getActiveStore()
+            activeSectionStore?.loadPosts()
+
             if (activeSectionStore) {
                 subscribe(activeSectionStore, () => {
                     posts = activeSectionStore.self().allPostStore.all()

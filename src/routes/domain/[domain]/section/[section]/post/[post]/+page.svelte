@@ -9,6 +9,7 @@
     import Post from '../../../../../../../core/stores/post/post'
     import Page from '../../../../../../../core/components/blog/Page.svelte'
     import { createPostStore, type IPostStore } from '../../../../../../../core/stores/post/post.store'
+    import { onMount } from 'svelte'
 
     export let data: { domain: string; sections: Section[]; sectionId: string; postUrlTitle: string }
 
@@ -16,21 +17,25 @@
 
     let activeSection: ISection | undefined, activeDomain, sections
     let activePostStore: IPostStore | undefined
+    let currentUrl: string
 
-    const initActiveDomain = () => {
+    const initActiveSection = () => {
         data.sections.find((s) => s.id === data.sectionId).setActive()
         globalStore.update({ allSectionsStore: createAllSectionStore(data.sections as ISectionProps[]) })
         activeSection = globalStore.self().allSectionsStore.getActive()
     }
 
     const changingData = () => {
-        initActiveDomain()
+        initActiveSection()
 
         sections = globalStore.self().allSectionsStore.all()
     }
 
+    onMount(() => (currentUrl = window.location.href))
+
     subscribe(globalStore, () => {
-        const isCurrentUrl = window.location.href.includes(data.postUrlTitle)
+        console.log(currentUrl)
+        const isCurrentUrl = currentUrl ? currentUrl.includes(data.postUrlTitle) : true
 
         if (isCurrentUrl && globalStore.self()?.allDomainsStore) {
             activeDomain = globalStore.self().allDomainsStore.getStoreByField('name', data.domain)?.self()
