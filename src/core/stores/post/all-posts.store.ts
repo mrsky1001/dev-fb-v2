@@ -6,6 +6,9 @@ import type { WrapperPropsForList } from '../_base.store'
 import { _baseStoreForList } from '../_base.store'
 
 export interface IAllPostStore extends WrapperPropsForList<IPost, IPostStore> {
+    getActive(): IPost | undefined
+    getActiveStore(): IPostStore | undefined
+
     init(posts: IPost[]): void
 }
 
@@ -20,8 +23,12 @@ export const createAllPostStore = () => {
             add,
             all,
             getStore,
-            getStoreByField,
             allStores,
+            getStoreByField,
+
+            getActive: () => all()?.find((s) => s.isActive),
+
+            getActiveStore: () => allStores()?.find((s) => s.self().isActive),
 
             init: (arr: IPost[]) => {
                 stores.set(arr.map((data) => createPostStore(data)))

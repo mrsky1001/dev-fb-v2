@@ -1,36 +1,68 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
-    import type { IPostStore } from '../../../../../../../core/stores/post/post.store'
+    import { globalStore } from '../../../../../../../core/stores/global.store'
+    import { createAllSectionStore } from '../../../../../../../core/stores/section/all-sections.store'
+    import type Section from '../../../../../../../core/stores/section/section'
+    import type { ISection, ISectionProps } from '../../../../../../../core/stores/section/section'
+    import { subscribe } from 'svelte/internal'
+    import { subscribeAll } from '../../../../../../../core/stores/subscribe-all'
+    import { getPostByTitle } from '../../../../../../../core/server/services/post.services.js'
+    import Post from '../../../../../../../core/stores/post/post'
     import Page from '../../../../../../../core/components/blog/Page.svelte'
-    import type { IPost } from '../../../../../../../core/stores/post/post.js'
-    // let posts: IPost[] = []
-    //
-    // const allUnsubscribe = subscribeAll(allSectionsStore.allStores(), () => {
-    //     posts = allSectionsStore.getActive()?.allPostStore.all() ?? []
-    // })
-    //
-    export let data: { postStore: IPostStore; latestPosts: IPost[] }
+    import { createPostStore, type IPostStore } from '../../../../../../../core/stores/post/post.store'
 
-    // onMount(() => {
-    //     console.log(data)
-    //     console.log(data.postStore)
-    //     console.log(data.postStore.self().authorStore.self())
-    //     console.log(data.latestPosts)
-    // })
-    //     console.log(posts[0]?.annotationStore.self().text)
-    //     console.log(allSectionsStore.getActive())
-    //     // console.log($allPostsStore)
-    //
-    //     // allUnsubscribe = subscribeAll(allSectionsStore.getActive().allPostStore.allStores(), (values) => {
-    //     //     posts = values
-    //     // })
-    // })
-    //
-    // onDestroy(() => allUnsubscribe())
+    export let data: { domain: string; sections: Section[]; sectionId: string; postUrlTitle: string }
+
+    $: data && changingData()
+
+    let activeSection: ISection | undefined, activeDomain, sections
+    let activePostStore: IPostStore | undefined
+
+    const initActiveDomain = () => {
+        data.sections.find((s) => s.id === data.sectionId).setActive()
+        globalStore.update({ allSectionsStore: createAllSectionStore(data.sections as ISectionProps[]) })
+        activeSection = globalStore.self().allSectionsStore.getActive()
+    }
+
+    const changingData = () => {
+        initActiveDomain()
+
+        sections = globalStore.self().allSectionsStore.all()
+    }
+
+    subscribe(globalStore, () => {
+        const isCurrentUrl = window.location.href.includes(data.postUrlTitle)
+
+        if (isCurrentUrl && globalStore.self()?.allDomainsStore) {
+            activeDomain = globalStore.self().allDomainsStore.getStoreByField('name', data.domain)?.self()
+
+            if (!activeDomain) {
+                subscribeAll(globalStore.self().allDomainsStore.allStores(), () => {
+                    activeDomain.setActive()
+                })
+            } else {
+                activeDomain.setActive()
+            }
+
+            const activeSectionStore = globalStore.self().allSectionsStore.getActiveStore()
+            if (activeSectionStore) {
+                activeSectionStore.loadActivePost(data.postUrlTitle).then((postStore: IPostStore) => {
+                    activePostStore = postStore
+                })
+
+                // subscribe(activeSectionStore, () => {
+                //     activeSectionStore.loadActivePost(data.postUrlTitle).then((post: Post) => {
+                //         console.log(post)
+                //     })
+                // })
+            }
+        }
+    })
 </script>
 
-{#if data.postStore}
-    <Page postStore={data.postStore} latestPosts={data.latestPosts} />
+<!--<div>{post?.url}</div>-->
+
+{#if activePostStore}
+    <Page postStore={activePostStore} />
 {/if}
 
 <style lang="scss">

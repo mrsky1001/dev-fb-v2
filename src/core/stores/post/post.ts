@@ -43,6 +43,8 @@ export interface IPostProps extends IBase {
     comments?: IComment[]
     annotation?: IAnnotation // | null
 
+    isActive: boolean
+
     getFormattedPublishDate(): string
 }
 
@@ -74,6 +76,8 @@ export default class Post implements IPost {
     authorStore: IUserStore = createUserStore()
     status: number = statuses.DRAFT.value
     annotationStore: IAnnotationStore = createAnnotationStore()
+
+    isActive = false
 
     constructor(initObj?: IPost) {
         if (initObj) {
@@ -112,6 +116,8 @@ export default class Post implements IPost {
         this.status = obj.status ?? this.status
         this.readTime = obj.readTime ?? this.readTime
         this.countComments = obj.countComments ?? this.countComments
+
+        this.isActive = obj.isActive ?? this.isActive
 
         if (obj.annotationStore) {
             this.annotationStore.init(obj.annotationStore.self())
@@ -154,5 +160,9 @@ export default class Post implements IPost {
 
     removeTag(tag: string) {
         this.tags = this.tags.filter((t) => t !== tag)
+    }
+
+    setActive(val = true) {
+        this.isActive = val
     }
 }

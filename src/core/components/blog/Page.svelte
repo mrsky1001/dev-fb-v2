@@ -22,7 +22,7 @@
     import TwitterSVG from '../svg/socials/TwitterSVG.svelte'
 
     export let postStore: IPostStore | undefined = undefined
-    export let latestPosts: Post[] | undefined = []
+    // export let latestPosts: Post[] | undefined = []
     let post: IPost | undefined
     let author: IUser | undefined
     let annotation: IAnnotation | undefined
@@ -175,35 +175,35 @@
                 </div>
                 <div class="md:mb-12">
                     <h4 class="mb-4 text-sm font-bold text-gray-900 uppercase">Свежие статьи</h4>
-                    {#each latestPosts.slice(0, 3) as p}
-                        <div class="mb-6 flex items-center">
-                            {#if p.annotationStore?.self().imgUrl}
-                                <a href="#" class="shrink-0">
-                                    <div
-                                        style={'background-image: url(' + p.annotationStore?.self().imgUrl + ')'}
-                                        class="mr-4 w-24 h-24 rounded-lg bg-center bg-cover"
-                                        alt="Image 1"
-                                    />
-                                </a>
-                            {:else}
-                                <a href="#" class="shrink-0 flex w-28 h-24">
-                                    <ArticleSVG classes="h-16 w-16" color="gray" />
-                                </a>
-                            {/if}
-                            <div>
-                                <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">{p.title}</h5>
-                                <p class="mb-2 font-light text-gray-500 text-gray-400">
-                                    {p.annotationStore?.self().shortText ?? ''}
-                                </p>
-                                <a
-                                    href="#"
-                                    class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_"
-                                >
-                                    Чтение в течение {p.readTime} мин.
-                                </a>
-                            </div>
-                        </div>
-                    {/each}
+                    <!--{#each latestPosts.slice(0, 3) as p}-->
+                    <!--    <div class="mb-6 flex items-center">-->
+                    <!--        {#if p.annotationStore?.self().imgUrl}-->
+                    <!--            <a href="#" class="shrink-0">-->
+                    <!--                <div-->
+                    <!--                    style={'background-image: url(' + p.annotationStore?.self().imgUrl + ')'}-->
+                    <!--                    class="mr-4 w-24 h-24 rounded-lg bg-center bg-cover"-->
+                    <!--                    alt="Image 1"-->
+                    <!--                />-->
+                    <!--            </a>-->
+                    <!--        {:else}-->
+                    <!--            <a href="#" class="shrink-0 flex w-28 h-24">-->
+                    <!--                <ArticleSVG classes="h-16 w-16" color="gray" />-->
+                    <!--            </a>-->
+                    <!--        {/if}-->
+                    <!--        <div>-->
+                    <!--            <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">{p.title}</h5>-->
+                    <!--            <p class="mb-2 font-light text-gray-500 text-gray-400">-->
+                    <!--                {p.annotationStore?.self().shortText ?? ''}-->
+                    <!--            </p>-->
+                    <!--            <a-->
+                    <!--                href="#"-->
+                    <!--                class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_"-->
+                    <!--            >-->
+                    <!--                Чтение в течение {p.readTime} мин.-->
+                    <!--            </a>-->
+                    <!--        </div>-->
+                    <!--    </div>-->
+                    <!--{/each}-->
                 </div>
                 <!--                <div>-->
                 <!--                    <a href="#" class="flex justify-center items-center mb-3 container h-48 bg-gray-100 rounded-lg">-->

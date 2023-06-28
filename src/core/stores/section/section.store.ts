@@ -4,12 +4,15 @@ import Section from './section'
 import _baseStore, { type WrapperProps } from '../_base.store'
 import { globalStore } from '../global.store'
 import Post from '../post/post'
-import { getPosts } from '../../server/services/post.services'
+import { getPostByTitle, getPosts } from '../../server/services/post.services'
+import type { IPostStore } from '../post/post.store'
 
 export interface ISectionStore extends WrapperProps<ISection> {
     setActive(val: boolean): void
 
-    loadPosts(): Promise<Post[]>
+    loadActivePost(activePostUrlTitle: string): Promise<IPostStore | undefined>
+
+    loadPosts(activePostUrlTitle?: string): Promise<Post[]>
 }
 
 export const createSectionStore = (s: ISectionProps): ISectionStore => {
@@ -30,9 +33,26 @@ export const createSectionStore = (s: ISectionProps): ISectionStore => {
                 return s
             })
         },
+        loadActivePost: async (activePostUrlTitle: string): Promise<IPostStore | undefined> => {
+            return new Promise((resolve, reject) => {
+                getPostByTitle(activePostUrlTitle)
+                    .then((rawPost) => {
+                        const post = new Post(rawPost)
+                        post.setActive()
+
+                        store.update((s) => {
+                            s.allPostStore.init([post])
+                            resolve(s.allPostStore.getActiveStore())
+                            return s
+                        })
+                    })
+                    .catch(reject)
+            })
+        },
         loadPosts: async (): Promise<Post[]> => {
             return new Promise((resolve, reject) => {
                 const section = get(store)
+
                 getPosts(section.domain, section.id)
                     .then((rawPosts) => {
                         const posts = rawPosts.map((p) => new Post(p))

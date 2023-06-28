@@ -1,14 +1,26 @@
-import { error } from '@sveltejs/kit'
-import { getPost, getPosts } from '../../../../../../../core/server/services/post.services'
-import Post from '../../../../../../../core/stores/post/post'
-import { createPostStore } from '../../../../../../../core/stores/post/post.store'
+// since there's no dynamic data here, we can prerender
+// it so that it gets served as a static asset in production
 
-/** @type {import('../../../../../../../../.svelte-kit/types/src/routes').PageLoad} */
-export const load = async ({ params }) => {
-    const postStore = createPostStore(await getPost('', params.post))
-    const latestPosts = await getPosts(postStore.self().sectionId)
+// export const prerender = true;
 
-    return { postStore: postStore, latestPosts: latestPosts }
+import { getSections } from '../../../../../../../core/server/services/sections.services'
+import type { ISectionProps } from '../../../../../../../core/stores/section/section'
+import Section from '../../../../../../../core/stores/section/section'
 
-    throw error(404, 'Not found')
+type TParams = { params: { domain: string; section: string; post: string } }
+
+export const load = async ({ params }: TParams) => {
+    const sections: Section[] = (await getSections(params.domain)).map((rawS: ISectionProps) => {
+        rawS.isActive = rawS._id === params.section
+        return new Section(rawS)
+    })
+
+    console.log('load [post section domain] =================')
+
+    return {
+        domain: params.domain,
+        sectionId: params.section,
+        postUrlTitle: params.post,
+        sections: sections
+    }
 }

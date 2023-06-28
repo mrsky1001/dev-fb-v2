@@ -45,6 +45,7 @@ export const createAllSectionStore = (rawSections: ISectionProps[]): IAllSection
                 getStoreByField,
 
                 getActive: () => all()?.find((s) => s.isActive),
+
                 getActiveStore: () => allStores()?.find((s) => s.self().isActive),
 
                 init: (rawSections: ISectionProps[]) => {

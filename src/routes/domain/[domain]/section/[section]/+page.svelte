@@ -38,6 +38,7 @@
             if (activeSectionStore) {
                 subscribe(activeSectionStore, () => {
                     posts = activeSectionStore.self().allPostStore.all()
+                    console.log(posts)
                 })
             }
         }

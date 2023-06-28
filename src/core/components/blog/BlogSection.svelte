@@ -21,7 +21,7 @@
     $: descriptionDomain = activeDomain?.description
 
     const buildRoute = (urlTitle: string) => {
-        return `/domain/${activeDomain.name}/sections/${activeSection.id}/${urlTitle}`
+        return `/domain/${activeDomain.name}/section/${activeSection.id}/post/${urlTitle}`
     }
 </script>
 
