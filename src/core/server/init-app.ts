@@ -7,6 +7,6 @@ export const initApp = () => {
     getDomains().then((rawDomains: IDomain[]): void => {
         const domains: Domain[] = rawDomains.map((d: IDomain) => new Domain(d))
 
-        globalStore.update({ allDomainsStore: createAllDomainStore(domains) })
+        globalStore.update({ allDomainStore: createAllDomainStore(domains) })
     })
 }

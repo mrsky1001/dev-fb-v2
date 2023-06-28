@@ -3,53 +3,20 @@
     import ScrollSpy from '../../../../../core/components/scrollspy/ScrollSpy.svelte'
     import BlogSection from '../../../../../core/components/blog/BlogSection.svelte'
     import { globalStore } from '../../../../../core/stores/global.store'
-    import { subscribeAll } from '../../../../../core/stores/subscribe-all'
+    import { subscribeAll } from '../../../../../core/subscriber/subscribe-all'
     import { subscribe } from 'svelte/internal'
     import type { ISection, ISectionProps } from '../../../../../core/stores/section/section'
     import Section from '../../../../../core/stores/section/section'
     import { SectionHeader } from '../../../../../core/components/utils'
+    import Domain from '../../../../../core/stores/domain/domain'
+    import type Post from '../../../../../core/stores/post/post'
 
-    export let data: { sections: Section[]; domain: string; sectionId: string }
+    export let data: { sections: Section[]; activeDomain: Domain; activeSection: Section; posts: Post[] }
 
-    $: data && changingData()
-
-    let activeSection: ISection | undefined, activeDomain, sections, posts
-
-    const initActiveSection = () => {
-        data.sections.find((s) => s.id === data.sectionId).setActive()
-        globalStore.update({ allSectionsStore: createAllSectionStore(data.sections as ISectionProps[]) })
-        activeSection = globalStore.self().allSectionsStore.getActive()
-    }
-
-    const changingData = () => {
-        initActiveSection()
-
-        sections = globalStore.self().allSectionsStore.all()
-    }
-
-    subscribe(globalStore, () => {
-        if (globalStore.self()?.allDomainsStore) {
-            activeDomain = globalStore.self().allDomainsStore.getStoreByField('name', data.domain)?.self()
-
-            if (!activeDomain) {
-                subscribeAll(globalStore.self().allDomainsStore.allStores(), () => {
-                    activeDomain.setActive()
-                })
-            } else {
-                activeDomain.setActive()
-            }
-
-            const activeSectionStore = globalStore.self().allSectionsStore.getActiveStore()
-            activeSectionStore?.loadPosts()
-
-            if (activeSectionStore) {
-                subscribe(activeSectionStore, () => {
-                    posts = activeSectionStore.self().allPostStore.all()
-                    console.log(posts)
-                })
-            }
-        }
-    })
+    $: activeDomain = data.activeDomain
+    $: activeSection = data.activeSection
+    $: sections = data.sections
+    $: posts = data.sections
 </script>
 
 <div class="w-full px-4 mx-auto max-w-8xl">

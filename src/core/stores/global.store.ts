@@ -5,8 +5,8 @@ import type { IAllSectionStore } from './section/all-sections.store'
 import type { IAllDomainStore } from './domain/all-domain.store'
 
 interface IGlobal extends IBase {
-    allDomainsStore: IAllDomainStore
-    allSectionsStore: IAllSectionStore
+    allDomainStore: IAllDomainStore
+    allSectionStore: IAllSectionStore
 }
 
 export interface IGlobalStore extends WrapperProps<IGlobal> {

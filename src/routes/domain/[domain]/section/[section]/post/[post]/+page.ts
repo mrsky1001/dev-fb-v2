@@ -15,8 +15,6 @@ export const load = async ({ params }: TParams) => {
         return new Section(rawS)
     })
 
-    console.log('load [post section domain] =================')
-
     return {
         domain: params.domain,
         sectionId: params.section,

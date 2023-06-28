@@ -36,7 +36,7 @@ export const getInValidPostFields: TValidFunc<Post> = (post: Post) => {
 export const getPostByTitle = (title: string) => apiGet<IPost>('post', urls.GET_POST_BY_TITLE, title)
 
 export const getPost = (postId: string): Promise<IPost> => {
-    const config = { params: { domain: globalStore.self().allDomainsStore.getActive()?.name } }
+    const config = { params: { domain: globalStore.self().allDomainStore.getActive()?.name } }
     return apiGet<IPost>('post', urls.GET_POST_BY_ID, postId, config)
 }
 
@@ -61,7 +61,7 @@ export const getPosts = (
 export const getFiltersPosts = (): Promise<IPostsFilter[]> => {
     const config = {
         params: {
-            domain: globalStore.self().allDomainsStore.getActive()?.name
+            domain: globalStore.self().allDomainStore.getActive()?.name
         }
     }
 

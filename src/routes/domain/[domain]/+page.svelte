@@ -1,36 +1,13 @@
 <script lang="ts">
-    import { createAllSectionStore } from '../../../core/stores/section/all-sections.store'
     import ScrollSpy from '../../../core/components/scrollspy/ScrollSpy.svelte'
-    import { globalStore } from '../../../core/stores/global.store'
-    import { subscribeAll } from '../../../core/stores/subscribe-all'
-    import { subscribe } from 'svelte/internal'
     import { SectionHeader } from '../../../core/components/utils'
-    export let data
+    import Section from '../../../core/stores/section/section'
+    import type Domain from '../../../core/stores/domain/domain'
 
-    $: data && changingData()
+    export let data: { sections: Section[]; activeDomain: Domain }
 
-    let activeSection, activeDomain, sections
-
-    const changingData = () => {
-        globalStore.update({ allSectionsStore: createAllSectionStore(data.sections) })
-
-        activeSection = globalStore.self().allSectionsStore.getActive()
-        sections = globalStore.self().allSectionsStore.all()
-    }
-
-    subscribe(globalStore, () => {
-        if (globalStore.self()?.allDomainsStore) {
-            activeDomain = globalStore.self().allDomainsStore.getStoreByField('name', data.domain)?.self()
-
-            if (!activeDomain) {
-                subscribeAll(globalStore.self().allDomainsStore.allStores(), () => {
-                    activeDomain.setActive()
-                })
-            } else {
-                activeDomain.setActive()
-            }
-        }
-    })
+    $: activeDomain = data.activeDomain
+    $: sections = data.sections
 </script>
 
 <div class="w-full px-4 mx-auto max-w-8xl">

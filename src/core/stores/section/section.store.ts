@@ -26,7 +26,7 @@ export const createSectionStore = (s: ISectionProps): ISectionStore => {
         setActive: (val: boolean): void => {
             // const section = get(store)
 
-            globalStore.self().allSectionsStore.resetActiveMark()
+            globalStore.self().allSectionStore.resetActiveMark()
 
             store.update((s) => {
                 s.isActive = val

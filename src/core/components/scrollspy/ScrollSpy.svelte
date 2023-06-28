@@ -30,7 +30,8 @@
                         class="{activeClass(
                             section
                         )} bg-transparent px-[5px] text-neutral-600 shadow-none dark:text-neutral-200 dark:!text-primary-400 border-solid border-primary dark:border-primary-400"
-                        href={url + section.id}>{section.name}</a
+                        href={url + section.id}
+                        data-sveltekit-preload-data="tap">{section.name}</a
                     >
                 </li>
                 <!--{#if section.arr.length}-->

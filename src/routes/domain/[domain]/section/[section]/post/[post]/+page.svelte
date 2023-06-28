@@ -4,7 +4,7 @@
     import type Section from '../../../../../../../core/stores/section/section'
     import type { ISection, ISectionProps } from '../../../../../../../core/stores/section/section'
     import { subscribe } from 'svelte/internal'
-    import { subscribeAll } from '../../../../../../../core/stores/subscribe-all'
+    import { subscribeAll } from '../../../../../../../core/subscriber/subscribe-all'
     import { getPostByTitle } from '../../../../../../../core/server/services/post.services.js'
     import Post from '../../../../../../../core/stores/post/post'
     import Page from '../../../../../../../core/components/blog/Page.svelte'
@@ -19,36 +19,41 @@
     let activePostStore: IPostStore | undefined
     let currentUrl: string
 
+    const isCurrentUrl = () => (currentUrl ? currentUrl.includes(data.postUrlTitle) : true)
+
     const initActiveSection = () => {
         data.sections.find((s) => s.id === data.sectionId).setActive()
-        globalStore.update({ allSectionsStore: createAllSectionStore(data.sections as ISectionProps[]) })
-        activeSection = globalStore.self().allSectionsStore.getActive()
+        globalStore.update({ allSectionStore: createAllSectionStore(data.sections as ISectionProps[]) })
+        activeSection = globalStore.self().allSectionStore.getActive()
     }
 
     const changingData = () => {
-        initActiveSection()
+        if (isCurrentUrl()) {
+            console.log('load [post section domain] =================')
 
-        sections = globalStore.self().allSectionsStore.all()
+            initActiveSection()
+
+            sections = globalStore.self().allSectionStore.all()
+        }
     }
 
     onMount(() => (currentUrl = window.location.href))
 
     subscribe(globalStore, () => {
         console.log(currentUrl)
-        const isCurrentUrl = currentUrl ? currentUrl.includes(data.postUrlTitle) : true
 
-        if (isCurrentUrl && globalStore.self()?.allDomainsStore) {
-            activeDomain = globalStore.self().allDomainsStore.getStoreByField('name', data.domain)?.self()
+        if (isCurrentUrl() && globalStore.self()?.allDomainStore) {
+            activeDomain = globalStore.self().allDomainStore.getStoreByField('name', data.domain)?.self()
 
             if (!activeDomain) {
-                subscribeAll(globalStore.self().allDomainsStore.allStores(), () => {
+                subscribeAll(globalStore.self().allDomainStore.allStores(), () => {
                     activeDomain.setActive()
                 })
             } else {
                 activeDomain.setActive()
             }
 
-            const activeSectionStore = globalStore.self().allSectionsStore.getActiveStore()
+            const activeSectionStore = globalStore.self().allSectionStore.getActiveStore()
             if (activeSectionStore) {
                 activeSectionStore.loadActivePost(data.postUrlTitle).then((postStore: IPostStore) => {
                     activePostStore = postStore
