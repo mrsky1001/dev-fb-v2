@@ -16,7 +16,7 @@
     $: activeDomain = data.activeDomain
     $: activeSection = data.activeSection
     $: sections = data.sections
-    $: posts = data.sections
+    $: posts = data.posts
 </script>
 
 <div class="w-full px-4 mx-auto max-w-8xl">

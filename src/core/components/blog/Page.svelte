@@ -21,29 +21,27 @@
     import FacebookSVG from '../svg/socials/FacebookSVG.svelte'
     import TwitterSVG from '../svg/socials/TwitterSVG.svelte'
 
-    export let postStore: IPostStore | undefined = undefined
     // export let latestPosts: Post[] | undefined = []
-    let post: IPost | undefined
+    export const post: IPost
     let author: IUser | undefined
     let annotation: IAnnotation | undefined
 
     let url = '/'
 
-    const unsubscribe = subscribe(postStore, () => {
-        post = postStore?.self()
-        author = post?.authorStore.self()
-        annotation = post?.annotationStore.self()
-    })
+    // const unsubscribe = subscribe(postStore, () => {
+    //     author = post?.authorStore.self()
+    //     annotation = post?.annotationStore.self()
+    // })
 
     onMount(() => (url = window.location.href))
 
     // const unsubscribePosts = subscribe(allSectionsStore, () => {
     //     latestPosts = allSectionsStore.getStore()?.allPostStore.all() ?? []
     // })
-    onDestroy(() => {
-        unsubscribe()
-        // unsubscribePosts()
-    })
+    // onDestroy(() => {
+    //     unsubscribe()
+    //     unsubscribePosts()
+    // })
 
     const bgOpacity = annotation?.imgUrl ? 'bg-opacity-30' : 'bg-opacity-80'
 </script>
@@ -57,10 +55,7 @@
 <!--</SectionBlock>-->
 
 <main class="mt-10 pb-16 xl:pb-24 bg-white">
-    <header
-        style="background-image: {'url(' + annotation.imgUrl + ')'}"
-        class=" h-header w-full bg-no-repeat bg-cover bg-center bg-blend-darken relative"
-    >
+    <header style="background-image: {'url(' + annotation.imgUrl + ')'}" class=" h-header w-full bg-no-repeat bg-cover bg-center bg-blend-darken relative">
         <div class="absolute top-0 left-0 w-full h-full {bgOpacity} bg-black" />
         <div class="container mx-auto">
             <div class=" items-center px-4 mx-auto translate-y-1/2 peer-placeholder-shown:-translate-y-1/2">
@@ -77,12 +72,8 @@
             </div>
         </div>
     </header>
-    <div
-        class="flex relative z-20 justify-between p-7 O7PVNyZQb9PCjpNKbt_t mx-4 container bg-white rounded w-article-container arrNNfkSdu1f3lPZlfMG mx-auto"
-    >
-        <article
-            class="w-article container max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert"
-        >
+    <div class="flex relative z-20 justify-between p-7 O7PVNyZQb9PCjpNKbt_t mx-4 container bg-white rounded w-article-container arrNNfkSdu1f3lPZlfMG mx-auto">
+        <article class="w-article container max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
             <div class="flex flex-row justify-between items-center">
                 <div class="flex items-center B1cgbA6Bb4LQo0qFJKck text-gray-500 text-base mb-2">
                     <span>
@@ -92,10 +83,8 @@
                     </span>
                     <span class="ml-3 bg-gray-300 bg-gray-400 w-2 h-2 rounded-full" />
                     <span class="ml-3">
-                        <time
-                            class="font-normal text-gray-500 text-gray-400"
-                            datetime={post.publishedDate}
-                            title={post.getFormattedPublishDate()}>{post.getFormattedPublishDate()}</time
+                        <time class="font-normal text-gray-500 text-gray-400" datetime={post.publishedDate} title={post.getFormattedPublishDate()}
+                            >{post.getFormattedPublishDate()}</time
                         >
                     </span>
                 </div>
@@ -131,16 +120,8 @@
                             class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg DpMPWwlSESiYA8EE1xKM _FONMPVaCsLFJJGDaaIL qHIOIw8TObHgD3VvKa5x text-white fq6QICPx8VcyAlLZi_Iy _OovBxfPdK7Rjv2nh2Ot P53YJBBtllZv8_nFHFHW"
                             type="button"
                         >
-                            <svg
-                                class="w-5 h-5 text-gray-500 text-gray-400"
-                                aria-hidden="true"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                                />
+                            <svg class="w-5 h-5 text-gray-500 text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                             </svg>
                         </button>
                         <!-- Dropdown menu -->
@@ -150,23 +131,12 @@
                             style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(1130px, 386px);"
                             data-popper-placement="bottom"
                         >
-                            <ul
-                                class="py-1 text-sm text-gray-700 text-gray-200"
-                                aria-labelledby="dropdownMenuIconHorizontalButton"
-                            >
+                            <ul class="py-1 text-sm text-gray-700 text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
                                 <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Add to collection</a
-                                    >
+                                    <a href="#" class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9">Add to collection</a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="#"
-                                        class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9"
-                                        >Report</a
-                                    >
+                                    <a href="#" class="block py-2 px-4 DpMPWwlSESiYA8EE1xKM xotVay0PVtR3gElm6ql5 DTyjKhtXBNaebZa5L0l9">Report</a>
                                 </li>
                             </ul>
                         </div>
@@ -180,9 +150,7 @@
                 <h3 id="sidebar-label" class="sr-only">Sidebar</h3>
                 <div class="mb-8">
                     <h4 class="mb-2 font-bold text-gray-900 uppercase">FOMA-BLOG - узнать первым</h4>
-                    <p class="mb-4 font-light text-gray-500 text-gray-400">
-                        Чтобы получать информацию о выходе новых статей, рекомендуем подписаться на нас
-                    </p>
+                    <p class="mb-4 font-light text-gray-500 text-gray-400">Чтобы получать информацию о выходе новых статей, рекомендуем подписаться на нас</p>
                     <button
                         type="button"
                         data-modal-toggle="newsletter-modal"

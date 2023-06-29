@@ -11,32 +11,13 @@ import { getDomains } from '../../../core/server/services/domains.services'
 import type { IDomain } from '../../../core/stores/domain/domain'
 import Domain from '../../../core/stores/domain/domain'
 import { createAllSectionStore } from '../../../core/stores/section/all-sections.store'
+import storeLoader from '../../../core/subscriber/storeLoader'
 
 type TParams = { params: { domain: string } }
 
 export const load = async ({ params }: TParams) => {
-    console.log('load [  domain] =================')
-
-    let domains = []
-    let sections: ISection[] = []
-
-    if (globalStore.self()?.allDomainStore?.all().length) {
-        console.log('load [ EXISTS domains] =================')
-        domains = globalStore.self()?.allDomainStore?.all() as Domain[]
-    } else {
-        domains = (await getDomains()).map((rawD: IDomain) => new Domain(rawD))
-    }
-
-    if (globalStore.self()?.allSectionStore?.all().length) {
-        console.log('load [ section EXISTS sections] =================')
-        sections = globalStore.self()?.allSectionStore?.all()
-    } else {
-        sections = (await getSections(params.domain)).map((rawS: ISectionProps) => new Section(rawS))
-        globalStore.update({ allSectionStore: createAllSectionStore(sections as ISectionProps[]) })
-    }
-
     return {
-        activeDomain: domains.find((d: IDomain) => d.name === params.domain),
-        sections: sections
+        sections: await storeLoader.loadSections(params.domain),
+        activeDomain: await storeLoader.getActiveDomain(params.domain)
     }
 }

@@ -9,9 +9,10 @@ export type IRoleStore = WrapperProps<IRole>
 export const createRoleStore = (s?: IRole): IRoleStore => {
     const store = writable<IRole>(new Role(s))
 
-    return _baseStore(store, ({ init, subscribe, self }) => ({
+    return _baseStore(store, ({ init, subscribe, updateByField, self }) => ({
         init,
         subscribe,
+        updateByField,
         self
     }))
 }

@@ -11,8 +11,7 @@ module.exports = {
 	parserOptions: {
 		sourceType: 'module',
 		semi: ["error", "never"],
-		ecmaVersion: 2020
-
+		ecmaVersion: 2020,
 	},
 	env: {
 		browser: true,

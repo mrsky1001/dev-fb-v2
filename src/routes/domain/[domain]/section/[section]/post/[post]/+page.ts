@@ -6,19 +6,12 @@
 import { getSections } from '../../../../../../../core/server/services/sections.services'
 import type { ISectionProps } from '../../../../../../../core/stores/section/section'
 import Section from '../../../../../../../core/stores/section/section'
+import storeLoader from '../../../../../../../core/subscriber/storeLoader'
 
 type TParams = { params: { domain: string; section: string; post: string } }
 
 export const load = async ({ params }: TParams) => {
-    const sections: Section[] = (await getSections(params.domain)).map((rawS: ISectionProps) => {
-        rawS.isActive = rawS._id === params.section
-        return new Section(rawS)
-    })
-
     return {
-        domain: params.domain,
-        sectionId: params.section,
-        postUrlTitle: params.post,
-        sections: sections
+        activePost: await storeLoader.getActivePost(params.domain)
     }
 }
