@@ -2,9 +2,8 @@
     import Post from '../../../../../../../core/stores/post/post'
     import Page from '../../../../../../../core/components/blog/Page.svelte'
 
-    export let data: { post: Post }
+    export let data: { promisePost: Promise<Post> }
 
-    $: activePost = data.activePost
     // $: activeSection = data.activeSection
     // $: sections = data.sections
     // $: posts = data.posts
@@ -12,7 +11,9 @@
 
 <!--<div>{post?.url}</div>-->
 
-<Page postStore={post} />
+{#await data.promisePost then post}
+    <Page {post} />
+{/await}
 
 <style lang="scss">
 </style>

@@ -5,102 +5,163 @@ import Post, { type IPost } from '../stores/post/post'
 import { getDomains } from '../server/services/domains.services'
 import { getSections } from '../server/services/sections.services'
 import { createAllSectionStore } from '../stores/section/all-sections.store'
-import { getPosts } from '../server/services/post.services'
+import { getPostByTitle, getPosts } from '../server/services/post.services'
 import type { IDomainStore } from '../stores/domain/domain.store'
+import { P } from 'flowbite-svelte'
 
 class StoreLoader {
-    private _getAllDomainStore = () => globalStore.self()?.allDomainStore
+  private _getAllDomainStore = () => globalStore.self()?.allDomainStore
 
-    private _getAllSectionStore = () => globalStore.self()?.allSectionStore
+  private _getAllSectionStore = () => globalStore.self()?.allSectionStore
 
-    private _getAllPostStore = () => globalStore.self()?.allSectionStore?.getActiveStore()?.self().allPostStore
+  private _getAllPostStore = () => globalStore.self()?.allSectionStore?.getActiveStore()?.self().allPostStore
 
-    getActiveDomain = async (domain?: string) => {
-        const savedDomain = this._getAllDomainStore()?.getActive()
+  getActiveDomain = async (domain?: string) => {
+    return new Promise((resolve, reject) => {
+      const savedDomain = this._getAllDomainStore()?.getActive()
 
-        if (!savedDomain) {
-            await this.loadDomains()
-            return this._domains.find((d) => d.name === domain)
-        }
+      if (!savedDomain) {
+        this.loadDomains()
+          .then((domains) => {
+            resolve(domains.find((d) => d.name === domain))
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      } else {
+        resolve(savedDomain)
+      }
+    })
+  }
 
-        return savedDomain
-    }
+  getActiveSection = async (domain?: string, sectionId?: string) => {
+    return new Promise((resolve, reject) => {
+      const savedSection = this._getAllSectionStore()?.getActive()
 
-    getActiveSection = async (domain?: string, sectionId?: string) => {
-        const savedSection = this._getAllSectionStore()?.getActive()
+      if (!savedSection && domain) {
+        this.loadSections(domain)
+          .then((sections) => {
+            resolve(sections.find((s) => s.id === sectionId))
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      } else {
+        resolve(savedSection)
+      }
+    })
+  }
 
-        if (!savedSection && domain) {
-            await this.loadSections(domain)
-            return this._sections.find((s) => s.id === sectionId)
-        }
+  getActivePost = async (domain?: string, sectionId?: string, postUrlTitle?: string) => {
+    return new Promise((resolve, reject) => {
+      const savedPost = this._getAllPostStore()?.getActive()
 
-        return savedSection
-    }
+      if (!savedPost && domain && sectionId && postUrlTitle) {
+        getPostByTitle(postUrlTitle)
+          .then((rawPost) => {
+            const post = new Post(rawPost)
+            this._posts = [post]
 
-    getActivePost = async (domain?: string, sectionId?: string) => {
-        const savedPost = this._getAllPostStore()?.getActive()
+            resolve(post)
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      } else {
+        resolve(savedPost)
+      }
+    })
+  }
 
-        if (!savedPost && domain) {
-            await this.loadPosts(domain, sectionId)
-            return this._sections.find((s) => s.id === sectionId)
-        }
+  get domains() {
+    return this._domains
+  }
 
-        return savedPost
-    }
+  get sections() {
+    return this._sections
+  }
 
-    get domains() {
-        return this._domains
-    }
-    get sections() {
-        return this._sections
-    }
-    get posts() {
-        return this._posts
-    }
+  get posts() {
+    return this._posts
+  }
 
-    private _domains: IDomain[] = []
-    private _sections: ISection[] = []
-    private _posts: IPost[] = []
+  private _domains: IDomain[] = []
+  private _sections: ISection[] = []
+  private _posts: IPost[] = []
 
-    async loadDomains(): Promise<IDomain[]> {
-        if (this._getAllDomainStore()?.all().length) {
-            this._domains = this._getAllDomainStore()?.all() as Domain[]
-        } else {
-            this._domains = (await getDomains()).map((rawD: IDomain) => new Domain(rawD))
-        }
+  async loadDomains(): Promise<IDomain[]> {
+    return new Promise((resolve, reject) => {
+      if (this._getAllDomainStore()?.all().length) {
+        this._domains = this._getAllDomainStore()?.all() as Domain[]
 
-        return this._domains
-    }
+        resolve(this._domains)
+      } else {
+        getDomains()
+          .then((rawDomains) => {
+            this._domains = rawDomains.map((rawD: IDomain) => new Domain(rawD))
 
-    async loadSections(domain: string): Promise<ISection[]> {
-        if (this._getAllSectionStore()?.all().length) {
-            this._sections = this._getAllSectionStore()?.all()
-        } else {
-            this._sections = (await getSections(domain)).map((rawS: ISectionProps) => new Section(rawS))
-            globalStore.update({ allSectionStore: createAllSectionStore(this._sections as ISectionProps[]) })
-        }
+            resolve(this._domains)
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      }
+    })
+  }
 
-        const domainStore = this._getAllDomainStore()
-            ?.allStores()
-            .find((d: IDomainStore) => d.self().name === domain)
-        domainStore?.setActive(true)
+  async loadSections(domain: string): Promise<ISection[]> {
+    return new Promise((resolve, reject) => {
+      const allStores = this._getAllDomainStore()?.allStores()
+      const domainStore = allStores?.find((d: IDomainStore) => d.self().name === domain)
 
-        return this._sections
-    }
+      domainStore?.setActive(true)
 
-    async loadPosts(domain: string, sectionId: string): Promise<IPost[]> {
-        if (this._getAllPostStore()?.all().length) {
-            this._posts = this._getAllPostStore()?.all() as Post[]
-        } else {
-            this._posts = (await getPosts(domain, sectionId)).map((raw: IPost) => new Post(raw))
-            globalStore.self().allSectionStore.getActive()?.allPostStore.init(this._posts)
-        }
+      const allSectionStore = this._getAllSectionStore()?.all()
+      const savedDomain = allSectionStore?.find((s) => s.domain === domain)
 
-        // const domainStore = this._getAllDomainStore()?.allStores().find((d: IDomainStore) => d.self().name === domain)
-        // domainStore?.setActive(true)
+      if (savedDomain) {
+        this._sections = this._getAllSectionStore()?.all()
+        resolve(this._sections)
+      } else {
+        getSections(domain)
+          .then((rawSections) => {
+            this._sections = rawSections.map((rawS: ISectionProps) => new Section(rawS))
 
-        return this._posts
-    }
+            globalStore.update({
+              allSectionStore: createAllSectionStore(this._sections as ISectionProps[])
+            })
+
+            resolve(this._sections)
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      }
+    })
+  }
+
+  async loadPosts(domain: string, sectionId: string): Promise<IPost[]> {
+    return new Promise((resolve, reject) => {
+      if (this._getAllPostStore()?.all().length) {
+        this._posts = this._getAllPostStore()?.all() as Post[]
+        resolve(this._posts)
+      } else {
+        getPosts(domain, sectionId)
+          .then((rawPosts) => {
+            this._posts = rawPosts.map((raw: IPost) => new Post(raw))
+            globalStore.self()?.allSectionStore?.getActive()?.allPostStore?.init(this._posts)
+
+            resolve(this._posts)
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      }
+
+      // const domainStore = this._getAllDomainStore()?.allStores().find((d: IDomainStore) => d.self().name === domain)
+      // domainStore?.setActive(true)
+    })
+  }
 }
 
 const storeLoader = new StoreLoader()

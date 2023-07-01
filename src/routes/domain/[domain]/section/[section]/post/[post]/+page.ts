@@ -12,6 +12,6 @@ type TParams = { params: { domain: string; section: string; post: string } }
 
 export const load = async ({ params }: TParams) => {
     return {
-        activePost: await storeLoader.getActivePost(params.domain)
+        promisePost: storeLoader.getActivePost(params.domain, params.section, params.post)
     }
 }

@@ -17,7 +17,7 @@ type TParams = { params: { domain: string } }
 
 export const load = async ({ params }: TParams) => {
     return {
-        sections: await storeLoader.loadSections(params.domain),
-        activeDomain: await storeLoader.getActiveDomain(params.domain)
+        promiseSections: storeLoader.loadSections(params.domain),
+        promiseActiveDomain: storeLoader.getActiveDomain(params.domain)
     }
 }

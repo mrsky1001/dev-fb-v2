@@ -22,9 +22,9 @@
     import TwitterSVG from '../svg/socials/TwitterSVG.svelte'
 
     // export let latestPosts: Post[] | undefined = []
-    export const post: IPost
+    export let post: Post
     let author: IUser | undefined
-    let annotation: IAnnotation | undefined
+    // let annotation: IAnnotation | undefined = promisePost.annotation
 
     let url = '/'
 
@@ -32,7 +32,6 @@
     //     author = post?.authorStore.self()
     //     annotation = post?.annotationStore.self()
     // })
-
     onMount(() => (url = window.location.href))
 
     // const unsubscribePosts = subscribe(allSectionsStore, () => {
@@ -43,7 +42,7 @@
     //     unsubscribePosts()
     // })
 
-    const bgOpacity = annotation?.imgUrl ? 'bg-opacity-30' : 'bg-opacity-80'
+    const bgOpacity = post.annotationStore.self()?.imgUrl ? 'bg-opacity-30' : 'bg-opacity-80'
 </script>
 
 <!--<MetaTag {breadcrumb_title} {title} {dir} {description}/>-->
@@ -55,7 +54,7 @@
 <!--</SectionBlock>-->
 
 <main class="mt-10 pb-16 xl:pb-24 bg-white">
-    <header style="background-image: {'url(' + annotation.imgUrl + ')'}" class=" h-header w-full bg-no-repeat bg-cover bg-center bg-blend-darken relative">
+    <header style="background-image: {'url(' + post.annotationStore.self().imgUrl + ')'}" class=" h-header w-full bg-no-repeat bg-cover bg-center bg-blend-darken relative">
         <div class="absolute top-0 left-0 w-full h-full {bgOpacity} bg-black" />
         <div class="container mx-auto">
             <div class=" items-center px-4 mx-auto translate-y-1/2 peer-placeholder-shown:-translate-y-1/2">
@@ -67,7 +66,7 @@
                     {post.title}
                 </h1>
                 <p class="sm:text-lg font-normal text-gray-300">
-                    {annotation.text}
+                    {post.annotationStore.self().text}
                 </p>
             </div>
         </div>
@@ -78,14 +77,12 @@
                 <div class="flex items-center B1cgbA6Bb4LQo0qFJKck text-gray-500 text-base mb-2">
                     <span>
                         <a href="#" class="text-gray-900 _5zvlMLkN1qETxEl3IhT no-underline font-semibold">
-                            {author.username}
+                            {post.authorStore.self().username}
                         </a>
                     </span>
                     <span class="ml-3 bg-gray-300 bg-gray-400 w-2 h-2 rounded-full" />
                     <span class="ml-3">
-                        <time class="font-normal text-gray-500 text-gray-400" datetime={post.publishedDate} title={post.getFormattedPublishDate()}
-                            >{post.getFormattedPublishDate()}</time
-                        >
+                        <time class="font-normal text-gray-500 text-gray-400" datetime={post.publishedDate} title={post.getFormattedPublishDate()}>{post.getFormattedPublishDate()}</time>
                     </span>
                 </div>
                 <aside aria-label="Share social media">
