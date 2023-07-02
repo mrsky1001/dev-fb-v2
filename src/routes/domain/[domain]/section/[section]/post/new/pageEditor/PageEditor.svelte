@@ -69,4 +69,4 @@
     }
 </script>
 
-<div bind:this={root} contenteditable={editable} on:paste on:input={input}><pre contenteditable="true" bind:innerHTML={html} /></div>
+<div id="editor" bind:this={root} contenteditable={editable} on:paste on:input={input}><pre contenteditable="true" bind:innerHTML={html} /></div>

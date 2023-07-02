@@ -77,11 +77,86 @@
         return allowedTags.includes(el.tagName) || !el.isContentEditable
     }
 
-    let demoOutput = '<p>Hello <b><i>Rich</i> Text</b>!</p>'
+    let demoOutput = '<p id="p_21dsada">Hello <b id="b_2211dsada"><i id="i_21dsaasdada">Rich</i> Text</b>!</p>'
 
     const bold = () => {
         console.log('demoOutput===============')
         console.log(demoOutput)
+
+        /**
+         * 1. Get main el, who contains selected head text
+         */
+
+        const mainEl = window.getSelection().getRangeAt(0)
+        console.log('1. mainEl')
+        console.log(mainEl)
+
+        /**
+         * 2. Get selectedDocFragment
+         */
+
+        const selectedDocFragment = mainEl.cloneContents()
+        console.log('2. selected selectedDocFragment')
+        console.log(selectedDocFragment)
+
+        /**
+         * 3. Check is have tag "b"
+         */
+        console.log('3. Check is have tag "b"')
+        const getChildOfTag = (tag: string): Element | undefined => {
+            let elB: Element | undefined = undefined
+
+            for (let el of selectedDocFragment.children) {
+                console.log(el.tagName)
+                elB = el.tagName === tag.toUpperCase() ? el : undefined
+            }
+
+            return elB
+        }
+
+        const elB = getChildOfTag('b')
+
+        if (elB) {
+            // const container = document.createElement('')
+            //
+            // for (let el of elB.children) {
+            //     container.appendChild(el)
+            // }
+
+            // selectedDocFragment.replaceChild(container, elB)
+            // console.log('selectedDocFragment')
+            // console.log(selectedDocFragment)
+
+            var node = mainEl.createContextualFragment(elB.innerHTML)
+            elB.parentNode.replaceChild(node, elB)
+
+            // mainEl.deleteContents()
+            // mainEl.
+            // var node = mainEl.createContextualFragment(elB.innerHTML)
+            // mainEl.insertNode(node)
+        }
+
+        console.log(elB?.children)
+
+        console.log(getChildOfTag('b'))
+
+        /**
+         * 3. Get child elements, who contains tail text
+         */
+        const tailEl = window.getSelection().getRangeAt(0)
+        console.log('2. tailEl')
+        console.log(tailEl)
+        // const docFragment = range.cloneContents()
+
+        console.log(window.getSelection())
+
+        // if (docFragment.querySelector('p')) {
+        //     return
+        // }
+
+        // const span = document.createElement('span')
+        // span.className = 'colored'
+        // range.surroundContents(span)
     }
 </script>
 
