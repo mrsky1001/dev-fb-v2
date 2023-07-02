@@ -36,7 +36,6 @@
         }
     }
 
-    const italic = () => document.execCommand('italic')
     const createLink = () => document.execCommand('createLink', false, 'https://')
     const formatH2 = () => (document.queryCommandValue('formatBlock') === 'h2' ? document.execCommand('formatBlock', false, 'p') : document.execCommand('formatBlock', false, 'h2'))
     const insertImage = () =>
@@ -79,84 +78,130 @@
 
     let demoOutput = '<p id="p_21dsada">Hello <b id="b_2211dsada"><i id="i_21dsaasdada">Rich</i> Text</b>!</p>'
 
-    const bold = () => {
-        console.log('demoOutput===============')
-        console.log(demoOutput)
-
+    const applyTag = (tag: string) => {
         /**
          * 1. Get main el, who contains selected head text
          */
 
         const mainEl = window.getSelection().getRangeAt(0)
-        console.log('1. mainEl')
-        console.log(mainEl)
+        const ancestor = mainEl.commonAncestorContainer
+        let parentEl = ancestor.nodeName === '#text' ? ancestor.parentNode : ancestor
+        // const parentEl = preParentEl.nodeName === tag ? preParentEl.parentNode : preParentEl
 
         /**
          * 2. Get selectedDocFragment
          */
 
-        const selectedDocFragment = mainEl.cloneContents()
-        console.log('2. selected selectedDocFragment')
-        console.log(selectedDocFragment)
+        const selectedDocFragment = mainEl.extractContents()
 
         /**
-         * 3. Check is have tag "b"
+         * 3. Check is have tag
          */
-        console.log('3. Check is have tag "b"')
-        const getChildOfTag = (tag: string): Element | undefined => {
-            let elB: Element | undefined = undefined
-
-            for (let el of selectedDocFragment.children) {
-                console.log(el.tagName)
-                elB = el.tagName === tag.toUpperCase() ? el : undefined
+        const getChildWithTag = (children: NodeList, tag: string): Node | undefined => {
+            for (let el of children) {
+                if (el.nodeName === tag.toUpperCase()) {
+                    return el
+                } else if (el.hasChildNodes()) {
+                    return getChildWithTag(el.childNodes, tag)
+                }
             }
 
-            return elB
+            return undefined
         }
 
-        const elB = getChildOfTag('b')
-
-        if (elB) {
-            // const container = document.createElement('')
-            //
-            // for (let el of elB.children) {
-            //     container.appendChild(el)
-            // }
-
-            // selectedDocFragment.replaceChild(container, elB)
-            // console.log('selectedDocFragment')
-            // console.log(selectedDocFragment)
-
-            var node = mainEl.createContextualFragment(elB.innerHTML)
-            elB.parentNode.replaceChild(node, elB)
-
-            // mainEl.deleteContents()
-            // mainEl.
-            // var node = mainEl.createContextualFragment(elB.innerHTML)
-            // mainEl.insertNode(node)
-        }
-
-        console.log(elB?.children)
-
-        console.log(getChildOfTag('b'))
+        const someChildTag = getChildWithTag(selectedDocFragment.childNodes, tag)
 
         /**
-         * 3. Get child elements, who contains tail text
+         * 3.1 If el exist, then remove, else insert
          */
-        const tailEl = window.getSelection().getRangeAt(0)
-        console.log('2. tailEl')
-        console.log(tailEl)
-        // const docFragment = range.cloneContents()
+        // const elContent = mainEl.createContextualFragment('</' + tag + '>' + selectedDocFragment + '<' + tag + '>')
+        // console.log(mainEl.startContainer)
+        // console.log(mainEl.endContainer)
+        // console.log(mainEl.startOffset)
+        // console.log(mainEl.endOffset)
+        // console.log(parentEl.childNodes)
 
-        console.log(window.getSelection())
+        if (someChildTag) {
+            const elContent = mainEl.createContextualFragment((someChildTag as HTMLElement).innerHTML)
+            //console.log(elContent, someChildTag)
+            someChildTag.parentNode.replaceChild(elContent, someChildTag)
 
-        // if (docFragment.querySelector('p')) {
-        //     return
-        // }
+            mainEl.insertNode(selectedDocFragment)
+        } else {
+            const newEl = document.createElement(tag)
+            newEl.appendChild(selectedDocFragment)
 
-        // const span = document.createElement('span')
-        // span.className = 'colored'
-        // range.surroundContents(span)
+            mainEl.insertNode(newEl)
+
+            if (parentEl.nodeName === tag.toUpperCase()) {
+                const upParentEl = parentEl.parentNode
+                console.log(upParentEl)
+                console.log(parentEl.childNodes)
+                for (let child of parentEl.childNodes) {
+                    console.log(child)
+                    if (child.nodeName === tag.toUpperCase()) {
+                        for (let deepChild of child.childNodes) {
+                            upParentEl.insertBefore(deepChild.cloneNode(true), parentEl)
+                        }
+                    } else {
+                        const newEl = document.createElement(tag)
+                        newEl.appendChild(child.cloneNode(true))
+                        upParentEl.insertBefore(newEl, parentEl)
+                    }
+                }
+
+                upParentEl.removeChild(parentEl)
+                parentEl = upParentEl
+            }
+        }
+
+        /**
+         * 4. Check identical neighborhood tags and collapse to one
+         */
+        const replaceDoublesNodes = (parent: Node) => {
+            let main = null
+            console.log('parent')
+            console.log(parent)
+            console.log(parent.childNodes)
+
+            for (let el of parent.childNodes) {
+                console.log('el ======== ')
+                console.log(el)
+                console.log(el.nodeName)
+                console.log(el.nodeValue)
+                console.log(el.nodeValue?.length)
+
+                if (el.nodeName === '#text' && !el.nodeValue.length) {
+                    console.log('remove')
+                } else if (el.nodeName === main?.nodeName) {
+                    if (el.nodeName === '#text') {
+                        parent.normalize()
+                    } else {
+                        console.log('append=------------')
+                        for (let childEl of el.childNodes) {
+                            main.appendChild(childEl.cloneNode(true))
+                        }
+
+                        el.remove()
+                        replaceDoublesNodes(main)
+                    }
+                } else {
+                    main = el
+                }
+            }
+        }
+
+        console.log(parentEl)
+
+        replaceDoublesNodes(parentEl)
+    }
+
+    const bold = () => {
+        applyTag('b')
+    }
+
+    const italic = () => {
+        applyTag('i')
     }
 </script>
 
