@@ -87,7 +87,67 @@
 
         el.parentNode?.removeChild(el)
     }
-    const findIdenticalTagOfParents = () => {}
+
+    const findIdenticalTagOfParents = (parentNode: Node, tag) => {
+        let someParentEl = parentNode
+
+        while ((someParentEl as HTMLElement).id !== 'editor') {
+            if (someParentEl.nodeName === tag) {
+                return someParentEl
+            }
+            someParentEl = someParentEl.parentNode
+        }
+    }
+
+    const isIncludeNodeById = (el: Node, id: string) => {
+        let isInclude = false
+
+        for (let child of el.childNodes) {
+            if ((child as HTMLElement).id === id) {
+                return true
+            } else {
+                isInclude = isIncludeNodeById(child, id)
+            }
+        }
+
+        return isInclude
+    }
+
+    const splitParentOfEl = (parent: Node, elId: string, tag: string) => {
+        let isFoundCenter = false
+        const newParentLeftEl = document.createElement(parent.nodeName)
+        const newCenterEl = document.createElement(parent.nodeName)
+        const newParentRightEl = document.createElement(parent.nodeName)
+
+        for (let childEl of parent.childNodes) {
+            if ((childEl as HTMLElement).id === elId || isIncludeNodeById(childEl, elId)) {
+                newCenterEl.appendChild(childEl.cloneNode(true))
+                isFoundCenter = true
+            } else {
+                /**
+                 * Left
+                 */
+                if (!isFoundCenter) {
+                    newParentLeftEl.appendChild(childEl.cloneNode(true))
+                } else {
+                    /**
+                     * Right
+                     */
+                    newParentRightEl.appendChild(childEl.cloneNode(true))
+                }
+            }
+        }
+
+        newParentLeftEl.hasChildNodes() && parent.parentNode.insertBefore(newParentLeftEl, parent)
+        parent.parentNode.insertBefore(newCenterEl, parent)
+        newParentRightEl.hasChildNodes() && parent.parentNode.insertBefore(newParentRightEl, parent)
+
+        if (parent.nodeName === tag) {
+            insertBeforeAllChild(newCenterEl)
+        }
+
+        parent.parentNode?.removeChild(parent)
+    }
 
     const applyTag = (tag: string) => {
         tag = tag.toUpperCase()
@@ -99,7 +159,7 @@
         const rootEl = document.getElementById('editor')
         const mainEl = window.getSelection().getRangeAt(0)
         const ancestor = mainEl.commonAncestorContainer
-        let parentEl = ancestor.nodeName === '#text' ? ancestor.parentNode : ancestor
+        const parentEl = ancestor.nodeName === '#text' ? ancestor.parentNode : ancestor
         // const parentEl = preParentEl.nodeName === tag ? preParentEl.parentNode : preParentEl
 
         /**
@@ -129,22 +189,14 @@
         /**
          * 3.1 If el exist, then remove, else insert
          */
-        // const elContent = mainEl.createContextualFragment('</' + tag + '>' + selectedDocFragment + '<' + tag + '>')
-        // console.log(mainEl.startContainer)
-        // console.log(mainEl.endContainer)
-        // console.log(mainEl.startOffset)
-        // console.log(mainEl.endOffset)
-        // console.log(parentEl.childNodes)
-
         if (someChildTag) {
             const elContent = mainEl.createContextualFragment((someChildTag as HTMLElement).innerHTML)
-            //console.log(elContent, someChildTag)
             someChildTag.parentNode.replaceChild(elContent, someChildTag)
 
             mainEl.insertNode(selectedDocFragment)
 
             /**
-             * Check all neighbour for same tag
+             * todo Check all neighbour for same tag
              */
         } else {
             const newEl = document.createElement(tag)
@@ -154,75 +206,17 @@
             newEl.appendChild(selectedDocFragment)
             mainEl.insertNode(newEl)
 
-            let identicalTagEl: Node
-            let someParentEl = newEl.parentNode
-
-            while ((someParentEl as HTMLElement).id !== 'editor') {
-                if (someParentEl.nodeName === tag) {
-                    identicalTagEl = someParentEl
-                    break
-                }
-                someParentEl = someParentEl.parentNode
-            }
-
-            const isIncludeNodeById = (el: Node, id: string) => {
-                let isInclude = false
-
-                for (let child of el.childNodes) {
-                    if ((child as HTMLElement).id === id) {
-                        return true
-                    } else {
-                        isInclude = isIncludeNodeById(child, id)
-                    }
-                }
-
-                return isInclude
-            }
+            const identicalTagEl: Node = findIdenticalTagOfParents(newEl.parentNode, tag)
 
             if (identicalTagEl) {
+                /**
+                 * Splitting of parent nodes on the left and right sides of the child nodes
+                 */
                 const parentIdenticalTagEl = identicalTagEl.parentNode
-
-                const splitParent = (parent: Node) => {
-                    let isFoundCenter = false
-                    const newParentLeftEl = document.createElement(parent.nodeName)
-                    const newCenterEl = document.createElement(parent.nodeName)
-                    const newParentRightEl = document.createElement(parent.nodeName)
-
-                    for (let childEl of parent.childNodes) {
-                        if ((childEl as HTMLElement).id === newElId || isIncludeNodeById(childEl, newElId)) {
-                            newCenterEl.appendChild(childEl.cloneNode(true))
-                            isFoundCenter = true
-                        } else {
-                            /**
-                             * Left
-                             */
-                            if (!isFoundCenter) {
-                                newParentLeftEl.appendChild(childEl.cloneNode(true))
-                            } else {
-                                /**
-                                 * Right
-                                 */
-                                newParentRightEl.appendChild(childEl.cloneNode(true))
-                            }
-                        }
-                    }
-
-                    newParentLeftEl.hasChildNodes() && parent.parentNode.insertBefore(newParentLeftEl, parent)
-                    parent.parentNode.insertBefore(newCenterEl, parent)
-                    newParentLeftEl.hasChildNodes() && parent.parentNode.insertBefore(newParentRightEl, parent)
-
-                    if (parent.nodeName === tag) {
-                        insertBeforeAllChild(newCenterEl)
-                    }
-
-                    parent.parentNode?.removeChild(parent)
-                }
-
                 let parentForSplit = parentEl
-
                 while (parentForSplit.nodeName !== parentIdenticalTagEl.nodeName) {
                     const temp = parentForSplit.parentNode
-                    splitParent(parentForSplit)
+                    splitParentOfEl(parentForSplit, newElId, tag)
                     parentForSplit = temp
                 }
 
@@ -230,73 +224,44 @@
             }
         }
 
-        demoOutput = document.getElementById('editor').innerHTML
-        //     const newEl = document.createElement(tag)
-        //     newEl.appendChild(selectedDocFragment)
-        //
-        //     mainEl.insertNode(newEl)
-        //
-        //     if (parentEl.nodeName === tag.toUpperCase()) {
-        //         const upParentEl = parentEl.parentNode
-        //         console.log(upParentEl)
-        //         console.log(parentEl.childNodes)
-        //         for (let child of parentEl.childNodes) {
-        //             console.log(child)
-        //             if (child.nodeName === tag.toUpperCase()) {
-        //                 for (let deepChild of child.childNodes) {
-        //                     upParentEl.insertBefore(deepChild.cloneNode(true), parentEl)
-        //                 }
-        //             } else {
-        //                 const newEl = document.createElement(tag)
-        //                 newEl.appendChild(child.cloneNode(true))
-        //                 upParentEl.insertBefore(newEl, parentEl)
-        //             }
-        //         }
-        //
-        //         upParentEl.removeChild(parentEl)
-        //         parentEl = upParentEl
-        //     }
-        // }
-
         /**
          * 4. Check identical neighborhood tags and collapse to one
          */
-        // const replaceDoublesNodes = (parent: Node) => {
-        //     let main = null
-        //     console.log('parent')
-        //     console.log(parent)
-        //     console.log(parent.childNodes)
-        //
-        //     for (let el of parent.childNodes) {
-        //         console.log('el ======== ')
-        //         console.log(el)
-        //         console.log(el.nodeName)
-        //         console.log(el.nodeValue)
-        //         console.log(el.nodeValue?.length)
-        //
-        //         if (el.nodeName === '#text' && !el.nodeValue.length) {
-        //             console.log('remove')
-        //         } else if (el.nodeName === main?.nodeName) {
-        //             if (el.nodeName === '#text') {
-        //                 parent.normalize()
-        //             } else {
-        //                 console.log('append=------------')
-        //                 for (let childEl of el.childNodes) {
-        //                     main.appendChild(childEl.cloneNode(true))
-        //                 }
-        //
-        //                 el.remove()
-        //                 replaceDoublesNodes(main)
-        //             }
-        //         } else {
-        //             main = el
-        //         }
-        //     }
-        // }
+        const replaceDoublesNodes = (parent: Node) => {
+            let main = null
 
-        // console.log(parentEl)
-        //
-        // replaceDoublesNodes(parentEl)
+            for (let el of parent.childNodes) {
+                console.log(parent.childNodes)
+                console.log('el.nodeValue')
+                console.log(el.nodeName)
+                console.log(el.nodeValue)
+                console.log(el.childNodes)
+                console.log(el.childNodes.length)
+
+                if (el.nodeName !== '#text' && !el.childNodes.length) {
+                    el.remove()
+                } else if (el.nodeName === main?.nodeName) {
+                    if (el.nodeName === '#text') {
+                        parent.normalize()
+                    } else if (main) {
+                        for (let childEl of el.childNodes) {
+                            main.appendChild(childEl.cloneNode(true))
+                        }
+
+                        el.remove()
+                        replaceDoublesNodes(main)
+                    }
+                } else if (el.nodeName !== '#text') {
+                    main = el
+                }
+            }
+        }
+
+        console.log(parentEl)
+
+        replaceDoublesNodes(parentEl)
+
+        demoOutput = document.getElementById('editor').innerHTML
     }
 
     const bold = () => {
