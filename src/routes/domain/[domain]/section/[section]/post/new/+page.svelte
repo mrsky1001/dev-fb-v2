@@ -80,7 +80,7 @@
 
     let demoOutput = '<b id="p_21dsada">Hello <p id="b_2211dsada">textBLeft <i id="i_21dsaasdada"> textILeft Rich textIRight</i> textBRight</p> !</b>'
 
-    const insertBeforeAllChild = (el: Node) => {
+    const insertBeforeAllChild = (el: Node): void => {
         for (let child of el.childNodes) {
             el.parentNode?.insertBefore(child, el)
         }
@@ -88,7 +88,7 @@
         el.parentNode?.removeChild(el)
     }
 
-    const findIdenticalTagOfParents = (parentNode: Node, tag) => {
+    const findIdenticalTagOfParents = (parentNode: Node, tag): Node => {
         let someParentEl = parentNode
 
         while ((someParentEl as HTMLElement).id !== 'editor') {
@@ -99,7 +99,7 @@
         }
     }
 
-    const isIncludeNodeById = (el: Node, id: string) => {
+    const isIncludeNodeById = (el: Node, id: string): boolean => {
         let isInclude = false
 
         for (let child of el.childNodes) {
@@ -112,6 +112,21 @@
 
         return isInclude
     }
+
+    const hasChildNodes = (el: Node): boolean => {
+        if (el.childNodes.length === 1) {
+            return !!el.childNodes[0].textContent.length
+        } else {
+            return !!el.childNodes.length
+        }
+    }
+
+    /**
+     * todo use tiptap
+     * @param parent
+     * @param elId
+     * @param tag
+     */
 
     const splitParentOfEl = (parent: Node, elId: string, tag: string) => {
         let isFoundCenter = false
@@ -138,9 +153,9 @@
             }
         }
 
-        newParentLeftEl.hasChildNodes() && parent.parentNode.insertBefore(newParentLeftEl, parent)
+        hasChildNodes(newParentLeftEl) && parent.parentNode.insertBefore(newParentLeftEl, parent)
         parent.parentNode.insertBefore(newCenterEl, parent)
-        newParentRightEl.hasChildNodes() && parent.parentNode.insertBefore(newParentRightEl, parent)
+        hasChildNodes(newParentRightEl) && parent.parentNode.insertBefore(newParentRightEl, parent)
 
         if (parent.nodeName === tag) {
             insertBeforeAllChild(newCenterEl)
@@ -156,7 +171,6 @@
          * 1. Get main el, who contains selected head text
          */
 
-        const rootEl = document.getElementById('editor')
         const mainEl = window.getSelection().getRangeAt(0)
         const ancestor = mainEl.commonAncestorContainer
         const parentEl = ancestor.nodeName === '#text' ? ancestor.parentNode : ancestor
@@ -238,9 +252,7 @@
                 console.log(el.childNodes)
                 console.log(el.childNodes.length)
 
-                if (el.nodeName !== '#text' && !el.childNodes.length) {
-                    el.remove()
-                } else if (el.nodeName === main?.nodeName) {
+                if (el.nodeName === main?.nodeName) {
                     if (el.nodeName === '#text') {
                         parent.normalize()
                     } else if (main) {
