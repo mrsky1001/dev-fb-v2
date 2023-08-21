@@ -306,6 +306,13 @@
     svelte-hmr "^0.15.1"
     vitefu "^0.2.4"
 
+"@tinymce/tinymce-svelte@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@tinymce/tinymce-svelte/-/tinymce-svelte-1.0.1.tgz#4bdb83f09a542ace5b22c476e2648741e452c41a"
+  integrity sha512-mjso1Mx9FOPxwou528UmINIcE2hBbUpnC9AEInlvIXutydklfSGSGEeYJ57CBTxzgsMEJGw2LYHGC8R7KoEAeA==
+  dependencies:
+    rollup-plugin-execute "^1.1.1"
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
@@ -2469,6 +2476,11 @@ rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
+rollup-plugin-execute@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-execute/-/rollup-plugin-execute-1.1.1.tgz#ee7bcb293e48bc599232b66b66473763e3cb8965"
+  integrity sha512-isCNR/VrwlEfWJMwsnmt5TBRod8dW1IjVRxcXCBrxDmVTeA1IXjzeLSS3inFBmRD7KDPlo38KSb2mh5v5BoWgA==
+
 rollup@^3.18.0:
   version "3.20.2"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-3.20.2.tgz#f798c600317f216de2e4ad9f4d9ab30a89b690ff"
@@ -2852,6 +2864,11 @@ tiny-glob@^0.2.9:
   dependencies:
     globalyzer "0.1.0"
     globrex "^0.1.2"
+
+tinymce@^6.6.2:
+  version "6.6.2"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-6.6.2.tgz#23a2ad5fae79b081a2a4a4eaf093dfff6506429a"
+  integrity sha512-ShoaznNP3qI8dPtEnYt3ByhAJfMhzIY1K04CoFu1IPDeAxmAZCUJLgfiplo8etP4wN8zrBIxHEqpwYYb2IllOQ==
 
 to-regex-range@^5.0.1:
   version "5.0.1"

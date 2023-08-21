@@ -11,7 +11,8 @@ import storeLoader from '../../../../../../../core/subscriber/storeLoader'
 type TParams = { params: { domain: string; section: string; post: string } }
 
 export const load = async ({ params }: TParams) => {
-  return {
-    promiseSection: storeLoader.getActiveSection(params.domain, params.section)
-  }
+    return {
+        domain: await storeLoader.getActiveDomain(params.domain),
+        section: await storeLoader.getActiveSection(params.domain, params.section)
+    }
 }

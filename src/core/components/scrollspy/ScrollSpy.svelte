@@ -1,4 +1,7 @@
 <script lang="ts">
+    /**
+     * Компонент отображения разделов
+     */
     import { afterUpdate } from 'svelte'
     import Section from '../../stores/section/section'
 
