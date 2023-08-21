@@ -4,6 +4,7 @@
 
 import type { IBase } from '../_base.store'
 import { setId } from '../_base.store'
+import { nanoid } from 'nanoid'
 
 export interface IAnnotation extends IBase {
     text: string
@@ -13,34 +14,30 @@ export interface IAnnotation extends IBase {
     imgFile?: File
 }
 
+/**
+ * Класс аннотации к статье
+ */
 export default class Annotation {
-    id = ''
-    imgUrl = ''
-    keywords: string[] = []
-    imgFile?: File
+    readonly id
+    readonly imgUrl
+    readonly keywords: string[]
+    readonly imgFile?: File
 
     private _text = ''
 
-    constructor(initObj?: IAnnotation) {
-        if (initObj) {
-            this.init(initObj)
+    constructor(obj?: IAnnotation) {
+        if (obj) {
+            this.id = setId(obj)
+            this.text = obj.text
+            this.imgUrl = obj.imgUrl
+            this.keywords = obj.keywords
+            this.imgFile = obj.imgFile
         } else {
-            this.emptyInit()
+            this.id = nanoid()
+            this.text = ''
+            this.imgUrl = ''
+            this.keywords = []
         }
-    }
-
-    emptyInit() {
-        this.text = ''
-        this.imgUrl = ''
-        this.keywords = []
-    }
-
-    init(obj: IAnnotation): void {
-        this.id = setId(obj)
-        this.text = obj.text ?? this._text
-        this.imgUrl = obj.imgUrl ?? this.imgUrl
-        this.keywords = obj.keywords ?? this.keywords
-        this.imgFile = obj.imgFile ?? this.imgFile
     }
 
     get text() {

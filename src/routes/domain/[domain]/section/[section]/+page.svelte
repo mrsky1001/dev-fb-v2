@@ -1,4 +1,8 @@
 <script lang="ts">
+    /**
+     * Компонент страницы определенного раздела с выбором статьи раздела
+     * @Component
+     */
     import { createAllSectionStore } from '../../../../../core/stores/section/all-sections.store'
     import ScrollSpy from '../../../../../core/components/scrollspy/ScrollSpy.svelte'
     import BlogSection from '../../../../../core/components/blog/BlogSection.svelte'
@@ -49,9 +53,7 @@
                     <!--        {/each}-->
                 </div>
                 <div class="flex-none hidden w-64 pl-8 mr-8 xl:text-sm xl:block">
-                    <div
-                        class="flex overflow-y-auto sticky top-28 flex-col justify-between pt-10 pb-6 h-[calc(100vh-5rem)]"
-                    >
+                    <div class="flex overflow-y-auto sticky top-28 flex-col justify-between pt-10 pb-6 h-[calc(100vh-5rem)]">
                         <ScrollSpy {sections} />
                     </div>
                 </div>

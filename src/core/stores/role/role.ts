@@ -11,28 +11,23 @@ export interface IRole extends IBase {
     value: number
 }
 
+/**
+ * Класс роли пользователя
+ */
 export default class Role implements IRole {
-    id = ''
-    name = ''
-    value = roles.UNAUTHORIZED.value
+    readonly id
+    readonly name
+    readonly value
 
-    constructor(initObj?: IRole) {
-        if (initObj) {
-            this.init(initObj)
+    constructor(obj?: IRole) {
+        if (obj) {
+            this.id = setId(obj)
+            this.name = obj.name
+            this.value = obj.value
         } else {
-            this.emptyInit()
+            this.id = ''
+            this.name = ''
+            this.value = roles.UNAUTHORIZED.value
         }
-    }
-
-    emptyInit() {
-        this.id = ''
-        this.name = ''
-        this.value = roles.UNAUTHORIZED.value
-    }
-
-    init(obj: IRole): void {
-        this.id = setId(obj)
-        this.name = obj.name ?? this.name
-        this.value = obj.value ?? this.value
     }
 }

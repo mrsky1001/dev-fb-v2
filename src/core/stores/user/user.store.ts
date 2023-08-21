@@ -5,7 +5,12 @@ import User from './user'
 
 export type IUserStore = WrapperProps<IUser>
 
-export const createUserStore = (s?: IUser): IUserStore => {
+/**
+ * Функция создания store для типа данных User
+ * @param {IUser} s
+ * @returns {IUserStore}
+ */
+export function createUserStore(s?: IUser): IUserStore {
     const store = writable<IUser>(new User(s))
 
     return _baseStore(store, ({ init, subscribe, self, updateByField }) => ({

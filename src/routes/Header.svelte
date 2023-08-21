@@ -1,6 +1,7 @@
 <script lang="ts">
     /**
      * NavBar компонент для сайта
+     * @Component
      */
     import type { INavItem } from '../core/server/models/entitys'
     import PhotoSVG from '../core/components/svg/page-icons/PhotoSVG.svelte'

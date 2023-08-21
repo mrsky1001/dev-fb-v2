@@ -11,6 +11,9 @@ import type { IBase } from '../_base.store'
 import { setId } from '../_base.store'
 import type { IUser } from '../user/user'
 
+/**
+ * Интерфейс класса раздела
+ */
 export interface ISection extends IBase {
     author: IUser | null
     name: string
@@ -20,10 +23,12 @@ export interface ISection extends IBase {
     isActive: boolean
     allPostStore: IAllPostStore
 
-    init: (obj: ISectionProps) => void
     setPosts: (posts: IPost[]) => void
 }
 
+/**
+ * Интерфейс параметров инициализации раздела
+ */
 export interface ISectionProps extends ISection {
     _id: string
     author: IUser | null
@@ -36,33 +41,43 @@ export interface ISectionProps extends ISection {
     isActive: boolean
 }
 
+/**
+ * Класс раздела
+ */
 export default class Section implements ISection {
-    id = nanoid()
-    author: IUser | null = null
-    name = ''
-    domain: string = config.server.domain
-    description = ''
-    creatingDate: Date = new Date()
+    readonly id
+    readonly author: IUser | null
+    readonly name
+    readonly domain: string
+    readonly description
+    readonly creatingDate: Date
 
-    private _allPostStores: IAllPostStore = createAllPostStore()
+    private readonly _allPostStores: IAllPostStore = createAllPostStore()
 
     isActive = false
 
-    constructor(initObj?: ISectionProps) {
-        initObj && this.init(initObj)
-    }
+    constructor(obj?: ISectionProps) {
+        if (obj) {
+            this.id = setId(obj)
+            this.name = obj.name
+            this.description = obj.description
+            this.domain = obj.domain
+            this.author = obj.author
+            this.creatingDate = obj.creatingDate
 
-    init(obj: ISectionProps): void {
-        this.id = setId(obj)
-        this.name = obj.name ?? this.name
-        this.description = obj.description ?? this.description
-        this.domain = obj.domain ?? this.domain
-        this.author = obj.author ?? this.author
-        this.creatingDate = obj.creatingDate ?? this.creatingDate
+            this.isActive = obj.isActive ?? this.isActive
 
-        this.isActive = obj.isActive ?? this.isActive
+            this.setPosts(obj.posts)
+        } else {
+            this.id = nanoid()
+            this.name = ''
+            this.description = ''
+            this.domain = config.server.domain
+            this.author = null
+            this.creatingDate = new Date()
 
-        this.setPosts(obj.posts)
+            this.isActive = false
+        }
     }
 
     get allPostStore(): IAllPostStore {

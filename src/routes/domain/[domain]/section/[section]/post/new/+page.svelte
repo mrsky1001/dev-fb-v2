@@ -1,4 +1,8 @@
 <script lang="ts">
+    /**
+     * Компонент создания новой статьи
+     * @Component
+     */
     import Editor from '@tinymce/tinymce-svelte'
     import type Section from '../../../../../../../core/stores/section/section'
     import Domain from '../../../../../../../core/stores/domain/domain'

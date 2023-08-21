@@ -1,6 +1,7 @@
 <script>
     /**
      * Базовый компонент - основа
+     * @Component
      */
     import './styles.css'
     import Header from './Header.svelte'

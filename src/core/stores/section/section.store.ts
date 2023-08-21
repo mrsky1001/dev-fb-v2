@@ -15,8 +15,13 @@ export interface ISectionStore extends WrapperProps<ISection> {
     loadPosts(activePostUrlTitle?: string): Promise<Post[]>
 }
 
-export const createSectionStore = (s: ISectionProps): ISectionStore => {
-    const store = writable<ISection>(new Section(s))
+/**
+ * Функция создания store для типа данных Section
+ * @param {ISectionProps} rawSectionProps
+ * @returns {ISectionStore}
+ */
+export function createSectionStore(rawSectionProps: ISectionProps): ISectionStore {
+    const store = writable<ISection>(new Section(rawSectionProps))
 
     return _baseStore(store, ({ init, subscribe, self, updateByField }) => ({
         init,
@@ -72,10 +77,10 @@ export const createSectionStore = (s: ISectionProps): ISectionStore => {
         //     allSectionsStore.resetActiveMark()
         //
         //     getPosts(section.id, new Date()).then((posts) => {
-        //         store.update((s) => {
-        //             s.isActive = val
-        //             s.setPosts(posts)
-        //             return s
+        //         store.update((rawSectionProps) => {
+        //             rawSectionProps.isActive = val
+        //             rawSectionProps.setPosts(posts)
+        //             return rawSectionProps
         //         })
         //     })
         // }

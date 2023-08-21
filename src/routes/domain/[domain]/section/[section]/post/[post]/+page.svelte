@@ -1,4 +1,8 @@
 <script lang="ts">
+    /**
+     * Компонент отображения выбранной статьи
+     * @Component
+     */
     import Post from '../../../../../../../core/stores/post/post'
     import Page from '../../../../../../../core/components/blog/Page.svelte'
 

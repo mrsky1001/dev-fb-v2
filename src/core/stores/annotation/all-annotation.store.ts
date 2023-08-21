@@ -17,7 +17,11 @@ export interface IAllAnnotationStore {
     subscribe(v: any): Unsubscriber
 }
 
-export const createAllAnnotationStore = () => {
+/**
+ * Функция создания store для списка типа данных Annotation
+ * @returns {IAllAnnotationStore}
+ */
+export function createAllAnnotationStore(): IAllAnnotationStore {
     const stores = writable<IAnnotationStore[]>([])
 
     return {

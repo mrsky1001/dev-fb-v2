@@ -15,7 +15,13 @@ export interface IAllSectionStore extends WrapperPropsForList<ISection, ISection
     resetActiveMark(): void
 }
 
-export const createAllSectionStore = (rawSections: ISectionProps[]): IAllSectionStore => {
+/**
+ * Функция создания store для списка типа данных Section
+ * @param {ISectionProps []} rawSections
+ * @returns {IAllSectionStore}
+ */
+
+export function createAllSectionStore(rawSections: ISectionProps[]): IAllSectionStore {
     const stores = writable<ISectionStore[]>(rawSections.map((s) => createSectionStore(s)))
 
     // const loadPosts = ()=>{
@@ -26,42 +32,39 @@ export const createAllSectionStore = (rawSections: ISectionProps[]): IAllSection
     //     stores
     //   }
 
-    return _baseStoreForList<ISection, ISectionStore, IAllSectionStore>(
-        stores,
-        ({ set, add, all, getStore, getStoreByField, allStores }) => {
-            const activeSectionStore = getStoreByField('isActive', true)
+    return _baseStoreForList<ISection, ISectionStore, IAllSectionStore>(stores, ({ set, add, all, getStore, getStoreByField, allStores }) => {
+        const activeSectionStore = getStoreByField('isActive', true)
 
-            if (activeSectionStore) {
-                activeSectionStore.loadPosts()
-            }
-
-            return {
-                ...stores,
-                set,
-                add,
-                all,
-                getStore,
-                allStores,
-                getStoreByField,
-
-                getActive: () => all()?.find((s) => s.isActive),
-
-                getActiveStore: () => allStores()?.find((s) => s.self().isActive),
-
-                init: (rawSections: ISectionProps[]) => {
-                    stores.set(rawSections.map((s) => createSectionStore(s)))
-                },
-
-                resetActiveMark: () =>
-                    stores.update((all) =>
-                        all.map((s) => {
-                            s.self().isActive = false
-                            return s
-                        })
-                    )
-            }
+        if (activeSectionStore) {
+            activeSectionStore.loadPosts()
         }
-    )
+
+        return {
+            ...stores,
+            set,
+            add,
+            all,
+            getStore,
+            allStores,
+            getStoreByField,
+
+            getActive: () => all()?.find((s) => s.isActive),
+
+            getActiveStore: () => allStores()?.find((s) => s.self().isActive),
+
+            init: (rawSections: ISectionProps[]) => {
+                stores.set(rawSections.map((s) => createSectionStore(s)))
+            },
+
+            resetActiveMark: () =>
+                stores.update((all) =>
+                    all.map((s) => {
+                        s.self().isActive = false
+                        return s
+                    })
+                )
+        }
+    })
 }
 
 //

@@ -4,8 +4,13 @@ import _baseStore, { type WrapperProps } from '../_base.store'
 
 export type IPostStore = WrapperProps<IPost>
 
-export const createPostStore = (s: IPost): IPostStore => {
-    const store = writable<IPost>(new Post(s))
+/**
+ * Функция создания store для типа данных Post
+ * @param {IPost} rawPost
+ * @returns {IPostStore}
+ */
+export function createPostStore(rawPost: IPost): IPostStore {
+    const store = writable<IPost>(new Post(rawPost))
 
     return _baseStore(store, ({ init, subscribe, self, updateByField }) => ({
         init,

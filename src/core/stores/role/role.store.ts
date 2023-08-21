@@ -6,8 +6,13 @@ import _baseStore from '../_base.store'
 
 export type IRoleStore = WrapperProps<IRole>
 
-export const createRoleStore = (s?: IRole): IRoleStore => {
-    const store = writable<IRole>(new Role(s))
+/**
+ * Функция создания store для типа данных Role
+ * @param {IRole} rawRole
+ * @returns {IRoleStore}
+ */
+export function createRoleStore(rawRole?: IRole): IRoleStore {
+    const store = writable<IRole>(new Role(rawRole))
 
     return _baseStore(store, ({ init, subscribe, updateByField, self }) => ({
         init,

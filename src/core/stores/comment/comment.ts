@@ -4,6 +4,7 @@ import statuses from '../../server/collections/statuses'
 import type { IBase } from '../_base.store'
 import { setId } from '../_base.store'
 import type { IRole } from '../role/role'
+import { nanoid } from 'nanoid'
 
 export interface IRawComment {
     content: string
@@ -21,43 +22,38 @@ export interface IComment extends IBase {
     errorMsg: string
 }
 
+/**
+ * Класс комментария к статье
+ */
 export default class Comment implements IComment {
-    id = ''
-    creatingDate = ''
-    content = ''
-    postId = ''
-    parentId = ''
-    errorMsg = ''
-    author: IUser | null = null
-    status: IStatus = statuses.DRAFT
+    readonly id
+    readonly creatingDate
+    readonly content
+    readonly postId
+    readonly parentId
+    readonly errorMsg
+    readonly author: IUser | null = null
+    readonly status: IStatus = statuses.DRAFT
 
-    constructor(initObj?: IComment) {
-        if (initObj) {
-            this.init(initObj)
+    constructor(obj?: IComment) {
+        if (obj) {
+            this.id = setId(obj)
+            this.author = obj.author
+            this.content = obj.content
+            this.postId = obj.postId
+            this.parentId = obj.parentId
+            this.creatingDate = obj.creatingDate
+            this.status = obj.status
+            this.errorMsg = obj.content
         } else {
-            this.emptyInit()
+            this.id = nanoid()
+            this.author = null
+            this.content = ''
+            this.postId = ''
+            this.parentId = ''
+            this.creatingDate = ''
+            this.status = statuses.DRAFT
+            this.errorMsg = ''
         }
-    }
-
-    emptyInit() {
-        this.id = ''
-        this.author = null
-        this.content = ''
-        this.postId = ''
-        this.parentId = ''
-        this.creatingDate = ''
-        this.status = statuses.DRAFT
-        this.errorMsg = ''
-    }
-
-    init(obj: IComment): void {
-        this.id = setId(obj)
-        this.author = obj.author ?? this.author
-        this.content = obj.content ?? this.content
-        this.postId = obj.postId ?? this.postId
-        this.parentId = obj.parentId ?? this.parentId
-        this.creatingDate = obj.creatingDate ?? this.creatingDate
-        this.status = obj.status ?? this.status
-        this.errorMsg = obj.content ?? this.errorMsg
     }
 }

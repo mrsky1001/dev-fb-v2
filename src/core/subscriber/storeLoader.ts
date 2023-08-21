@@ -7,161 +7,206 @@ import { getSections } from '../server/services/sections.services'
 import { createAllSectionStore } from '../stores/section/all-sections.store'
 import { getPostByTitle, getPosts } from '../server/services/post.services'
 import type { IDomainStore } from '../stores/domain/domain.store'
-import { P } from 'flowbite-svelte'
 
+/**
+ * Класс загрузки данных в store's
+ * @Class
+ */
 class StoreLoader {
-  private _getAllDomainStore = () => globalStore.self()?.allDomainStore
+    /**
+     * Получить список всех store's доменов
+     * @returns {IAllDomainStore}
+     */
+    private _getAllDomainStore = () => globalStore.self()?.allDomainStore
 
-  private _getAllSectionStore = () => globalStore.self()?.allSectionStore
+    /**
+     * Получить список всех store's разделов активного домена
+     * @returns {IAllSectionStore}
+     */
+    private _getAllSectionStore = () => globalStore.self()?.allSectionStore
 
-  private _getAllPostStore = () => globalStore.self()?.allSectionStore?.getActiveStore()?.self().allPostStore
+    /**
+     * Получить список всех store's статей активного раздела
+     * @returns {IAllPostStore}
+     */
+    private _getAllPostStore = () => globalStore.self()?.allSectionStore?.getActiveStore()?.self().allPostStore
 
-  getActiveDomain = async (domain?: string) => {
-    return new Promise((resolve, reject) => {
-      const savedDomain = this._getAllDomainStore()?.getActive()
+    /**
+     * Загрузка и получение выбранного домена
+     * @param {string} domain
+     * @returns {Promise<IDomain | undefined>}
+     */
+    async getActiveDomain(domain?: string): Promise<IDomain | undefined> {
+        return new Promise((resolve, reject) => {
+            const savedDomain = this._getAllDomainStore()?.getActive()
 
-      if (!savedDomain) {
-        this.loadDomains()
-          .then((domains) => {
-            resolve(domains.find((d) => d.name === domain))
-          })
-          .catch((err) => {
-            reject(err)
-          })
-      } else {
-        resolve(savedDomain)
-      }
-    })
-  }
+            if (!savedDomain) {
+                this.loadDomains()
+                    .then((domains) => {
+                        resolve(domains.find((d) => d.name === domain))
+                    })
+                    .catch((err) => {
+                        reject(err)
+                    })
+            } else {
+                resolve(savedDomain)
+            }
+        })
+    }
 
-  getActiveSection = async (domain?: string, sectionId?: string) => {
-    return new Promise((resolve, reject) => {
-      const savedSection = this._getAllSectionStore()?.getActive()
+    /**
+     * Загрузка и получение выбранного раздела
+     * @param {string} domain
+     * @param {string} sectionId
+     * @returns {Promise<IDomain | undefined>}
+     */
+    async getActiveSection(domain?: string, sectionId?: string): Promise<ISection | undefined> {
+        return new Promise((resolve, reject) => {
+            const savedSection = this._getAllSectionStore()?.getActive()
 
-      if (!savedSection && domain) {
-        this.loadSections(domain)
-          .then((sections) => {
-            resolve(sections.find((s) => s.id === sectionId))
-          })
-          .catch((err) => {
-            reject(err)
-          })
-      } else {
-        resolve(savedSection)
-      }
-    })
-  }
+            if (!savedSection && domain) {
+                this.loadSections(domain)
+                    .then((sections) => {
+                        resolve(sections.find((s) => s.id === sectionId))
+                    })
+                    .catch((err) => {
+                        reject(err)
+                    })
+            } else {
+                resolve(savedSection)
+            }
+        })
+    }
 
-  getActivePost = async (domain?: string, sectionId?: string, postUrlTitle?: string) => {
-    return new Promise((resolve, reject) => {
-      const savedPost = this._getAllPostStore()?.getActive()
+    /**
+     * Загрузка и получение выбранной статьи
+     * @param {string} domain
+     * @param {string} sectionId
+     * @param {string} postUrlTitle
+     * @returns {Promise<IDomain | undefined>}
+     */
+    async getActivePost(domain?: string, sectionId?: string, postUrlTitle?: string): Promise<IPost | undefined> {
+        return new Promise((resolve, reject) => {
+            const savedPost = this._getAllPostStore()?.getActive()
 
-      if (!savedPost && domain && sectionId && postUrlTitle) {
-        getPostByTitle(postUrlTitle)
-          .then((rawPost) => {
-            const post = new Post(rawPost)
-            this._posts = [post]
+            if (!savedPost && domain && sectionId && postUrlTitle) {
+                getPostByTitle(postUrlTitle)
+                    .then((rawPost) => {
+                        const post = new Post(rawPost)
+                        this._posts = [post]
 
-            resolve(post)
-          })
-          .catch((err) => {
-            reject(err)
-          })
-      } else {
-        resolve(savedPost)
-      }
-    })
-  }
+                        resolve(post)
+                    })
+                    .catch((err) => {
+                        reject(err)
+                    })
+            } else {
+                resolve(savedPost)
+            }
+        })
+    }
 
-  get domains() {
-    return this._domains
-  }
+    private _domains: IDomain[] = []
+    private _sections: ISection[] = []
+    private _posts: IPost[] = []
 
-  get sections() {
-    return this._sections
-  }
+    /**
+     * Загрузка списка доменов
+     * @returns {Promise<IDomain[]>}
+     */
+    async loadDomains(): Promise<IDomain[]> {
+        return new Promise((resolve, reject) => {
+            if (this._getAllDomainStore()?.all().length) {
+                this._domains = this._getAllDomainStore()?.all() as Domain[]
 
-  get posts() {
-    return this._posts
-  }
+                resolve(this._domains)
+            } else {
+                getDomains()
+                    .then((rawDomains) => {
+                        this._domains = rawDomains.map((rawD: IDomain) => new Domain(rawD))
 
-  private _domains: IDomain[] = []
-  private _sections: ISection[] = []
-  private _posts: IPost[] = []
+                        resolve(this._domains)
+                    })
+                    .catch((err) => {
+                        reject(err)
+                    })
+            }
+        })
+    }
 
-  async loadDomains(): Promise<IDomain[]> {
-    return new Promise((resolve, reject) => {
-      if (this._getAllDomainStore()?.all().length) {
-        this._domains = this._getAllDomainStore()?.all() as Domain[]
+    /**
+     * Загрузка списка разделов активного домена
+     * @returns {Promise<ISection[]>}
+     */
+    async loadSections(domain: string): Promise<ISection[]> {
+        return new Promise((resolve, reject) => {
+            const allStores = this._getAllDomainStore()?.allStores()
+            const domainStore = allStores?.find((d: IDomainStore) => d.self().name === domain)
 
-        resolve(this._domains)
-      } else {
-        getDomains()
-          .then((rawDomains) => {
-            this._domains = rawDomains.map((rawD: IDomain) => new Domain(rawD))
+            domainStore?.setActive(true)
 
-            resolve(this._domains)
-          })
-          .catch((err) => {
-            reject(err)
-          })
-      }
-    })
-  }
+            const allSectionStore = this._getAllSectionStore()?.all()
+            const savedDomain = allSectionStore?.find((s) => s.domain === domain)
 
-  async loadSections(domain: string): Promise<ISection[]> {
-    return new Promise((resolve, reject) => {
-      const allStores = this._getAllDomainStore()?.allStores()
-      const domainStore = allStores?.find((d: IDomainStore) => d.self().name === domain)
+            if (savedDomain) {
+                this._sections = this._getAllSectionStore()?.all()
+                resolve(this._sections)
+            } else {
+                getSections(domain)
+                    .then((rawSections) => {
+                        this._sections = rawSections.map((rawS: ISectionProps) => new Section(rawS))
 
-      domainStore?.setActive(true)
+                        globalStore.update({
+                            allSectionStore: createAllSectionStore(this._sections as ISectionProps[])
+                        })
 
-      const allSectionStore = this._getAllSectionStore()?.all()
-      const savedDomain = allSectionStore?.find((s) => s.domain === domain)
+                        resolve(this._sections)
+                    })
+                    .catch((err) => {
+                        reject(err)
+                    })
+            }
+        })
+    }
 
-      if (savedDomain) {
-        this._sections = this._getAllSectionStore()?.all()
-        resolve(this._sections)
-      } else {
-        getSections(domain)
-          .then((rawSections) => {
-            this._sections = rawSections.map((rawS: ISectionProps) => new Section(rawS))
+    /**
+     * Загрузка списка статьей активного раздела
+     * @returns {Promise<IPost[]>}
+     */
+    async loadPosts(domain: string, sectionId: string): Promise<IPost[]> {
+        return new Promise((resolve, reject) => {
+            if (this._getAllPostStore()?.all().length) {
+                this._posts = this._getAllPostStore()?.all() as Post[]
+                resolve(this._posts)
+            } else {
+                getPosts(domain, sectionId)
+                    .then((rawPosts) => {
+                        this._posts = rawPosts.map((raw: IPost) => new Post(raw))
+                        globalStore.self()?.allSectionStore?.getActive()?.allPostStore?.init(this._posts)
 
-            globalStore.update({
-              allSectionStore: createAllSectionStore(this._sections as ISectionProps[])
-            })
+                        resolve(this._posts)
+                    })
+                    .catch((err) => {
+                        reject(err)
+                    })
+            }
 
-            resolve(this._sections)
-          })
-          .catch((err) => {
-            reject(err)
-          })
-      }
-    })
-  }
+            // const domainStore = this._getAllDomainStore()?.allStores().find((d: IDomainStore) => d.self().name === domain)
+            // domainStore?.setActive(true)
+        })
+    }
 
-  async loadPosts(domain: string, sectionId: string): Promise<IPost[]> {
-    return new Promise((resolve, reject) => {
-      if (this._getAllPostStore()?.all().length) {
-        this._posts = this._getAllPostStore()?.all() as Post[]
-        resolve(this._posts)
-      } else {
-        getPosts(domain, sectionId)
-          .then((rawPosts) => {
-            this._posts = rawPosts.map((raw: IPost) => new Post(raw))
-            globalStore.self()?.allSectionStore?.getActive()?.allPostStore?.init(this._posts)
+    get domains() {
+        return this._domains
+    }
 
-            resolve(this._posts)
-          })
-          .catch((err) => {
-            reject(err)
-          })
-      }
+    get sections() {
+        return this._sections
+    }
 
-      // const domainStore = this._getAllDomainStore()?.allStores().find((d: IDomainStore) => d.self().name === domain)
-      // domainStore?.setActive(true)
-    })
-  }
+    get posts() {
+        return this._posts
+    }
 }
 
 const storeLoader = new StoreLoader()

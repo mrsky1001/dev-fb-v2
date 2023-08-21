@@ -4,6 +4,7 @@
 
 import type { IBase } from '../_base.store'
 import { setId } from '../_base.store'
+import { nanoid } from 'nanoid'
 
 export interface IDomain extends IBase {
     name: string
@@ -11,39 +12,28 @@ export interface IDomain extends IBase {
     description: string
 
     isActive: boolean
-    setActive(val?: boolean): void
+    // setActive(val?: boolean): void
 }
 
 export default class Domain {
-    id = ''
-    name = ''
-    text = ''
-    description = ''
+    readonly id
+    readonly name
+    readonly text
+    readonly description
 
-    isActive = false
+    readonly isActive = false
 
-    constructor(initObj?: IDomain) {
-        if (initObj) {
-            this.init(initObj)
+    constructor(obj?: IDomain) {
+        if (obj) {
+            this.id = setId(obj)
+            this.name = obj.name
+            this.text = obj.text
+            this.description = obj.description
         } else {
-            this.emptyInit()
+            this.id = nanoid()
+            this.name = ''
+            this.text = ''
+            this.description = ''
         }
-    }
-
-    emptyInit() {
-        this.name = ''
-        this.text = ''
-        this.description = ''
-    }
-
-    init(obj: IDomain): void {
-        this.id = setId(obj)
-        this.name = obj.name ?? this.name
-        this.text = obj.text ?? this.text
-        this.description = obj.description ?? this.description
-    }
-
-    setActive(val = true) {
-        this.isActive = val
     }
 }

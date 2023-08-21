@@ -8,8 +8,13 @@ export interface IDomainStore extends WrapperProps<IDomain> {
     setActive(val: boolean): void
 }
 
-export const createDomainStore = (s?: IDomain): IDomainStore => {
-    const store = writable<IDomain>(new Domain(s))
+/**
+ * Функция создания store для типа данных Domain
+ * @param {IDomain} rawDomain
+ * @returns {IDomainStore}
+ */
+export function createDomainStore(rawDomain?: IDomain): IDomainStore {
+    const store = writable<IDomain>(new Domain(rawDomain))
 
     return _baseStore(store, ({ init, subscribe, self, updateByField }) => ({
         subscribe,

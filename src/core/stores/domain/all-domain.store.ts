@@ -12,33 +12,34 @@ export interface IAllDomainStore extends WrapperPropsForList<IDomain, IDomainSto
     resetActiveMark(): void
 }
 
-export const createAllDomainStore = (rawDomains: IDomain[]): IAllDomainStore => {
+/**
+ * Функция создания store для списка типа данных Domain
+ * @returns {IAllDomainStore}
+ */
+export function createAllDomainStore(rawDomains: IDomain[]): IAllDomainStore {
     const stores = writable<IDomainStore[]>(rawDomains.map((s) => createDomainStore(s)))
 
-    return _baseStoreForList<IDomain, IDomainStore, IAllDomainStore>(
-        stores,
-        ({ set, add, all, getStore, getStoreByField, allStores }) => {
-            return {
-                ...stores,
-                set,
-                add,
-                all,
-                getStore,
-                allStores,
-                getStoreByField,
+    return _baseStoreForList<IDomain, IDomainStore, IAllDomainStore>(stores, ({ set, add, all, getStore, getStoreByField, allStores }) => {
+        return {
+            ...stores,
+            set,
+            add,
+            all,
+            getStore,
+            allStores,
+            getStoreByField,
 
-                getActive: () => all()?.find((s) => s.isActive),
+            getActive: () => all()?.find((s) => s.isActive),
 
-                getActiveStore: () => allStores()?.find((s) => s.self().isActive),
+            getActiveStore: () => allStores()?.find((s) => s.self().isActive),
 
-                resetActiveMark: () =>
-                    stores.update((all) =>
-                        all.map((s) => {
-                            s.self().isActive = false
-                            return s
-                        })
-                    )
-            }
+            resetActiveMark: () =>
+                stores.update((all) =>
+                    all.map((s) => {
+                        s.self().isActive = false
+                        return s
+                    })
+                )
         }
-    )
+    })
 }

@@ -16,7 +16,11 @@ export interface IAllRoleStore {
     subscribe(v: any): Unsubscriber
 }
 
-export const createAllRoleStore = () => {
+/**
+ * Функция создания store для списка типа данных Role
+ * @returns {IAllRoleStore}
+ */
+export function createAllRoleStore(): IAllRoleStore {
     const stores = writable<IRoleStore[]>([])
 
     return {

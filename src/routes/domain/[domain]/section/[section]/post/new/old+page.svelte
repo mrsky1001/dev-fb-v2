@@ -34,7 +34,7 @@
         }
     }
 
-    const createLink = () => document.execCommand('createLink', false, 'https://')
+    function createLink = () => document.execCommand('createLink', false, 'https://')
     const formatH2 = () => (document.queryCommandValue('formatBlock') === 'h2' ? document.execCommand('formatBlock', false, 'p') : document.execCommand('formatBlock', false, 'h2'))
     const insertImage = () =>
         document.execCommand(

@@ -12,27 +12,28 @@ export interface IAllPostStore extends WrapperPropsForList<IPost, IPostStore> {
     init(posts: IPost[]): void
 }
 
-export const createAllPostStore = () => {
+/**
+ * Функция создания store для списка типа данных Post
+ * @returns {IAllPostStore}
+ */
+export function createAllPostStore() {
     const stores = writable<IPostStore[]>([])
 
-    return _baseStoreForList<IPost, IPostStore, IAllPostStore>(
-        stores,
-        ({ set, add, all, getStore, getStoreByField, allStores }) => ({
-            ...stores,
-            set,
-            add,
-            all,
-            getStore,
-            allStores,
-            getStoreByField,
+    return _baseStoreForList<IPost, IPostStore, IAllPostStore>(stores, ({ set, add, all, getStore, getStoreByField, allStores }) => ({
+        ...stores,
+        set,
+        add,
+        all,
+        getStore,
+        allStores,
+        getStoreByField,
 
-            getActive: () => all()?.find((s) => s.isActive),
+        getActive: () => all()?.find((s) => s.isActive),
 
-            getActiveStore: () => allStores()?.find((s) => s.self().isActive),
+        getActiveStore: () => allStores()?.find((s) => s.self().isActive),
 
-            init: (arr: IPost[]) => {
-                stores.set(arr.map((data) => createPostStore(data)))
-            }
-        })
-    )
+        init: (arr: IPost[]) => {
+            stores.set(arr.map((data) => createPostStore(data)))
+        }
+    }))
 }

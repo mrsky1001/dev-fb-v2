@@ -16,7 +16,11 @@ export interface IAllCommentStore {
     subscribe(v: any): Unsubscriber
 }
 
-export const createAllCommentStore = () => {
+/**
+ * Функция создания store для списка типа данных Comment
+ * @returns {IAllCommentStore}
+ */
+export function createAllCommentStore(): IAllCommentStore {
     const stores = writable<ICommentStore[]>([])
 
     return {

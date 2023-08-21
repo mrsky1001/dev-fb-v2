@@ -19,6 +19,7 @@ import { createAllCommentStore } from '../comment/all-comment.store'
 import type { IComment } from '../comment/comment'
 import Annotation from '../annotation/annotation'
 import Comment from '../comment/comment'
+import { nanoid } from 'nanoid'
 
 export interface IPostProps extends IBase {
     _id?: string
@@ -55,7 +56,7 @@ export interface IPost extends IPostProps {
 }
 
 export default class Post implements IPost {
-    id = ''
+    readonly id
     title = ''
     urlTitle = ''
     content = ''
@@ -79,65 +80,57 @@ export default class Post implements IPost {
 
     isActive = false
 
-    constructor(initObj?: IPost) {
-        if (initObj) {
-            this._init(initObj)
+    constructor(obj?: IPost) {
+        if (obj) {
+            this.id = setId(obj)
+            this.title = obj.title ?? this.title
+            this.urlTitle = obj.urlTitle ?? this.urlTitle
+            this.content = obj.content ?? this.content
+            this.photoPosts = obj.photoPosts ?? this.photoPosts
+            this.sectionId = obj.sectionId ?? this.sectionId
+            this.domain = obj.domain ?? this.domain
+
+            this.tags = obj.tags ?? this.tags
+            this.countSymbols = obj.countSymbols ?? this.countSymbols
+
+            this.creatingDate = obj.creatingDate ?? this.creatingDate
+            this.updatingDate = obj.updatingDate ?? this.updatingDate
+            this.publishedDate = obj.publishedDate ?? this.publishedDate
+            this.views = obj.views ?? this.views
+            this.likes = obj.likes ?? this.likes
+            this.shares = obj.shares ?? this.shares
+            this.status = obj.status ?? this.status
+            this.readTime = obj.readTime ?? this.readTime
+            this.countComments = obj.countComments ?? this.countComments
+
+            this.isActive = obj.isActive ?? this.isActive
+
+            if (obj.annotationStore) {
+                this.annotationStore.init(obj.annotationStore.self())
+            } else if (obj.annotation) {
+                this.annotationStore.init(new Annotation(obj.annotation))
+            }
+
+            if (obj.authorStore) {
+                this.authorStore.init(obj.authorStore.self())
+            } else if (obj.author) {
+                this.authorStore.init(new User(obj.author))
+            }
+
+            if (obj.commentsStore) {
+                this.commentsStore.init(obj.commentsStore.all())
+            } else if (obj.comments) {
+                this.commentsStore.init(obj.comments.map((c) => new Comment(c)))
+            }
         } else {
-            this._emptyInit()
+            this.id = nanoid()
+            this.title = ''
+            this.urlTitle = ''
+            this.content = ''
+            this.sectionId = ''
+            this.tags = []
         }
     }
-
-    private _emptyInit() {
-        this.title = ''
-        this.urlTitle = ''
-        this.content = ''
-        this.sectionId = ''
-        this.tags = []
-    }
-
-    private _init(obj: IPost): void {
-        this.id = setId(obj)
-        this.title = obj.title ?? this.title
-        this.urlTitle = obj.urlTitle ?? this.urlTitle
-        this.content = obj.content ?? this.content
-        this.photoPosts = obj.photoPosts ?? this.photoPosts
-        this.sectionId = obj.sectionId ?? this.sectionId
-        this.domain = obj.domain ?? this.domain
-
-        this.tags = obj.tags ?? this.tags
-        this.countSymbols = obj.countSymbols ?? this.countSymbols
-
-        this.creatingDate = obj.creatingDate ?? this.creatingDate
-        this.updatingDate = obj.updatingDate ?? this.updatingDate
-        this.publishedDate = obj.publishedDate ?? this.publishedDate
-        this.views = obj.views ?? this.views
-        this.likes = obj.likes ?? this.likes
-        this.shares = obj.shares ?? this.shares
-        this.status = obj.status ?? this.status
-        this.readTime = obj.readTime ?? this.readTime
-        this.countComments = obj.countComments ?? this.countComments
-
-        this.isActive = obj.isActive ?? this.isActive
-
-        if (obj.annotationStore) {
-            this.annotationStore.init(obj.annotationStore.self())
-        } else if (obj.annotation) {
-            this.annotationStore.init(new Annotation(obj.annotation))
-        }
-
-        if (obj.authorStore) {
-            this.authorStore.init(obj.authorStore.self())
-        } else if (obj.author) {
-            this.authorStore.init(new User(obj.author))
-        }
-
-        if (obj.commentsStore) {
-            this.commentsStore.init(obj.commentsStore.all())
-        } else if (obj.comments) {
-            this.commentsStore.init(obj.comments.map((c) => new Comment(c)))
-        }
-    }
-
     // getRoute() {
     //     return `/post/${this.urlTitle}`
     // }
