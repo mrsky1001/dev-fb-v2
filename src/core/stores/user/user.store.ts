@@ -8,9 +8,10 @@ export type IUserStore = WrapperProps<IUser>
 export const createUserStore = (s?: IUser): IUserStore => {
     const store = writable<IUser>(new User(s))
 
-    return _baseStore(store, ({ init, subscribe, self }) => ({
+    return _baseStore(store, ({ init, subscribe, self, updateByField }) => ({
         init,
         subscribe,
+        updateByField,
         self
     }))
 }

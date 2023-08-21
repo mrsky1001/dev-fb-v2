@@ -18,18 +18,14 @@
     }
 </script>
 
-<div class="mb-8">
-    <h4 class="pl-[5px] mb-2 text-sm font-semibold tracking-wide text-gray-900 uppercase dark:text-white lg:text-xs">
-        Темы
-    </h4>
+<div class="mb-8 px-[5px]">
+    <h4 class=" mb-2 text-sm font-semibold tracking-wide text-gray-900 uppercase dark:text-white lg:text-xs">Темы</h4>
     <nav id="TableOfContents">
         <ul id="mainScrollSpy">
             {#each sections as section}
                 <li id={section.name} class="py-1">
                     <a
-                        class="{activeClass(
-                            section
-                        )} bg-transparent px-[5px] text-neutral-600 shadow-none dark:text-neutral-200 dark:!text-primary-400 border-solid border-primary dark:border-primary-400"
+                        class="{activeClass(section)} hover:font-medium bg-transparent text-neutral-600 shadow-none dark:text-neutral-200 border-solid border-primary dark:border-primary-400"
                         href={url + section.id}
                         data-sveltekit-preload-data="tap">{section.name}</a
                     >

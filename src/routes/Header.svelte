@@ -1,4 +1,7 @@
 <script lang="ts">
+    /**
+     * NavBar компонент для сайта
+     */
     import type { INavItem } from '../core/server/models/entitys'
     import PhotoSVG from '../core/components/svg/page-icons/PhotoSVG.svelte'
     import HomeSVG from '../core/components/svg/page-icons/HomeSVG.svelte'
@@ -76,9 +79,7 @@
     const logo = { name: 'FOMA-BLOG', href: config.front.host + '/' }
 </script>
 
-<header
-    class="sticky top-0 z-40 flex-none w-full mx-auto bg-white border-b border-gray-200 dark:border-gray-600 dark:bg-gray-800"
->
+<header class="sticky top-0 z-40 flex-none w-full mx-auto bg-white border-b border-gray-200 dark:border-gray-600 dark:bg-gray-800">
     <Navbar let:hidden let:toggle>
         <NavBrand href={logo.href} />
         <NavHamburger on:click={toggle} />
