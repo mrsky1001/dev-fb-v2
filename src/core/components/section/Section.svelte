@@ -1,7 +1,11 @@
-<script lang="ts">
-    import classNames from 'classnames';
+<!--
+  - Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
+  -->
 
-    export let sectionClass = 'bg-white dark:bg-gray-900';
+<script lang="ts">
+    import classNames from 'classnames'
+
+    export let sectionClass = 'bg-white dark:bg-gray-900'
     export let name:
         | 'blog'
         | 'cta'
@@ -34,7 +38,7 @@
         | 'social'
         | 'tableheader'
         | 'team'
-        | 'testimonial' = 'default';
+        | 'testimonial' = 'default'
     const sectionClasses = {
         blog: {
             div: 'py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6'
@@ -66,7 +70,7 @@
         default: {
             div: 'py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6'
         },
-        faq: {div: 'py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6'},
+        faq: { div: 'py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6' },
         feature: {
             div: 'py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6'
         },
@@ -130,11 +134,11 @@
         testimonial: {
             div: 'max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6'
         }
-    };
+    }
 </script>
 
 <section class={classNames(sectionClass, $$props.classSection)}>
     <div class={classNames(sectionClasses[name]['div'], $$props.classDiv)}>
-        <slot/>
+        <slot />
     </div>
 </section>

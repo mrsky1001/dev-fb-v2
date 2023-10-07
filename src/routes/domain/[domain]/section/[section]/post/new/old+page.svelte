@@ -1,5 +1,10 @@
+<!--
+  - Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
+  -->
+
 <script lang="ts">
-    import { Section } from '../../../../../../../core/components/flowbite'
+    import Section from '../../../../../../../core/components/section/Section.svelte'
+
     export let data: { promiseSection: Promise<Section> }
 
     import Editor from './pageEditor/PageEditor.svelte'

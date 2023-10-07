@@ -1,7 +1,11 @@
+<!--
+  - Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
+  -->
+
 <script lang="ts">
     import { page } from '$app/stores'
     import { EditOnGithub, DocsLink } from './index'
-    import { Section } from '../flowbite/index.js'
+    import Section from '../section/Section.svelte'
 
     export let title = ''
     const href = `https://github.com/shinokada/flowbite-svelte-blocks/blob/main/src/routes${$page.url.pathname}.svelte`

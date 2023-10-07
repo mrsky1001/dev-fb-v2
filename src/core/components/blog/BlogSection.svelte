@@ -1,18 +1,20 @@
+<!--
+  - Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
+  -->
+
 <script lang="ts">
-    import {
-        ArticleAuthor,
-        ArticleBody,
-        ArticleHead,
-        ArticleWrapper,
-        BlogBodyWrapper,
-        BlogHead,
-        Section
-    } from '../flowbite'
     import { ExampleDiv } from '../utils/index.ts'
     import { ArrowSmallRight } from 'svelte-heros'
-    import ArticleImg from '../flowbite/blog/ArticleImg.svelte'
-    import ArticleContent from '../flowbite/blog/ArticleContent.svelte'
     import Post from '../../stores/post/post'
+    import ArticleImg from './article/ArticleImg.svelte'
+    import ArticleContent from './article/ArticleContent.svelte'
+    import Section from '../section/Section.svelte'
+    import BlogHead from './article/BlogHead.svelte'
+    import BlogBodyWrapper from './article/BlogBodyWrapper.svelte'
+    import ArticleWrapper from './article/ArticleWrapper.svelte'
+    import ArticleHead from './article/ArticleHead.svelte'
+    import ArticleBody from './article/ArticleBody.svelte'
+    import ArticleAuthor from './article/ArticleAuthor.svelte'
 
     export let activeDomain
     export let activeSection: Section
@@ -69,19 +71,12 @@
                                 </ArticleBody>
                                 <ArticleAuthor>
                                     <svelte:fragment slot="author">
-                                        <img
-                                            class="w-7 h-7 rounded-full"
-                                            src={post.authorStore.self().avatar}
-                                            alt="Jese Leos avatar"
-                                        />
+                                        <img class="w-7 h-7 rounded-full" src={post.authorStore.self().avatar} alt="Jese Leos avatar" />
                                         <span class="font-medium dark:text-white">
                                             {post.authorStore.self().username}
                                         </span>
                                     </svelte:fragment>
-                                    <a
-                                        href={buildRoute(post.urlTitle)}
-                                        class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
-                                    >
+                                    <a href={buildRoute(post.urlTitle)} class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline">
                                         Прочитать
                                         <ArrowSmallRight class="ml-2" />
                                     </a>
