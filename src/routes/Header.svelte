@@ -1,3 +1,7 @@
+<!--
+  - Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
+  -->
+
 <script lang="ts">
     /**
      * NavBar компонент для сайта
@@ -95,7 +99,7 @@
             <Search size="sm" placeholder="Поиск" />
         </div>
         <div class="flex">
-            <Button size="sm">Войти</Button>
+            <NavItem href="/login">Войти</NavItem>
             <NavHamburger on:click={toggle} />
         </div>
     </Navbar>

@@ -24,7 +24,7 @@
 
     export let label = ''
 
-    placeholder = placeholder ?? label
+    placeholder = placeholder.length ? placeholder : label
 
     let containerClassesCSS = classes
 
@@ -38,18 +38,7 @@
         <Input {id} {type} bind:value {placeholder} bind:disabled classes={inputClasses} {numSettings} {required} {onChange} />
         <Label forName={id} text={label} {disabled} classes="font-medium" />
     {:else if type === 'radio'}
-        <Input
-            {id}
-            {type}
-            bind:group
-            {value}
-            {placeholder}
-            classes={inputClasses}
-            {disabled}
-            {numSettings}
-            {required}
-            {onChange}
-        />
+        <Input {id} {type} bind:group {value} {placeholder} classes={inputClasses} {disabled} {numSettings} {required} {onChange} />
         <Label forName={id} text={label} {disabled} classes="font-medium" />
     {:else}
         <Label forName={id} text={label} {disabled} />
