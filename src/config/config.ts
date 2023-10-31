@@ -1,11 +1,9 @@
 /*
- * Copyright (©) 15.10.2021, 17:34. Kolyada Nikita Vladimirovich (nikita.nk16@yandex.ru)
+ * Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
  */
 
-/*
- * Copyright (c)  Kolyada Nikita Vladimirovich <nikita.nk16@yandex.ru> 12.09.2021, 15:42
- */
 interface IConfig {
+    mainStorageName: string
     front: {
         host: string
         homeName: string
@@ -25,18 +23,18 @@ interface IConfig {
 
 const isProd = false
 const isTestProd = false
-const serverPort = isProd ? 8081 : 8082
+const serverPort = isProd ? 8081 : 3000
 const frontPort = 5173
 
 export const config: IConfig = {
+    mainStorageName: '__foma_blog_ru',
     front: {
         homeName: 'DEV',
         host: isProd || isTestProd ? `https://foma-blog.ru` : `http://localhost:${frontPort}`,
         homeText: 'Разработка',
         homeIcon: 'mdi-code-braces',
         metaTitle: 'Веб-разработка и программирование',
-        metaDescription:
-            'Заметки на тему веб-разработки, программирования (JavaScript, TypeScript, NodeJS, ReactJs, VueJS, Java, Scala) и др'
+        metaDescription: 'Заметки на тему веб-разработки, программирования (JavaScript, TypeScript, NodeJS, ReactJs, VueJS, Java, Scala) и др'
     },
     server: {
         domain: 'dev',

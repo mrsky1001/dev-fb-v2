@@ -3,13 +3,13 @@
   -->
 
 <script lang="ts">
-    import SuccessSVG from '../../../svg/toast-svg/SuccessSVG.svelte'
-    import WarningSVG from '../../../svg/toast-svg/WarningSVG.svelte'
-    import InfoSVG from '../../../svg/toast-svg/InfoSVG.svelte'
-    import ErrorSVG from '../../../svg/toast-svg/ErrorSVG.svelte'
     import { onMount } from 'svelte'
+    import InfoSVG from '../../../components/svg-icons/toast-svg/InfoSVG.svelte'
+    import WarningSVG from '../../../components/svg-icons/toast-svg/WarningSVG.svelte'
+    import SuccessSVG from '../../../components/svg-icons/toast-svg/SuccessSVG.svelte'
+    import ErrorSVG from '../../../components/svg-icons/toast-svg/ErrorSVG.svelte'
 
-    export let type
+    export let type: string
 
     let iconClasses = 'inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg'
     const color = ' text-green-500 bg-green-100 dark:bg-green-700 dark:text-green-200'

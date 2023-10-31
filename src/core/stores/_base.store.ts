@@ -1,21 +1,18 @@
+/*
+ * Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
+ */
+
 import { get } from 'svelte/store'
 import type { Writable } from 'svelte/store'
 import type { Readable } from 'svelte/types/runtime/store'
-
-/**
- * Базовый интерфейс для всех классов с данными
- */
-export interface IBase {
-    _id?: string
-    id: string
-}
+import type { IBase } from '../models/base/Base'
 
 /**
  * Функция автоматического определения идентификатора
  * @param {IBase} obj
  * @returns {string}
  */
-export function setId(obj: IBase): string {
+export function setId(obj: IBase): number {
     if (obj._id) {
         return obj._id
     } else {
@@ -78,8 +75,9 @@ export default function _baseStore<TClass extends IBase, TStore>(store: Writable
 export interface WrapperPropsForList<TClass extends IBase, TStore extends WrapperProps<TClass>> extends Writable<TStore[]> {
     add: (s: TStore) => void
     all: () => TClass[]
+    remove: (id: number) => void
     set: (s: TStore[]) => void
-    getStore: (id: string) => TStore | undefined
+    getStore: (id: number) => TStore | undefined
     getStoreByField: (field: keyof TClass, value: TClass[keyof TClass]) => TStore | undefined
     allStores: () => TStore[]
 }
@@ -106,10 +104,10 @@ export function _baseStoreForList<TClass extends IBase, TStore extends WrapperPr
 
     /**
      * Метод получения store по id
-     * @param {string} id
+     * @param {number} id
      * @returns {<TClass extends IBase, TStore extends WrapperProps<TClass>, TAllStore> TStore | undefined}
      */
-    function getStore(id: string): TStore | undefined {
+    function getStore(id: number): TStore | undefined {
         return get(stores).find((s) => s.self().id === id)
     }
 
@@ -139,5 +137,13 @@ export function _baseStoreForList<TClass extends IBase, TStore extends WrapperPr
         update((old) => [...old, rawStore])
     }
 
-    return wrapperFn({ ...stores, set, add, all, getStore, getStoreByField, allStores })
+    /**
+     * Метод удаления store из списка
+     * @param {number} id
+     */
+    const remove = (id: number): void => {
+        return stores.set([...get(stores).filter((s) => s.self().id !== id)])
+    }
+
+    return wrapperFn({ ...stores, set, add, remove, all, getStore, getStoreByField, allStores })
 }

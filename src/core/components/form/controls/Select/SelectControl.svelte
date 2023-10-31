@@ -8,12 +8,14 @@
      */
     import Label from '../../Label/Label.svelte'
     import Select from './tags/Select.svelte'
-    import type { TOptionSettings } from '../../../../models/types'
-    import Option from '../../../../models/form/control/select/Option'
+    import type { TOptionSettings } from '../../../../form.control/types'
 
     export let id = ''
     export let placeholder = ''
     export let value
+    export let title = ''
+    export let error: string
+    export let disabled = false
     export let options: any[] = []
     export let required = false
     export let onChange = undefined
@@ -22,5 +24,5 @@
     export let label = ''
 </script>
 
-<Label forName={id} text={label} />
-<Select {id} {value} {placeholder} {options} {required} {onChange} {optionSettings} />
+<Label forName={id} text={label} {disabled} />
+<Select {id} bind:value bind:error {title} {disabled} {placeholder} {options} {required} {onChange} {optionSettings} />

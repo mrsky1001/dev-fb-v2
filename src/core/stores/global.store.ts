@@ -1,16 +1,11 @@
 import { writable } from 'svelte/store'
 import _baseStore from './_base.store'
 import type { IBase, WrapperProps } from './_base.store'
-import type { IAllSectionStore } from './section/all-sections.store'
-import type { IAllDomainStore } from './domain/all-domain.store'
 
 /**
  * Интерфейс для общего store
  */
-interface IGlobal extends IBase {
-    allDomainStore: IAllDomainStore
-    allSectionStore: IAllSectionStore
-}
+type IGlobal = IBase
 
 /**
  * Интерфейс для общего store

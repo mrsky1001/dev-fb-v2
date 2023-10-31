@@ -3,23 +3,24 @@
   -->
 
 <script lang="ts">
-    import Option from '../../../../../models/form/control/select/Option'
-    import type { TOptionSettings } from '../../../../../models/types'
     import { afterUpdate } from 'svelte'
     import { Img } from 'flowbite-svelte'
+    import Option from '../../../../../form.control/select/Option'
+    import type { TOptionSettings } from '../../../../../form.control/types'
 
     /**
      *  Компонент выбора данных
      */
-    const defaultParams = {
-        optionSettings: { idField: 'id', valueField: 'id', textField: 'name' }
+    const defaultParams: { optionSettings: TOptionSettings } = {
+        optionSettings: { idField: 'id', valueField: 'id', textField: 'name', typeValue: 'valueType' }
     }
 
     export let id = ''
     export let title = ''
     export let placeholder = ''
     export let options: Option[] = []
-    export let value
+    export let value: any
+    export let error: string
     export let disabled = false
     export let required = false
     export let onChange = undefined
@@ -31,23 +32,28 @@
     optionSettings = Object.assign({}, defaultParams.optionSettings, optionSettings)
 
     title = title.length ? title : placeholder
+    let errorText = error ?? ''
 
-    const getImgValue = () => {
-        return value[optionSettings.imgField]
+    const getImgValue = (value: any) => {
+        if (optionSettings.imgField) {
+            return value[optionSettings.imgField]
+        }
+
+        return undefined
     }
 
-    const getText = (o: Option) => {
+    const getText = (value: any) => {
         if (Array.isArray(optionSettings.textField)) {
-            return optionSettings.textField.map((f) => o[f]).join(' | ')
+            return optionSettings.textField.map((f) => value[f]).join(' | ')
         } else {
-            return o[optionSettings.textField]
+            return value[optionSettings.textField]
         }
     }
 
     let listOptions = options.map((o) => {
         return new Option({
             id: o[optionSettings.idField],
-            img: o[optionSettings.imgField],
+            img: optionSettings.imgField ? o[optionSettings.imgField] : '',
             text: getText(o)
         })
     })
@@ -67,14 +73,20 @@
      * Обработка параметров после обновления
      */
     afterUpdate(() => {
-        if (value && value.id) {
-            if (String(value.id).startsWith('empty_')) {
+        const valueObj = optionSettings.typeValue === 'valueType' ? options.find((o) => o[optionSettings.valueField] === value) : value
+
+        if (valueObj && valueObj.name) {
+            if (String(valueObj.name).startsWith('empty_')) {
                 value = undefined
             }
         }
 
-        btnTagParams.colorClasses = value ? ' text-gray-900' : ''
-        btnTagParams.img = value ? getImgValue() : ''
+        btnTagParams.colorClasses = valueObj ? ' text-gray-900' : ''
+        btnTagParams.img = valueObj ? getImgValue(valueObj) : undefined
+
+        if (!btnTagParams.img) {
+            btnTagParams.classes += ' flex'
+        }
 
         listOptions = [...listOptions]
 
@@ -82,9 +94,11 @@
             disabledCSS += ' bg-gray-100 focus:bg-[white]'
             btnTagParams.text = '-'
         } else {
-            btnTagParams.text = value ? getText(value) : placeholder
+            btnTagParams.text = valueObj ? getText(valueObj) : placeholder
             disabledCSS = ''
         }
+
+        errorText = error ?? ''
     })
 
     const getOptionColorClass = (option: Option) => {
@@ -110,22 +124,23 @@
      * Функции обработки событий
      */
     const onSelect = (option: Option) => {
-        value = options.find((o) => o.id === option.id)
+        //todo for number and strings lists
+        const selectedOption = options.find((o) => o[optionSettings.idField] === option.id)
+
+        if (selectedOption && optionSettings.typeValue === 'valueType') {
+            value = selectedOption[optionSettings.valueField]
+        } else {
+            value = selectedOption
+        }
+
+        error = ''
     }
 </script>
 
 <svelte:window on:click={onWindowClick} />
 
-<button
-    id="dropdownDefaultButton"
-    class={btnTagParams.classes + btnTagParams.colorClasses + disabledCSS}
-    type="button"
-    {title}
-    {disabled}
-    bind:this={btnRef}
-    on:click={() => (isShow = !isShow)}
->
-    <div class="relative z-1 bg-[transparent] inline-flex justify-between items-center">
+<button id="dropdownDefaultButton" class={btnTagParams.classes + btnTagParams.colorClasses + disabledCSS} type="button" {title} {disabled} bind:this={btnRef} on:click={() => (isShow = !isShow)}>
+    <div class="relative z-1 bg-[transparent] w-full inline-flex justify-between items-center">
         {#if value && btnTagParams.img}
             <div class="divide-x-2 pr-2 mr-2 border-r">
                 <Img class="w-9 h-9  rounded-full bg-gray-100 text-green-500" src={btnTagParams.img} alt={btnTagParams.text} />
@@ -137,21 +152,11 @@
         </svg>
     </div>
 </button>
-<div
-    id="dropdown"
-    hidden={!isShow}
-    class="    w-auto absolute z-10 bg-[white] divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
->
+<div id="dropdown" hidden={!isShow} class=" w-auto absolute z-10 bg-[white] divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
     <ul class=" text-sm py-2 text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
         {#each listOptions as option}
             <li>
-                <a
-                    href="#"
-                    class=" flex items-center px-4 py-2 dark:hover:bg-gray-600 dark:hover:text-white {getOptionColorClass(
-                        option
-                    )}"
-                    on:click={() => onSelect(option)}
-                >
+                <a href="#" class=" flex items-center px-4 py-2 dark:hover:bg-gray-600 dark:hover:text-white {getOptionColorClass(option)}" on:click={() => onSelect(option)}>
                     <div hidden={!option.img} class="divide-x-2 pr-2 mr-2 border-r">
                         <Img class="w-9 h-9  rounded-full bg-gray-100 text-green-500" src={option.img} alt={option.text} />
                     </div>
@@ -161,6 +166,4 @@
         {/each}
     </ul>
 </div>
-
-<style>
-</style>
+<p class="ml-1 mt-1 text-xs text-red-600 dark:text-red-500">{errorText}</p>

@@ -3,9 +3,13 @@
   -->
 
 <script lang="ts">
+    /**
+     *  Компонент кнопки-лого заголовка
+     *  @component
+     */
     import CustomComponent from '../../custom/CustomComponent.svelte'
-    import LogoSVG from '../../svg/btn-icons/LogoSVG.svelte'
     import { NavBrand } from 'flowbite-svelte'
+    import LogoSVG from '../../../../components/svg-icons/btn-icons/LogoSVG.svelte'
 
     export let type = ''
     export let name = ''
@@ -13,7 +17,7 @@
 </script>
 
 {#if type.includes('mobile')}
-    <a rel="noreferrer" {href} target="_blank" class="-m-1.5 p-1.5">
+    <a rel="noreferrer" {href} title={name} target="_blank" class="-m-1.5 p-1.5">
         <span class="sr-only">{name}</span>
         <CustomComponent component={LogoSVG} />
     </a>
@@ -22,15 +26,4 @@
         <LogoSVG />
         <span><slot /></span>
     </NavBrand>
-    <!--    <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">-->
-    <!--    FOMA-BLOG-->
-    <!--    </span>-->
-    <!--    -->
-    <!--    <a rel="noreferrer" href="{href}" target="_blank" class="btn btn-ghost normal-case text-xl">-->
-    <!--        <span class="sr-only">{name}</span>-->
-    <!--        <custom component="{LogoSVG}"/>-->
-    <!--    </a>-->
 {/if}
-
-<style>
-</style>

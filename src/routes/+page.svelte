@@ -1,10 +1,12 @@
+<!--
+  - Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
+  -->
+
 <script lang="ts">
     /**
-     * Компонент домашней страницы
-     * @Component
-     */
-
-    /**
-     * todo внедрить html - стартовую страницу
+     * Компонент верхнего заголовка страницы
+     * @component
      */
 </script>
+
+<div class=" flex justify-center items-center h-[20vh]" />

@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 21.11.2021, 23:33  Kolyada Nikita Vladimirovich nikita.nk16@yandex.ru
+ * Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
  */
 
-import roles from '../../server/collections/roles'
+import roles from '../../lib/collections/roles'
 import type { IBase } from '../_base.store'
 import { setId } from '../_base.store'
 

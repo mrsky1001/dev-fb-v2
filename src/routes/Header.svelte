@@ -7,7 +7,7 @@
      * NavBar компонент для сайта
      * @Component
      */
-    import type { INavItem } from '../core/server/models/entitys'
+    import type { INavItem } from '../core/models/entitys'
     import PhotoSVG from '../core/components/svg/page-icons/PhotoSVG.svelte'
     import HomeSVG from '../core/components/svg/page-icons/HomeSVG.svelte'
     import TravelSVG from '../core/components/svg/page-icons/TravelSVG.svelte'
@@ -99,7 +99,7 @@
             <Search size="sm" placeholder="Поиск" />
         </div>
         <div class="flex">
-            <NavItem href="/login">Войти</NavItem>
+            <NavItem href="/auth/login">Войти</NavItem>
             <NavHamburger on:click={toggle} />
         </div>
     </Navbar>

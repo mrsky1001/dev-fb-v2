@@ -1,19 +1,20 @@
+<!--
+  - Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
+  -->
+
 <script>
     /**
-     * Базовый компонент - основа
-     * @Component
+     * Компонент обертка применяемый для всех маршрутов
+     * @component
      */
-    import './styles.css'
-    import Header from './Header.svelte'
-    import { initApp } from '../core/server/init-app'
-    import { onMount } from 'svelte'
 
-    onMount(() => {
-        initApp()
-    })
+    import './styles.css'
+    import Toaster from '../core/components/toast/Toaster.svelte'
+    import Header from './Header.svelte'
 </script>
 
 <Header />
+<Toaster />
 <slot />
 
 <style lang="scss">

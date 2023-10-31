@@ -1,0 +1,12 @@
+<!--
+  - Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
+  -->
+
+<svg aria-hidden="true" fill="transparent" viewBox="0 0 20 20" width="18" data-view-component="true">
+    <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-width="2"
+        d="M11 14h6m-3 3v-6M1.857 1h4.286c.473 0 .857.384.857.857v4.286A.857.857 0 0 1 6.143 7H1.857A.857.857 0 0 1 1 6.143V1.857C1 1.384 1.384 1 1.857 1Zm10 0h4.286c.473 0 .857.384.857.857v4.286a.857.857 0 0 1-.857.857h-4.286A.857.857 0 0 1 11 6.143V1.857c0-.473.384-.857.857-.857Zm-10 10h4.286c.473 0 .857.384.857.857v4.286a.857.857 0 0 1-.857.857H1.857A.857.857 0 0 1 1 16.143v-4.286c0-.473.384-.857.857-.857Z"
+    />
+</svg>

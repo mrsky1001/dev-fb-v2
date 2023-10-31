@@ -10,17 +10,19 @@
      */
     export let id = ''
     export let placeholder = ''
-    export let title = ''
     export let type = 'text'
     export let group
+    export let error = ''
     export let disabled = false
-    export let numSettings: TNumSettingsInput
     export let required = false
+    export let title = ''
     export let value
     export let onChange = undefined
+    export let numSettings: TNumSettingsInput | undefined = undefined
 
     export let classes
 
+    let errorText = error ?? ''
     /**
      * Функция для задания динамического типа
      * @param node
@@ -58,35 +60,45 @@
         classesCSS += ' w-full text-gray-900 rounded-lg'
     }
 
-    const _onChange = (target, val: string) => {
-        const redAlertClasses = ' text-red-800 border border-red-300'
-        let newValue: string | number = type === 'number' ? Number(val) : val
+    const _onChange = (eventTarget: Event & { currentTarget: EventTarget & HTMLInputElement }) => {
+        if (eventTarget) {
+            const target = eventTarget.currentTarget
+            const val = target.value
 
-        if (type === 'checkbox') {
-            value = !value
-            target.checked = value
-        } else if (isValidValue(newValue)) {
+            const redAlertClasses = ' text-red-800 border border-red-300'
+            let newValue: string | number = type === 'number' ? Number(val) : val
+
+            if (type === 'checkbox') {
+                value = !value
+                target.checked = value
+            } else if (isValidValue(newValue)) {
+                if (type === 'radio') {
+                    group = value
+                } else {
+                    value = newValue
+                }
+            } else {
+                if (!isValidValue(newValue)) {
+                    if (!classesCSS.includes(redAlertClasses)) {
+                        classesCSS += redAlertClasses
+
+                        setTimeout(() => {
+                            classesCSS = classesCSS.replace(redAlertClasses, '')
+                        }, 1000)
+                    }
+                }
+            }
+
             if (type === 'radio') {
                 group = value
             } else {
-                value = newValue
+                target.value = value
             }
-        } else {
-            if (!isValidValue(newValue)) {
-                if (!classesCSS.includes(redAlertClasses)) {
-                    classesCSS += redAlertClasses
+        }
+    }
 
-                    setTimeout(() => {
-                        classesCSS = classesCSS.replace(redAlertClasses, '')
-                    }, 1000)
-                }
-            }
-        }
-        if (type === 'radio') {
-            group = value
-        } else {
-            target.value = value
-        }
+    const _onInputText = () => {
+        error = ''
     }
 
     afterUpdate(() => {
@@ -95,6 +107,8 @@
         } else {
             disabledCSS = ''
         }
+
+        errorText = error ?? ''
     })
 </script>
 
@@ -108,7 +122,7 @@
         {placeholder}
         title={title.length ? title : placeholder}
         bind:checked={value}
-        on:input={(e) => _onChange(e.target, e.target.value)}
+        on:input={(e) => _onChange(e)}
         class={classesCSS + disabledCSS}
     />
 {:else if type === 'radio'}
@@ -122,7 +136,7 @@
         title={title.length ? title : placeholder}
         bind:group
         {value}
-        on:input={(e) => _onChange(e.target, e.target.value)}
+        on:input={(e) => _onChange(e)}
         class={classesCSS + disabledCSS}
     />
 {:else}
@@ -136,7 +150,10 @@
         {placeholder}
         title={title.length ? title : placeholder}
         {value}
-        on:change={(e) => _onChange(e.target, e.target.value)}
+        on:keypress={() => _onInputText()}
+        on:change={(e) => _onChange(e)}
         class={classesCSS + disabledCSS}
     />
 {/if}
+
+<p class="ml-1 mt-1 text-xs text-red-600 dark:text-red-500">{errorText}</p>

@@ -1,7 +1,11 @@
+/*
+ * Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
+ */
+
 import { writable } from 'svelte/store'
 import _baseStore, { type WrapperProps } from '../_base.store'
-import type { IUser } from './user'
-import User from './user'
+import type { IUser } from '../../models/user/User'
+import User from '../../models/user/User'
 
 export type IUserStore = WrapperProps<IUser>
 

@@ -1,10 +1,14 @@
+/*
+ * Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
+ */
+
 import { get, writable } from 'svelte/store'
 import type { ISection, ISectionProps } from './section'
 import Section from './section'
 import _baseStore, { type WrapperProps } from '../_base.store'
 import { globalStore } from '../global.store'
 import Post from '../post/post'
-import { getPostByTitle, getPosts } from '../../server/services/post.services'
+import { getPostByTitle, getPosts } from '../../services/post.services'
 import type { IPostStore } from '../post/post.store'
 
 export interface ISectionStore extends WrapperProps<ISection> {

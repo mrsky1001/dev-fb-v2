@@ -8,19 +8,21 @@
      */
     import Label from '../../Label/Label.svelte'
     import Input from './tags/Input.svelte'
-    import type { TNumSettingsInput } from '../../../../models/types'
+    import type { TNumSettingsInput } from '../../../../form.control/types'
 
     export let id = ''
     export let placeholder = ''
     export let type = 'text'
     export let required = false
-    export let group
+    export let group = undefined
     export let disabled = false
+    export let error = ''
     export let value
     export let onChange = undefined
+    export let title = ''
     export let classes = ''
     export let inputClasses = ''
-    export let numSettings: TNumSettingsInput
+    export let numSettings: TNumSettingsInput | undefined = undefined
 
     export let label = ''
 
@@ -35,13 +37,13 @@
 
 <div class={containerClassesCSS}>
     {#if type === 'checkbox'}
-        <Input {id} {type} bind:value {placeholder} bind:disabled classes={inputClasses} {numSettings} {required} {onChange} />
+        <Input {id} {type} {title} bind:group bind:value bind:error {placeholder} bind:disabled classes={inputClasses} {numSettings} {required} {onChange} />
         <Label forName={id} text={label} {disabled} classes="font-medium" />
     {:else if type === 'radio'}
-        <Input {id} {type} bind:group {value} {placeholder} classes={inputClasses} {disabled} {numSettings} {required} {onChange} />
+        <Input {id} {type} {title} bind:group bind:error {value} {placeholder} classes={inputClasses} {disabled} {numSettings} {required} {onChange} />
         <Label forName={id} text={label} {disabled} classes="font-medium" />
     {:else}
         <Label forName={id} text={label} {disabled} />
-        <Input {id} {type} bind:value {placeholder} {numSettings} classes={inputClasses} {disabled} {required} {onChange} />
+        <Input {id} {type} {title} bind:group bind:value bind:error {placeholder} {numSettings} classes={inputClasses} {disabled} {required} {onChange} />
     {/if}
 </div>
