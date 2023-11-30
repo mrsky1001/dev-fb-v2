@@ -9,31 +9,34 @@
      */
     import InputControl from '../../../core/components/form/controls/Input/InputControl.svelte'
     import SelectControl from '../../../core/components/form/controls/Select/SelectControl.svelte'
-    import { registration } from '../../../core/services/auth.services'
-    import type { TErrorData, TErrorObj, TRegistrationResult } from '../../../core/models/types'
-    import { type IRegistrationData, RegistrationData } from '../../../core/models/auth/RegistrationData'
-    import { authStore } from '../../../stores/init-store'
-    import toaster from '../../../core/stores/toast/all-toast.store'
-    import { createToastStore } from '../../../core/stores/toast/toast.store'
-    import messages from '../../../lib/collections/messages'
-    import type { IUserType } from '../../../core/models/userType/UserType'
-    import Toast from '../../../core/stores/toast/toast'
+
+    import type { TErrorData, TErrorObj } from '../../../core/models/types'
+    import messages from '$lib/collections/messages'
+    import { Button } from 'flowbite-svelte'
     import routes from '$lib/collections/routes'
+    import { onMount } from 'svelte'
+    import type UserType from '../../../modules/userType/userType.class'
+    import { authStore } from '../../../stores/init-store'
+    import allToastStore from '../../../modules/app/toast/deps/all-toast.store'
+    import userTypeService from '../../../modules/userType/userType.service'
+    import type { IUserForCreate } from '../../../modules/user/user.class'
+    import authService from '../../../modules/auth/auth.service'
+    import type { IAuth } from '../../../modules/auth/auth.class'
 
-    export let data: { userTypes: IUserType[] }
-    const { userTypes } = data
+    let userTypes: UserType[] = []
 
-    const registrationData = new RegistrationData()
+    const registrationData: IUserForCreate = { login: '', avatarPath: '', email: '', password: '', name: '', typeId: -1 }
 
-    const errorData: TErrorData<IRegistrationData> = { email: '', password: '', login: '', name: '', type: '' }
+    const errorData: TErrorData<IUserForCreate> = { login: '', avatarPath: '', email: '', password: '', name: '', typeId: '' }
     let errorText = ''
 
     const onRegistration = () => {
         errorText = ''
-        registration(registrationData)
-            .then((res: TRegistrationResult) => {
+        authService
+            .registration(registrationData)
+            .then((res: IAuth) => {
                 authStore.updateLoginData(res)
-                toaster.add(createToastStore(messages.REGISTRATION_SUCCESS))
+                allToastStore.createFromObj(messages.REGISTRATION_SUCCESS)
 
                 setTimeout(() => {
                     window.location.href = '/'
@@ -44,11 +47,11 @@
                     let errorsText = ''
                     const errors: string | TErrorObj<typeof errorData>[] = JSON.parse(error.request.response).message
 
-                    toaster.add(createToastStore(messages.REGISTRATION_ERROR))
+                    allToastStore.createFromObj(messages.REGISTRATION_ERROR)
 
                     if (typeof errors === 'string') {
                         errorText = errors
-                        toaster.add(createToastStore(new Toast(errors)))
+                        allToastStore.create(errors)
                     } else {
                         errors.forEach((errObj) => {
                             if (errObj.property in errorData) {
@@ -57,30 +60,34 @@
                             }
                         })
 
-                        toaster.add(createToastStore(new Toast(errorsText)))
+                        allToastStore.create(errorsText)
                     }
                 } catch (err) {
                     console.log(err)
                 }
             })
     }
+
+    onMount(async () => {
+        userTypes = await userTypeService.getAll()
+    })
 </script>
 
-<section class="pt-[10%] bg-gray-50 dark:bg-gray-900">
+<section class="pt-[10%] bg-gray-50">
     <div class="flex flex-col items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 class="text-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Регистрация</h1>
+                <h1 class="text-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">Регистрация</h1>
                 {#if userTypes.length}
                     <div class="space-y-4 md:space-y-6">
                         <div>
-                            <InputControl id="name" type="text" label="Имя" bind:error={errorData.name} placeholder="Введите ваше имя..." bind:value={registrationData.name} />
-                        </div>
-                        <div>
-                            <InputControl id="login" type="text" label="Логин" bind:error={errorData.login} placeholder="Введите ваш логин..." bind:value={registrationData.login} />
+                            <InputControl id="name" type="text" label="Имя (ФИО)" bind:error={errorData.name} placeholder="Введите ваше имя..." bind:value={registrationData.name} />
                         </div>
                         <div>
                             <InputControl id="email" type="email" label="E-mail" bind:error={errorData.email} placeholder="Введите ваш E-mail..." bind:value={registrationData.email} />
+                        </div>
+                        <div>
+                            <InputControl id="login" label="Логин" bind:error={errorData.login} placeholder="Введите ваш login..." bind:value={registrationData.login} />
                         </div>
                         <div>
                             <InputControl id="password" type="password" label="Пароль" title="Пароль" bind:error={errorData.password} placeholder="••••••••" bind:value={registrationData.password} />
@@ -89,49 +96,32 @@
                             <SelectControl
                                 id="type"
                                 label="Роль"
-                                bind:error={errorData.type}
+                                bind:error={errorData.typeId}
                                 placeholder="Выберите роль..."
-                                bind:value={registrationData.type}
+                                bind:value={registrationData.typeId}
                                 options={userTypes}
                                 optionSettings={{
-                                    idField: 'value',
+                                    idField: 'id',
                                     textField: 'name',
-                                    valueField: 'value',
+                                    valueField: 'id',
                                     typeValue: 'valueType'
                                 }}
                             />
                         </div>
-                        <!--                    <div class="flex items-center justify-between">-->
-                        <!--                        <div class="flex items-start">-->
-                        <!--                            <div class="flex items-center h-5">-->
-                        <!--                                <input-->
-                        <!--                                    id="remember"-->
-                        <!--                                    aria-describedby="remember"-->
-                        <!--                                    type="checkbox"-->
-                        <!--                                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"-->
-                        <!--                                    required=""-->
-                        <!--                                />-->
-                        <!--                            </div>-->
-                        <!--                            <div class="ml-3 text-sm">-->
-                        <!--                                <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-                        <!--                        <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>-->
-                        <!--                    </div>-->
                         <div class="flex justify-between items-end">
-                            <p class="pr-2 text-sm font-light text-gray-500 dark:text-gray-400">
-                                Уже есть аккаунт? <a href={routes.LOGIN} class="font-medium text-primary-600 hover:underline dark:text-primary-500">Войти</a>
+                            <p class="pr-2 text-sm font-light text-gray-500">
+                                Уже есть аккаунт? <a href={routes.LOGIN} class="font-medium text-primary-600 hover:underline">Войти</a>
                             </p>
-                            <button
+                            <Button
                                 on:click={onRegistration}
                                 class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4
                             focus:outline-none focus:ring-primary-300 font-medium rounded-lg
-                             text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                             text-sm px-5 py-2.5 text-center   "
                             >
                                 Зарегистрироваться
-                            </button>
+                            </Button>
                         </div>
-                        <p class="p-0 m-0 text-xs text-red-600 dark:text-red-500">{errorText}</p>
+                        <p class="p-0 m-0 text-xs text-red-600">{errorText}</p>
                     </div>
                 {/if}
             </div>

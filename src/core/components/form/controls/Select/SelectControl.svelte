@@ -8,7 +8,7 @@
      */
     import Label from '../../Label/Label.svelte'
     import Select from './tags/Select.svelte'
-    import type { TOptionSettings } from '../../../../form.control/types'
+    import type { TOptionSettings } from '../../../form.control/types'
 
     export let id = ''
     export let placeholder = ''

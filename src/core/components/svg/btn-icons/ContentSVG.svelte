@@ -2,7 +2,7 @@
   - Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
   -->
 
-<svg class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+<svg class="w-3.5 h-3.5 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
     <path
         stroke="currentColor"
         stroke-linejoin="round"

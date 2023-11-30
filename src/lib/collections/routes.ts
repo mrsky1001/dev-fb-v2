@@ -4,5 +4,7 @@
 
 export default {
     LOGIN: '/auth/login',
-    REGISTRATION: '/auth/registration'
+    LOGOUT: '/auth/logout',
+    REGISTRATION: '/auth/registration',
+    ERROR_CONNECTION_TIMEOUT: '/error/connection-timeout'
 }

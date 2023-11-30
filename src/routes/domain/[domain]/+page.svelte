@@ -5,8 +5,8 @@
      */
     import ScrollSpy from '../../../core/components/scrollspy/ScrollSpy.svelte'
     import { SectionHeader } from '../../../core/components/utils'
-    import Section from '../../../core/stores/section/section'
-    import type Domain from '../../../core/stores/domain/domain'
+    import type Domain from '../../../modules/blog/domain/domain'
+    import type Section from '../../../modules/blog/section/section'
 
     export let data: { promiseSections: Promise<Section[]>; promiseActiveDomain: Promise<Domain> }
 

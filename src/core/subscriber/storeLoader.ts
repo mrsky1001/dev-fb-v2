@@ -3,14 +3,14 @@
  */
 
 import { globalStore } from '../stores/global.store'
-import Domain, { type IDomain } from '../stores/domain/domain'
-import Section, { type ISection, type ISectionProps } from '../stores/section/section'
-import Post, { type IPost } from '../stores/post/post'
+import Domain, { type IDomain } from '../../modules/blog/domain/domain'
+import Section, { type ISection, type ISectionProps } from '../../modules/blog/section/section'
+import Post, { type IPost } from '../../modules/blog/post/post'
 import { getDomains } from '../services/domains.services'
 import { getSections } from '../services/sections.services'
-import { createAllSectionStore } from '../stores/section/all-sections.store'
+import { createAllSectionStore } from '../../modules/blog/section/deps/all-sections.store'
 import { getPostByTitle, getPosts } from '../services/post.services'
-import type { IDomainStore } from '../stores/domain/domain.store'
+import type { IDomainStore } from '../../modules/blog/domain/domain.store'
 
 /**
  * Класс загрузки данных в store's

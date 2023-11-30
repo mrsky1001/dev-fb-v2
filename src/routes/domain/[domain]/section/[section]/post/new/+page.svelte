@@ -7,8 +7,8 @@
      * Компонент создания новой статьи
      * @Component
      */
-    import type Section from '../../../../../../../core/stores/section/section'
-    import Domain from '../../../../../../../core/stores/domain/domain'
+    import type Section from '../../../../../../../modules/blog/section/section'
+    import Domain from '../../../../../../../modules/blog/domain/domain'
     import ContentEditor from '../../../../../../../core/components/contentEditor/ContentEditor.svelte'
     import DocBlank from '../../../../../../../core/components/svg/btn-icons/DocBlankSVG.svelte'
     import ContentSVG from '../../../../../../../core/components/svg/btn-icons/ContentSVG.svelte'
@@ -32,8 +32,8 @@
     <div class="lg:flex">
         <main class="flex-auto w-full min-w-0 lg:static lg:max-h-full lg:overflow-visible">
             <div class="w-full mt-20">
-                <h1 class="inline-block my-10 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Новая статья</h1>
-                <ol class="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
+                <h1 class="inline-block my-10 text-3xl font-extrabold tracking-tight text-gray-900">Новая статья</h1>
+                <ol class="relative text-gray-500 border-l border-gray-200">
                     <li class="mb-10 ml-6">
                         <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white">
                             <DocBlankSVG />

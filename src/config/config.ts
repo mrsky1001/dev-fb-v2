@@ -2,6 +2,8 @@
  * Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
  */
 
+import urls from '$lib/collections/urls'
+
 interface IConfig {
     mainStorageName: string
     front: {
@@ -19,6 +21,7 @@ interface IConfig {
     paths: {
         footerImgs: string
     }
+    excludedURLForShowMsg: string[]
 }
 
 const isProd = false
@@ -27,6 +30,7 @@ const serverPort = isProd ? 8081 : 3000
 const frontPort = 5173
 
 export const config: IConfig = {
+    excludedURLForShowMsg: [urls.IS_AUTHORIZED],
     mainStorageName: '__foma_blog_ru',
     front: {
         homeName: 'DEV',

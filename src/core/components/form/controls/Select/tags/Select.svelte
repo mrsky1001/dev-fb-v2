@@ -5,8 +5,8 @@
 <script lang="ts">
     import { afterUpdate } from 'svelte'
     import { Img } from 'flowbite-svelte'
-    import Option from '../../../../../form.control/select/Option'
-    import type { TOptionSettings } from '../../../../../form.control/types'
+    import Option from '../../../../form.control/select/Option'
+    import type { TOptionSettings } from '../../../../form.control/types'
 
     /**
      *  Компонент выбора данных
@@ -66,7 +66,7 @@
         classes:
             'relative bg-[white] border border-[transparent] rounded-lg  text-sm z-0 ' +
             'ring-1 ring-gray-300 focus:shadow-outline focus:ring-blue-600 focus:border-blue-600 w-full mt-[1px] px-[12px] py-[7px] ' +
-            'dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 '
+            '      '
     }
 
     /**
@@ -152,11 +152,11 @@
         </svg>
     </div>
 </button>
-<div id="dropdown" hidden={!isShow} class=" w-auto absolute z-10 bg-[white] divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-    <ul class=" text-sm py-2 text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+<div id="dropdown" hidden={!isShow} class=" w-auto absolute z-10 bg-[white] divide-y divide-gray-100 rounded-lg shadow w-44">
+    <ul class=" text-sm py-2 text-gray-700" aria-labelledby="dropdownDefaultButton">
         {#each listOptions as option}
             <li>
-                <a href="#" class=" flex items-center px-4 py-2 dark:hover:bg-gray-600 dark:hover:text-white {getOptionColorClass(option)}" on:click={() => onSelect(option)}>
+                <a href="#" class=" flex items-center px-4 py-2 {getOptionColorClass(option)}" on:click={() => onSelect(option)}>
                     <div hidden={!option.img} class="divide-x-2 pr-2 mr-2 border-r">
                         <Img class="w-9 h-9  rounded-full bg-gray-100 text-green-500" src={option.img} alt={option.text} />
                     </div>
@@ -166,4 +166,4 @@
         {/each}
     </ul>
 </div>
-<p class="ml-1 mt-1 text-xs text-red-600 dark:text-red-500">{errorText}</p>
+<p class="ml-1 mt-1 text-xs text-red-600">{errorText}</p>

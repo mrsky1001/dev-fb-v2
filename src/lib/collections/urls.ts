@@ -4,31 +4,35 @@
 
 export default {
     /**
-     * USER TYPE
-     */
-
-    GET_ALL_USER_TYPES: '/api/userTypes',
-
-    /**
-     * USER
+     * Auth
      */
 
     LOGIN: '/api/auth/login',
     ROLES: '/api/roles',
     REGISTRATION: '/api/auth/registration',
     LOGOUT: '/api/auth/logout',
-    IS_AUTHORIZED: '/api/is-authorized',
-    GET_USER: '/api/user',
-    UPDATE_USER: '/api/user',
-    DELETE_USER: '/api/user',
+    IS_AUTHORIZED: '/api/auth/is-authorized',
 
-    GET_USERS: '/api/users',
-    CREATE_USER: '/api/user',
-    GET_USER_BY_ID: '/api/user',
-    UPDATE_USER_BY_ID: '/api/user',
-    DELETE_USER_BY_ID: '/api/user',
+    /**
+     * USER TYPE
+     */
 
-    SEARCH: '/api/search/:search',
+    GET_USER_TYPE: '/api/userType/id',
+    GET_ALL_USER_TYPE: '/api/userType/all',
+    CREATE_USER_TYPE: '/api/userType/create',
+    UPDATE_USER_TYPE: '/api/userType/update',
+    DELETE_USER_TYPE: '/api/userType/delete',
+
+    /**
+     * User
+     */
+    GET_USER: '/api/user/id',
+    GET_ALL_USER: '/api/user/all',
+    CREATE_USER: '/api/user/create',
+    UPDATE_USER: '/api/user/update',
+    DELETE_USER: '/api/user/delete',
+
+    GET_USER_BY_TYPE: '/api/user/type',
 
     /**
      * POST

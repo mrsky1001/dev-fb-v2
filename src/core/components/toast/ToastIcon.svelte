@@ -12,7 +12,7 @@
     export let type: string
 
     let iconClasses = 'inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg'
-    const color = ' text-green-500 bg-green-100 dark:bg-green-700 dark:text-green-200'
+    const color = ' text-green-500 bg-green-100  '
 
     onMount(() => {
         switch (type) {

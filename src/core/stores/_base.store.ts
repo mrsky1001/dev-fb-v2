@@ -5,20 +5,7 @@
 import { get } from 'svelte/store'
 import type { Writable } from 'svelte/store'
 import type { Readable } from 'svelte/types/runtime/store'
-import type { IBase } from '../models/base/Base'
-
-/**
- * Функция автоматического определения идентификатора
- * @param {IBase} obj
- * @returns {string}
- */
-export function setId(obj: IBase): number {
-    if (obj._id) {
-        return obj._id
-    } else {
-        return obj.id
-    }
-}
+import type { IBase } from '../../../../orders-klimov-red/src/core/models/base/Base'
 
 /**
  * Интерфейс параметров callback методов для _baseStore

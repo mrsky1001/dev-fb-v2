@@ -3,17 +3,17 @@
      * Компонент страницы определенного раздела с выбором статьи раздела
      * @Component
      */
-    import { createAllSectionStore } from '../../../../../core/stores/section/all-sections.store'
+    import { createAllSectionStore } from '../../../../../modules/blog/section/deps/all-sections.store'
     import ScrollSpy from '../../../../../core/components/scrollspy/ScrollSpy.svelte'
     import BlogSection from '../../../../../core/components/blog/BlogSection.svelte'
     import { globalStore } from '../../../../../core/stores/global.store'
     import { subscribeAll } from '../../../../../core/subscriber/subscribe-all'
     import { subscribe } from 'svelte/internal'
-    import type { ISection, ISectionProps } from '../../../../../core/stores/section/section'
-    import Section from '../../../../../core/stores/section/section'
+    import type { ISection, ISectionProps } from '../../../../../modules/blog/section/section'
+    import Section from '../../../../../modules/blog/section/section'
     import { SectionHeader } from '../../../../../core/components/utils'
-    import Domain from '../../../../../core/stores/domain/domain'
-    import type Post from '../../../../../core/stores/post/post'
+    import Domain from '../../../../../modules/blog/domain/domain'
+    import type Post from '../../../../../modules/blog/post/post'
 
     export let data: { sections: Section[]; activeDomain: Domain; activeSection: Section; posts: Post[] }
 
@@ -39,8 +39,8 @@
                     {/if}
                     <BlogSection {activeSection} {activeDomain} {posts} />
                     <!--            <Card img="{img}">-->
-                    <!--                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{post.title}</h5>-->
-                    <!--                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">-->
+                    <!--                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{post.title}</h5>-->
+                    <!--                <p class="mb-3 font-normal text-gray-700  leading-tight">-->
                     <!--                    {post.annotationStore.self().text}-->
                     <!--                </p>-->
                     <!--                <Button>-->

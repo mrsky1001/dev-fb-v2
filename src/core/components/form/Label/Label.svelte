@@ -14,7 +14,7 @@
     export let classes = 'font-medium'
 
     $: getCSSClasses = () => {
-        let classesCSS = `text-sm block mb-2 text-gray-900 dark:text-white ${classes}`
+        let classesCSS = `text-sm block mb-2 text-gray-900  ${classes}`
 
         if (disabled) {
             classesCSS += ' opacity-70'

@@ -2,13 +2,13 @@
  * Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
  */
 
-import Toast from '../../core/stores/toast/toast'
+import Toast from '../../modules/app/toast/toast'
 
 const messages = {
     DOWNLOADED: new Toast('Данные успешно получены!', 'success'),
     SAVED: new Toast('Данные успешно сохранены!', 'success'),
     LOGIN_SUCCESS: new Toast('Пользователь успешно авторизован!', 'success'),
-    REGISTRATION_SUCCESS: new Toast('Пользователь успешно зарегистриован!', 'success'),
+    REGISTRATION_SUCCESS: new Toast('Пользователь успешно зарегистрирован!', 'success'),
     LOGOUT_SUCCESS: new Toast('Пользователь успешно деавторизован!', 'success'),
     REQUIRED_FIELD: new Toast('Обязательное поле!'),
     INCORRECT_PASSWORD_SYMBOLS: new Toast('Пароль должен содержать цифры и латинские буквы!'),
@@ -20,7 +20,7 @@ const messages = {
     INCORRECT_EMAIL: new Toast('Не корректный e-mail!'),
 
     LOGIN_ERROR: new Toast('Ошибка! Пользователь не авторизован!', 'error'),
-    REGISTRATION_ERROR: new Toast('Ошибка! Пользователь не зарегистриован!', 'error'),
+    REGISTRATION_ERROR: new Toast('Ошибка! Пользователь не зарегистрирован!', 'error'),
     NOT_SAVED: new Toast('Внимание! Данные не сохранены!', 'error'),
     DELETED: new Toast('Данные успешно удалены!', 'success'),
     NOT_DELETED: new Toast('Внимание! Данные не удалось удалить!', 'error'),

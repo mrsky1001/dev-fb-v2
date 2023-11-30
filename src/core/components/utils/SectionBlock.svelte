@@ -14,10 +14,10 @@
 <Section name="none" classSection="py-6 sm:py-10" classDiv="px-4 mx-auto max-w-8xl">
     <div class="grid lg:grid-cols-2">
         <div>
-            <h2 class="mb-1 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+            <h2 class="mb-1 text-2xl font-semibold tracking-tight text-gray-900">
                 {title}
             </h2>
-            <p class="text-lg text-gray-500 lg:mb-0 dark:text-gray-400 lg:max-w-2xl">
+            <p class="text-lg text-gray-500 lg:mb-0 lg:max-w-2xl">
                 <slot />
             </p>
         </div>

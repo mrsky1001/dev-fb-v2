@@ -3,10 +3,13 @@
  */
 
 import type { AxiosError, AxiosResponse } from 'axios'
+import { goto } from '$app/navigation'
+import routes from '$lib/collections/routes'
+import allToastStore from '../../modules/app/toast/deps/all-toast.store'
 
-export const responseHandler = (res: AxiosResponse, msg?: IAppMessage | null, isShowMsg = true): Promise<any> => {
+export const responseHandler = (res: AxiosResponse, msg?: string | null, isShowMsg = true): Promise<any> => {
     return new Promise<any>((resolve, reject) => {
-        if (res.status === 200) {
+        if (res.status.toString().startsWith('2')) {
             if (isShowMsg) {
                 // let props: ISnackbarProps = { msg: '' }
                 //
@@ -38,11 +41,17 @@ export const responseHandler = (res: AxiosResponse, msg?: IAppMessage | null, is
     })
 }
 
-export const handlerError = (err: AxiosError, checkAuth = false, redirect?: IRoute | null, isShowMsg = true): void => {
+export const handlerError = (err: AxiosError, checkAuth = false, redirect?: string | null, isShowMsg = true): void => {
     // const hostPath = window.location.protocol + '//' + window.location.host
 
     if (checkAuth && err.response) {
         switch (err.response.status) {
+            case 401: {
+                if (typeof window !== 'undefined') {
+                    goto(routes.LOGIN)
+                }
+                break
+            }
             case 403: {
                 // const pathLogin = hostPath + routesObj.LOGIN.path
                 //
@@ -56,16 +65,43 @@ export const handlerError = (err: AxiosError, checkAuth = false, redirect?: IRou
     }
 
     if (isShowMsg && err) {
-        const props = { classes: 'red', msg: '' }
+        const status = err.response ? err.response.status : '000'
+        const props = { classes: 'red', msg: String(`Код ошибки: ${status}`) + '\n' }
 
-        if (err.response && err.response.data && err.response.data.message) {
-            props.msg = err.response.data.message
-        } else {
-            props.msg = err.message
-        }
+        if (err.response)
+            if (err.response.status > 400 && err.response.status < 404) {
+                switch (err.response.status) {
+                    case 401: {
+                        props.msg += 'Пользователь не авторизован!'
+                        break
+                    }
+                    case 403: {
+                        // const pathLogin = hostPath + routesObj.LOGIN.path
+                        //
+                        // if (window.location.href !== pathLogin) {
+                        //     window.location.href = pathLogin
+                        // }
 
-        console.error(props.msg)
-        // vxc.snackbar.setSnackBarMsg(props)
+                        break
+                    }
+                }
+            } else {
+                if (err.response.data) {
+                    if (Array.isArray(err.response.data.message)) {
+                        const msgs = err.response.data.message.map((m) => m.message ?? '')
+
+                        props.msg += msgs.join('\n')
+                    } else if (typeof err.response.data.message === 'string') {
+                        props.msg += err.response.data.message
+                    }
+                } else {
+                    props.msg += err.message
+                }
+            }
+
+        allToastStore.create(props.msg, 'error')
+    } else if (err.code === 'ERR_NETWORK') {
+        goto(routes.ERROR_CONNECTION_TIMEOUT)
     } else {
         console.error(err)
     }

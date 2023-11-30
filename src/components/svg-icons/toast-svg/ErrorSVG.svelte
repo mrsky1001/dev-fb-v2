@@ -2,13 +2,7 @@
     export let classes = ''
 </script>
 
-<svg
-    class="w-5 h-5 text-inherit {classes} text-gray-800 dark:text-white"
-    aria-hidden="true"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 19 20"
->
+<svg class="w-5 h-5 text-inherit {classes} text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 19 20">
     <path
         class="text-inherit"
         stroke="currentColor"

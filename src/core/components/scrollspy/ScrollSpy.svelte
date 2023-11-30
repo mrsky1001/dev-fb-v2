@@ -3,7 +3,7 @@
      * Компонент отображения разделов
      */
     import { afterUpdate } from 'svelte'
-    import Section from '../../stores/section/section'
+    import Section from '../../../modules/blog/section/section'
 
     export let sections = []
 
@@ -22,24 +22,24 @@
 </script>
 
 <div class="mb-8 px-[5px]">
-    <h4 class=" mb-2 text-sm font-semibold tracking-wide text-gray-900 uppercase dark:text-white lg:text-xs">Темы</h4>
+    <h4 class=" mb-2 text-sm font-semibold tracking-wide text-gray-900 uppercase lg:text-xs">Темы</h4>
     <nav id="TableOfContents">
         <ul id="mainScrollSpy">
             {#each sections as section}
                 <li id={section.name} class="py-1">
                     <a
-                        class="{activeClass(section)} hover:font-medium bg-transparent text-neutral-600 shadow-none dark:text-neutral-200 border-solid border-primary dark:border-primary-400"
+                        class="{activeClass(section)} hover:font-medium bg-transparent text-neutral-600 shadow-none border-solid border-primary"
                         href={url + section.id}
                         data-sveltekit-preload-data="tap">{section.name}</a
                     >
                 </li>
                 <!--{#if section.arr.length}-->
                 <!--    <li class="py-1">-->
-                <!--        <a class="bg-transparent px-[5px] text-neutral-600 shadow-none dark:text-neutral-200" href="#example-3">Section 3</a>-->
+                <!--        <a class="bg-transparent px-[5px] text-neutral-600 shadow-none " href="#example-3">Section 3</a>-->
                 <!--        <ul class="pl-3">-->
                 <!--            {#each section.arr as section}-->
                 <!--                <li class="py-1">-->
-                <!--                    <a class="bg-transparent px-[5px] text-neutral-600 shadow-none dark:text-neutral-200" href="#example-sub-A">Subsection A</a>-->
+                <!--                    <a class="bg-transparent px-[5px] text-neutral-600 shadow-none " href="#example-sub-A">Subsection A</a>-->
                 <!--                </li>-->
                 <!--            {/each}-->
                 <!--        </ul>-->

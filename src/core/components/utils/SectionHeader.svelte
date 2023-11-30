@@ -12,7 +12,7 @@
 
 <section class="pt-3 md:pt-5">
     <div class="px-4 mx-auto max-w-8xl">
-        <div class="grid pb-6 border-b border-gray-200 md:pb-10 lg:gap-8 lg:grid-cols-3 dark:border-gray-800">
+        <div class="grid pb-6 border-b border-gray-200 md:pb-10 lg:gap-8 lg:grid-cols-3">
             <div class="col-span-2 mb-2 lg:mb-0">
                 <Breadcrumb navClass="flex mb-3">
                     <BreadcrumbItem href="/" home>{home}</BreadcrumbItem>
@@ -21,10 +21,10 @@
                         <BreadcrumbItem href="/domain/{domain}/section/{sectionId}">{textSection}</BreadcrumbItem>
                     {/if}
                 </Breadcrumb>
-                <h1 class="inline-block mb-2 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+                <h1 class="inline-block mb-2 text-3xl font-extrabold tracking-tight text-gray-900">
                     {textDomain}
                 </h1>
-                <p class="text-lg text-gray-500 lg:mb-0 dark:text-gray-400">
+                <p class="text-lg text-gray-500 lg:mb-0">
                     {descriptionDomain}
                 </p>
             </div>

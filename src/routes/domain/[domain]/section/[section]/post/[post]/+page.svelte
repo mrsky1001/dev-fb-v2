@@ -3,7 +3,7 @@
      * Компонент отображения выбранной статьи
      * @Component
      */
-    import Post from '../../../../../../../core/stores/post/post'
+    import Post from '../../../../../../../modules/blog/post/post'
     import Page from '../../../../../../../core/components/blog/Page.svelte'
 
     export let data: { promisePost: Promise<Post> }

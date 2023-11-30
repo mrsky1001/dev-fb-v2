@@ -5,8 +5,8 @@
 <script lang="ts">
     import { ArrowSmallRight } from 'svelte-heros'
     import { onDestroy, onMount } from 'svelte'
-    import type { IPost } from '../../stores/post/post'
-    import type { IPostStore } from '../../stores/post/post.store'
+    import type { IPost } from '../../../modules/blog/post/post'
+    import type { IPostStore } from '../../../modules/blog/post/post.store'
     import { subscribe } from 'svelte/internal'
 
     export let postStore: IPostStore | undefined = undefined
@@ -42,7 +42,7 @@
         </div>
     </header>
     <div class="flex relative z-20 justify-between p-6 O7PVNyZQb9PCjpNKbt_t mx-4 container bg-white rounded w-article-container arrNNfkSdu1f3lPZlfMG mx-auto">
-        <article class="w-article container max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+        <article class="w-article container max-w-none format format-sm sm:format-base lg:format-lg format-blue">
             <div class="flex flex-row justify-between items-center">
                 <div class="flex items-center B1cgbA6Bb4LQo0qFJKck text-gray-500 text-base mb-2">
                     <span>By <a href="#" class="text-gray-900 _5zvlMLkN1qETxEl3IhT InmgdriTvIwr8C_lWYEj font-semibold">Jese Leos</a></span>
@@ -292,18 +292,18 @@
                 of the following:
             </p>
             <pre><code class="language-html"
-                    >&lt;dl class="grid grid-cols-2 gap-8 max-w-screen-md text-gray-900 sm:grid-cols-3 dark:text-white"&gt;
+                    >&lt;dl class="grid grid-cols-2 gap-8 max-w-screen-md text-gray-900 sm:grid-cols-3 "&gt;
 &lt;div class="flex flex-col justify-center items-center"&gt;
   &lt;dt class="mb-2 text-3xl font-extrabold"&gt;73M+&lt;/dt&gt;
-  &lt;dd class="text-lg font-normal text-gray-500 dark:text-gray-400"&gt;developers&lt;/dd&gt;
+  &lt;dd class="text-lg font-normal text-gray-500 "&gt;developers&lt;/dd&gt;
 &lt;/div&gt;
 &lt;div class="flex flex-col justify-center items-center"&gt;
   &lt;dt class="mb-2 text-3xl font-extrabold"&gt;1B+&lt;/dt&gt;
-  &lt;dd class="text-lg font-normal text-gray-500 dark:text-gray-400"&gt;contributors&lt;/dd&gt;
+  &lt;dd class="text-lg font-normal text-gray-500 "&gt;contributors&lt;/dd&gt;
 &lt;/div&gt;
 &lt;div class="flex flex-col justify-center items-center"&gt;
   &lt;dt class="mb-2 text-3xl font-extrabold"&gt;4M+&lt;/dt&gt;
-  &lt;dd class="text-lg font-normal text-gray-500 dark:text-gray-400"&gt;organizations&lt;/dd&gt;
+  &lt;dd class="text-lg font-normal text-gray-500 "&gt;organizations&lt;/dd&gt;
 &lt;/div&gt;
 &lt;/dl&gt;
 </code></pre>
@@ -372,13 +372,13 @@
                     <div>
                         <button
                             type="button"
-                            class="py-2 px-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 qHIOIw8TObHgD3VvKa5x DpMPWwlSESiYA8EE1xKM hover:text-primary-700 m_8FxTcpOfmK___hAaJ6 _FONMPVaCsLFJJGDaaIL _bKyZ1er5YE_NnrwOCm9 __8kBLtrR_iuU2wW25Lp bg-gray-800 text-gray-400 dark:border-gray-600 DTyjKhtXBNaebZa5L0l9 _OovBxfPdK7Rjv2nh2Ot"
+                            class="py-2 px-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 qHIOIw8TObHgD3VvKa5x DpMPWwlSESiYA8EE1xKM hover:text-primary-700 m_8FxTcpOfmK___hAaJ6 _FONMPVaCsLFJJGDaaIL _bKyZ1er5YE_NnrwOCm9 __8kBLtrR_iuU2wW25Lp bg-gray-800 text-gray-400 DTyjKhtXBNaebZa5L0l9 _OovBxfPdK7Rjv2nh2Ot"
                             >Subscribe
                         </button>
                     </div>
                 </div>
                 <form class="mb-6">
-                    <div class="mb-4 container bg-gray-50 rounded-lg border border-gray-200 bg-gray-700 dark:border-gray-600">
+                    <div class="mb-4 container bg-gray-50 rounded-lg border border-gray-200 bg-gray-700">
                         <div class="py-2 px-4 bg-gray-50 rounded-t-lg bg-gray-800">
                             <label for="comment" class="sr-only">Your comment</label>
                             <textarea
@@ -389,10 +389,10 @@
                                 required=""
                             />
                         </div>
-                        <div class="flex justify-between items-center py-2 px-3 border-y dark:border-gray-600">
+                        <div class="flex justify-between items-center py-2 px-3 border-y">
                             <button
                                 type="submit"
-                                class="inline-flex items-center _gKcj49wZgnwx1LpcJi6 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg _FONMPVaCsLFJJGDaaIL focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+                                class="inline-flex items-center _gKcj49wZgnwx1LpcJi6 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg _FONMPVaCsLFJJGDaaIL focus:ring-primary-200 hover:bg-primary-800"
                             >
                                 Post comment
                             </button>
@@ -699,7 +699,7 @@
                     <button
                         type="button"
                         data-modal-toggle="newsletter-modal"
-                        class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 text-center container"
+                        class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 text-center container"
                         >Subscribe
                     </button>
                 </div>
@@ -712,9 +712,7 @@
                         <div>
                             <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">Our first office</h5>
                             <p class="mb-2 font-light text-gray-500 text-gray-400">Over the past year, Volosoft has undergone changes.</p>
-                            <a href="#" class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_">
-                                Read in 9 minutes
-                            </a>
+                            <a href="#" class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 _LWmEJ3ddClfhUowkba_"> Read in 9 minutes </a>
                         </div>
                     </div>
                     <div class="mb-6 flex items-center">
@@ -724,9 +722,7 @@
                         <div>
                             <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">Enterprise Design tips</h5>
                             <p class="mb-2 font-light text-gray-500 text-gray-400">Over the past year, Volosoft has undergone changes.</p>
-                            <a href="#" class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_">
-                                Read in 14 minutes
-                            </a>
+                            <a href="#" class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 _LWmEJ3ddClfhUowkba_"> Read in 14 minutes </a>
                         </div>
                     </div>
                     <div class="mb-6 flex items-center">
@@ -736,9 +732,7 @@
                         <div>
                             <h5 class="mb-2 sm:text-lg font-bold leading-tight text-gray-900">Partnered up with Google</h5>
                             <p class="mb-2 font-light text-gray-500 text-gray-400">Over the past year, Volosoft has undergone changes.</p>
-                            <a href="#" class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_">
-                                Read in 9 minutes
-                            </a>
+                            <a href="#" class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 _LWmEJ3ddClfhUowkba_"> Read in 9 minutes </a>
                         </div>
                     </div>
                 </div>
@@ -764,7 +758,7 @@
         <ArticleHead>
             <span
                 class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex
-                                    items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800"
+                                    items-center px-2.5 py-0.5 rounded"
             >
                 Tutorial
             </span>
@@ -775,15 +769,15 @@
                 <a>{post.title} </a>
             </svelte:fragment>
             <svelte:fragment slot="paragraph">
-                <p class="mb-5 font-light text-gray-500 dark:text-gray-400" />
+                <p class="mb-5 font-light text-gray-500" />
             </svelte:fragment>
         </ArticleBody>
         <ArticleAuthor>
             <svelte:fragment slot="author">
                 <img class="w-7 h-7 rounded-full" alt="Jese Leos avatar" />
-                <span class="font-medium dark:text-white" />
+                <span class="font-medium" />
             </svelte:fragment>
-            <a href="/dev-fb-v2/static" class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline">
+            <a href="/dev-fb-v2/static" class="inline-flex items-center font-medium text-primary-600 hover:underline">
                 Прочитать
                 <ArrowSmallRight class="ml-2" />
             </a>

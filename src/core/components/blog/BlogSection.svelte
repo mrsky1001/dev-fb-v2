@@ -5,7 +5,7 @@
 <script lang="ts">
     import { ExampleDiv } from '../utils/index.ts'
     import { ArrowSmallRight } from 'svelte-heros'
-    import Post from '../../stores/post/post'
+    import Post from '../../../modules/blog/post/post'
     import ArticleImg from './article/ArticleImg.svelte'
     import ArticleContent from './article/ArticleContent.svelte'
     import Section from '../section/Section.svelte'
@@ -39,7 +39,7 @@
                 <BlogHead>
                     <svelte:fragment slot="h2">{activeSection.name}</svelte:fragment>
                     <svelte:fragment slot="paragraph">
-                        <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">
+                        <p class="font-light text-gray-500 sm:text-xl">
                             {activeSection.description}
                         </p>
                     </svelte:fragment>
@@ -53,7 +53,7 @@
                                 <ArticleHead>
                                     <span
                                         class="bg-primary-100 text-primary-800 text-xs font-medium inline-flex
-                                    items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800"
+                                    items-center px-2.5 py-0.5 rounded"
                                     >
                                         Tutorial
                                     </span>
@@ -64,7 +64,7 @@
                                         <a href={buildRoute(post.urlTitle)}>{post.title} </a>
                                     </svelte:fragment>
                                     <svelte:fragment slot="paragraph">
-                                        <p class="mb-5 font-light text-gray-500 dark:text-gray-400">
+                                        <p class="mb-5 font-light text-gray-500">
                                             {post.annotationStore.self().text}
                                         </p>
                                     </svelte:fragment>
@@ -72,11 +72,11 @@
                                 <ArticleAuthor>
                                     <svelte:fragment slot="author">
                                         <img class="w-7 h-7 rounded-full" src={post.authorStore.self().avatar} alt="Jese Leos avatar" />
-                                        <span class="font-medium dark:text-white">
+                                        <span class="font-medium">
                                             {post.authorStore.self().username}
                                         </span>
                                     </svelte:fragment>
-                                    <a href={buildRoute(post.urlTitle)} class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline">
+                                    <a href={buildRoute(post.urlTitle)} class="inline-flex items-center font-medium text-primary-600 hover:underline">
                                         Прочитать
                                         <ArrowSmallRight class="ml-2" />
                                     </a>

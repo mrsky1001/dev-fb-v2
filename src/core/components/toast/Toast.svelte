@@ -4,34 +4,33 @@
 <script lang="ts">
     import { onMount } from 'svelte'
     import ToastIcon from './ToastIcon.svelte'
-    import type { TToastTypes } from '../../stores/toast/toast'
+    import type { TToastTypes } from '../../../modules/app/toast/toast'
 
     export let type: TToastTypes = 'info'
     export let text = ''
-    export let id: string
-    export let close: (id: string) => void
+    export let id: number
+    export let close: (id: number) => void
 
-    let classesContainer = 'animate__animated animate__backInDown mt-2 w-full flex items-center max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 '
+    let classesContainer = 'animate__animated animate__backInDown mt-2 w-full flex items-center max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow   '
 
     onMount(() => {
         setTimeout(() => {
             classesContainer += 'animate__animated animate__bounceOutUp'
-        }, 4000)
+        }, 5000)
 
         setTimeout(() => {
             close(id)
-        }, 3000)
+        }, 5000)
     })
 </script>
 
-<div id="toast{id}" class={classesContainer} role="alert">
+<div id={String(id)} class={classesContainer} role="alert">
     <ToastIcon {type} />
     <div class="ml-3 font-normal whitespace-pre-wrap">
         {text.trim().split('\n').join('\n\n')}
     </div>
     <button
-        type="button"
-        class="  ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+        class="  ml-auto -mx-1.5 -my-1.5 text-gray-500 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-7 w-7"
         aria-label="Закрыть"
         title="Закрыть"
         on:click={() => close(id)}

@@ -20,21 +20,8 @@
 
     let disabledCSS = ''
     let classesCSS = `${className}
-                     w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700
+                     w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer
                      `
 </script>
 
-<input
-    {id}
-    type="range"
-    name={id}
-    {disabled}
-    {required}
-    {min}
-    {max}
-    {step}
-    {placeholder}
-    title={title.length ? title : placeholder}
-    bind:value
-    class={classesCSS + disabledCSS}
-/>
+<input {id} type="range" name={id} {disabled} {required} {min} {max} {step} {placeholder} title={title.length ? title : placeholder} bind:value class={classesCSS + disabledCSS} />

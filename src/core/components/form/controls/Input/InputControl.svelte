@@ -8,7 +8,7 @@
      */
     import Label from '../../Label/Label.svelte'
     import Input from './tags/Input.svelte'
-    import type { TNumSettingsInput } from '../../../../form.control/types'
+    import type { TNumSettingsInput } from '../../../form.control/types'
 
     export let id = ''
     export let placeholder = ''

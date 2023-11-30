@@ -48,7 +48,7 @@
     let disabledCSS = ''
     let classesCSS = `border border-gray-300 text-sm
                      focus:ring-primary-600 focus:border-primary-600 block
-                     dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500
+
                      `
 
     if (type === 'checkbox' || type === 'radio') {
@@ -156,4 +156,4 @@
     />
 {/if}
 
-<p class="ml-1 mt-1 text-xs text-red-600 dark:text-red-500">{errorText}</p>
+<p class="ml-1 mt-1 text-xs text-red-600">{errorText}</p>

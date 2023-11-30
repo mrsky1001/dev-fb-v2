@@ -1,15 +1,20 @@
 /*
- * Copyright (c) 08.01.2022, 23:32  Kolyada Nikita Vladimirovich nikita.nk16@yandex.ru
+ * Copyright (c) Kolyada N.V. <mrsky1001.work@gmail.com> 2023
  */
 
-export const dateAndTime = (rawDate: string | Date): string => {
-    const date = new Date(rawDate)
-    const hours: string = date.getHours().toString()
-    const minutes: string = date.getMinutes().toString()
+import moment from 'moment'
 
-    const dateStr: string = date.toLocaleDateString()
-    const hoursStr: string = hours.length > 1 ? hours : '0' + hours
-    const minutesStr: string = minutes.length > 1 ? minutes : '0' + minutes
+/**
+ * Преобразование даты в формат для input
+ */
+export function toInputDate(date: Date | string) {
+    return moment(date).format('YYYY-MM-DD')
+}
 
-    return dateStr + ' / ' + hoursStr + ':' + minutesStr
+
+/**
+ * Преобразование даты в формат для печати
+ */
+export function toPrintDate(date: Date | string) {
+    return moment(date).format('DD.MM.YYYY')
 }

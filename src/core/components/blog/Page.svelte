@@ -1,13 +1,13 @@
 <script lang="ts">
     import articleIcon from '../../../assets/images/article.svg'
     import { onDestroy, onMount } from 'svelte'
-    import type { IPost } from '../../stores/post/post'
-    import type { IPostStore } from '../../stores/post/post.store'
+    import type { IPost } from '../../../modules/blog/post/post'
+    import type { IPostStore } from '../../../modules/blog/post/post.store'
     import { subscribe } from 'svelte/internal'
-    import type { IAnnotation } from '../../stores/annotation/annotation'
+    import type { IAnnotation } from '../../../modules/blog/post/deps/annotation/annotation'
     import type { IUser } from '../../stores/user/user'
     import PageContent from './PageContent.svelte'
-    import Post from '../../stores/post/post'
+    import Post from '../../../modules/blog/post/post'
     import ArticleSVG from '../svg/ArticleSVG.svelte'
     import FacebookBTN from '../socials/FacebookBTN.svelte'
     import SocialBTN from '../socials/SocialBTN.svelte'
@@ -72,7 +72,7 @@
         </div>
     </header>
     <div class="flex relative z-20 justify-between p-7 O7PVNyZQb9PCjpNKbt_t mx-4 container bg-white rounded w-article-container arrNNfkSdu1f3lPZlfMG mx-auto">
-        <article class="w-article container max-w-none format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+        <article class="w-article container max-w-none format format-sm sm:format-base lg:format-lg format-blue">
             <div class="flex flex-row justify-between items-center">
                 <div class="flex items-center B1cgbA6Bb4LQo0qFJKck text-gray-500 text-base mb-2">
                     <span>
@@ -151,7 +151,7 @@
                     <button
                         type="button"
                         data-modal-toggle="newsletter-modal"
-                        class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 text-center container"
+                        class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 mr-2 mb-2 text-center container"
                     >
                         Подписаться
                     </button>
@@ -180,7 +180,7 @@
                     <!--            </p>-->
                     <!--            <a-->
                     <!--                href="#"-->
-                    <!--                class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600 dark:text-primary-500 _LWmEJ3ddClfhUowkba_"-->
+                    <!--                class="inline-flex items-center font-medium vjxcH6oRcT32j4R9BxSq aLkxBYrqOmZoa_nRh3yL text-primary-600  _LWmEJ3ddClfhUowkba_"-->
                     <!--            >-->
                     <!--                Чтение в течение {p.readTime} мин.-->
                     <!--            </a>-->
