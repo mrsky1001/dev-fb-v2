@@ -7,5 +7,5 @@
 
 * Frontend: SvelteJS, Flowbite, TypeScript
 * Backend: NodeJS, NestJS, Prisma, TypeScript
-* DB: PostgreasSQL
+* DB: PostgresSQL
 * Server VDS
